@@ -1,14 +1,36 @@
 import type { ReactNode } from "react";
+import { Bebas_Neue, Cormorant,Space_Grotesk, Inter } from 'next/font/google';
 import "./globals.css";
 
 interface Props {
   readonly children: ReactNode;
 }
 
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bebas', 
+});
+
+const cormorant = Cormorant({
+  subsets: ['latin'],
+  variable: '--font-cormorant',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space', 
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className="bg-[#0a0a0a] text-white min-h-screen flex flex-col">
+    <html lang="en" suppressHydrationWarning className={`${bebasNeue.variable} ${cormorant.variable} ${spaceGrotesk.variable}`}>
+      <body suppressHydrationWarning className={`bg-[#0a0a0a] bg-[url('/bg1.png')] bg-repeat bg-top bg-left text-white min-h-screen flex flex-col`}>
         {/* Navigation Bar */}
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/30 backdrop-blur-md px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -22,7 +44,7 @@ export default function RootLayout({ children }: Props) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+        <main className="flex-1 w-full max-w-7xl mx-auto px-2 sm:px-6 py-8">
           {children}
         </main>
 
