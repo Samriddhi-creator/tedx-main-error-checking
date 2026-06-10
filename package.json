@@ -9,15 +9,16 @@
     "@tailwindcss/postcss": "^4.2.2",
     "lucide-react": "^1.17.0",
     "next": "latest",
-    "postcss": "^8.5.9",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^4.2.2"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "20.2.5",
     "@types/react": "18.2.37",
     "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0",
     "typescript": "^5.3.3"
   }
 }
