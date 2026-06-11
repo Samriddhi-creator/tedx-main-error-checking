@@ -33,7 +33,7 @@ export const Locations:location[]=[
     {
         name:"About Us",
         href:"/aboutUs",
-        topInPercentage:81,
-        leftInPercentage:88,
+        topInPercentage:78,
+        leftInPercentage:85,
     }
 ];

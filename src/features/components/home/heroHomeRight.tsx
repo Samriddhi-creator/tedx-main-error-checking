@@ -15,12 +15,15 @@ export default function HeroHomeRight() {
     >
       <div
         className="
-          relative
-          w-full
-          max-w-218.25
-          lg:w-[45.99vw]
-          aspect-883/858
-        "
+        relative
+        w-[85%]
+        sm:w-[90%]
+        md:w-full
+        max-w-218.25
+        lg:w-[45.99vw]
+        aspect-883/858
+        mx-auto
+      "
       >
         <img
           src="/map.png"
@@ -40,13 +43,13 @@ export default function HeroHomeRight() {
             }}
           >
             <img
-              src="/locateicon.png"
+              src="/locateicon2.png"
               alt={location.name}
               className="
-                w-4 h-4
-                sm:w-5 sm:h-5
-                md:w-6 md:h-6
-                lg:w-8 lg:h-8
+                w-8 h-8
+                sm:w-14 sm:h-14
+                md:w-16 md:h-16
+                lg:w-18 lg:h-18
                 transition-all duration-300
                 group-hover:scale-150
                 drop-shadow-[0_0_12px_rgba(235,0,40,0.8)]
@@ -54,7 +57,9 @@ export default function HeroHomeRight() {
             />
             <div
               className="
-                absolute left-10 top-1/2 -translate-y-1/2
+                absolute
+                left-6 sm:left-8 md:left-10 lg:left-14
+                top-1/2 -translate-y-1/2
                 whitespace-nowrap
                 text-[10px] md:text-xs lg:text-sm
                 text-white
