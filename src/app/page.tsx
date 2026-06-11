@@ -30,7 +30,7 @@ export default function IndexPage() {
       {/* Top Header / Navigation Action Bar */}
       <div className="flex justify-end items-center w-full min-h-[40px] relative z-50">
         <div className="flex flex-row items-center gap-6">
-          <Link href="/cart" passHref legacyBehavior>
+          <Link href="/cart">
            
               <button className="bg-black hover:bg-transparent text-white hover:text-red-500 border-2 border-[#eb0028] rounded-full h-10 px-5 text-[13px] font-bold tracking-widest transition-all duration-200 uppercase cursor-pointer shadow-lg shadow-red-600/20">
                 Buy Now

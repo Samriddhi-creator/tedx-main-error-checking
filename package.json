@@ -1,7 +1,25 @@
 {
+  "name": "tedx-main",
+  "version": "1.0.0",
   "private": true,
+  "description": "This example shows how to integrate Next.js with [Redux Toolkit](https://redux-toolkit.js.org).",
+  "homepage": "https://github.com/Samriddhi-creator/TEDX-main#readme",
+  "bugs": {
+    "url": "https://github.com/Samriddhi-creator/TEDX-main/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samriddhi-creator/TEDX-main.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },

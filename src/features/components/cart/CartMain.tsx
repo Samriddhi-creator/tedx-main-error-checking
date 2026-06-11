@@ -202,21 +202,21 @@ export default function CartMain() {
 
           <div className={`${spaceGrotesk.className} flex flex-col gap-4 text-xs font-lighter tracking-wide text-white`}>
             <div className="flex justify-between">
-              <span className="text-[15px] font-lighter">Subtotal ({totalItemsCount} items)</span>
-              <span className="text-[15px] font-lighter text-white">${subtotal.toFixed(2)}</span>
+              <span className="text-[19px] font-lighter">Subtotal ({totalItemsCount} items)</span>
+              <span className="text-[19px] font-lighter text-white">${subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-lighter text-[15px] flex items-center gap-1">Convenience Fee <span className="text-[9px] text-zinc-500 cursor-help">ⓘ</span></span>
-              <span className="text-[15px] font-lighter text-white">${convenienceFee.toFixed(2)}</span>
+              <span className="font-lighter text-[19px] flex items-center gap-1">Convenience Fee </span>
+              <span className="text-[19px] font-lighter text-white">${convenienceFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center border-b border-red-950/40 pb-4">
-              <span className="font-lighter text-white text-[15px] flex items-center gap-1">Tax <span className="text-[9px] text-zinc-500 cursor-help">ⓘ</span></span>
-              <span className="text-[15px] font-lighter text-white">${tax.toFixed(2)}</span>
+              <span className="font-lighter text-white text-[19px] flex items-center gap-1">Tax </span>
+              <span className="text-[19px] font-lighter text-white">${tax.toFixed(2)}</span>
             </div>
           </div>
 
           <div>
-            <label className={`${spaceGrotesk.className} text-[15px] scale-y-150 font-lighter font-bold text-[#C30000] uppercase tracking-tighter block mb-0 mt-4`}>
+            <label className={`${spaceGrotesk.className} text-[19px] scale-y-150 font-lighter font-bold text-[#C30000] uppercase tracking-tighter block mb-0 mt-4`}>
               Expedition Code
             </label>
             <div className="relative flex items-center mt-2">
