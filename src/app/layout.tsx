@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import "./globals.css";
+import { Bebas_Neue, Cormorant , Space_Grotesk, Inter } from "next/font/google";
+
 
 interface Props {
   readonly children: ReactNode;

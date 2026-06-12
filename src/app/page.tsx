@@ -1,13 +1,11 @@
 "use client";
-import Link from "next/link";
 import * as React from "react";
 import { Button } from "../components/ui/Button";
 import { Checkbox } from "../components/ui/Checkbox";
 import { Card } from "../components/ui/Card";
 import { Sparkles, Bell, Ticket, Users, Send } from "lucide-react";
-
-import HeroHome from "../features/components/home/heroHome";
 import Link from "next/link";
+import HeroHome from "@/src/features/components/home/heroHome";
 
 export default function IndexPage() {
   const [btnLoading, setBtnLoading] = React.useState(false);
