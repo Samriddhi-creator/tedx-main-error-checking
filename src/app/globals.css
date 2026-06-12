@@ -1,4 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Instrument+Sans:wght@400;500&family=Poppins:wght@400;500;600&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  --font-bebas: var(--font-bebas), sans-serif;
+  --font-cormorant: var(--font-cormorant), serif;
+  --font-space: var(--font-space), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+}
 
 @layer base {
   body {
@@ -14,6 +23,7 @@
     transform: scale(0.85);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
