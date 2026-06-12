@@ -28,9 +28,9 @@ export default function Footer() {
         <footer className="bg-black text-white flex flex-col mt-0">
             {/* Ruler */}
             <div className="w-full flex h-[40px] overflow-hidden relative flex-shrink-0">
-                <img src="/ruler.svg" className="flex-1 h-full object-cover object-top" />
-                <img src="/ruler.svg" className="flex-1 h-full object-cover object-top" />
-                <img src="/ruler.svg" className="flex-1 h-full object-cover object-top" />
+                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
+                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
+                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
                 <div className="absolute inset-0 bg-black/40" />
             </div>
 

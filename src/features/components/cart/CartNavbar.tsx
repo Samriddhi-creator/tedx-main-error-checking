@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Button } from "../../../components/ui/Button";
 import bgImg from "./background.png"; 
 
@@ -8,10 +9,12 @@ export default function CartNavbar(){
       <div className="relative w-full z-20 px-4 sm:px-8 py-4 overflow-hidden">
         
        
-         <img
-        src={`${bgImg.src}`}
+         <Image
+        src={bgImg}
         alt="Cart background"
-        className="absolute inset-0 w-full h-full object-cover  z-10"
+        fill
+        className="object-cover z-10"
+        priority
       />
         
         <div className="absolute inset-0 bg-black/80 -z-10" />

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; 
 import CartFooter from "./footet"; 
@@ -99,10 +100,12 @@ export default function Checkoutp1() {
         }
       `}} />
 
-      <img
-        src={`${bgImg.src}`}
+      <Image
+        src={bgImg}
         alt="Cart background"
-        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-75"
+        fill
+        className="object-cover z-0 pointer-events-none opacity-75"
+        priority
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
       
