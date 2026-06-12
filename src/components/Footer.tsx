@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaInstagram, FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
 
 const leftLinks = [
     { label: "TED Website", href: "https://www.ted.com/" },
@@ -11,7 +11,7 @@ const socialLinks = [
     { icon: FaInstagram, href: "https://www.instagram.com/tedxiitpatna" },
     { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/tedxiitpatna" },
     { icon: FaFacebookF, href: "https://www.facebook.com/tedxiitpatna" },
-    { icon: FaTwitter, href: "https://twitter.com/tedxiitpatna" },
+    { icon: FaXTwitter, href: "https://twitter.com/tedxiitpatna" },
 ];
 
 const quickLinks = [
@@ -54,12 +54,12 @@ export default function Footer() {
                 <div className="self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
                 {/* Middle col */}
-                <div className="flex flex-col items-center gap-2 md:gap-4 flex-[624]">
+                <div className="flex flex-col items-center gap-2 md:gap-4 flex-[624] -mt-2 md:-mt-1">
                     <h3 className="font-sans text-base md:text-4xl font-bold text-red-600">Follow us</h3>
                     <div className="flex gap-2 md:gap-6">
                         {socialLinks.map(({ icon: Icon, href }) => (
                             <a key={href} href={href} target="_blank" rel="noopener noreferrer"
-                                className="size-6 md:size-10 bg-white rounded flex items-center justify-center text-black text-xs md:text-base hover:bg-red-600 hover:text-white transition-colors">
+                                className="size-6 md:size-10 bg-white rounded flex items-center justify-center text-black text-3xs md:text-4xl hover:bg-red-600 hover:text-white transition-colors">
                                 <Icon />
                             </a>
                         ))}
@@ -77,11 +77,11 @@ export default function Footer() {
                 <div className="self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
                 {/* Right col */}
-                <div className="flex flex-col gap-1 md:gap-3 flex-[700] md:flex-[572] items-center">
-                    <h3 className="font-sans text-base md:text-3xl font-bold text-red-600">Quick Links</h3>
+                <div className="flex flex-col gap-0 md:gap-1 flex-[700] md:flex-[572] items-start -mt-2 md:mt-0">
+                    <h3 className="font-sans text-base md:text-4xl font-bold text-red-600 md:ml-24">Quick Links</h3>
                     {quickLinks.map((link) => (
                         <a key={link.label} href={link.href}
-                            className="flex items-center gap-1 text-white font-['Ancizar_Serif'] text-[10px] md:text-2xl hover:text-red-500 transition-colors">
+                            className="flex items-center gap-1 text-white font-['Ancizar_Serif'] text-[10px] md:text-2xl hover:text-red-500 transition-colors md:ml-24">
                             <span className="text-red-600">
                                 <Image src="/compass.svg" alt="•" width={12} height={12} className="md:w-[14px] md:h-[14px]" />
                             </span> {link.label}

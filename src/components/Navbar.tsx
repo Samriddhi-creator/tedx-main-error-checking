@@ -98,7 +98,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Close button */}
-                    <button onClick={() => setOpen(false)} className="absolute top-4 md:top-8 right-4 md:right-8 size-8 md:size-10 rounded-full border-2 border-white flex items-center justify-center text-white text-sm md:text-xl hover:bg-white/10 transition-colors">
+                    <button onClick={() => setOpen(false)} className="absolute top-[9px] md:top-[13px] right-4 md:right-12 size-8 md:size-14 rounded-full border-2 border-white flex items-center justify-center text-white text-sm md:text-xl hover:bg-white/10 transition-colors">
                         ✕
                     </button>
                 </div>
