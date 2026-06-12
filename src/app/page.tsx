@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import * as React from "react";
 import { Button } from "../components/ui/Button";
 import { Checkbox } from "../components/ui/Checkbox";
@@ -25,9 +25,23 @@ export default function IndexPage() {
   };
 
   return (
-    <div className="space-y-12 max-w-4xl mx-auto py-8">
+    <div className="space-y-12 max-w-4xl mx-auto py-8 px-4 relative">
+      
+      {/* Top Header / Navigation Action Bar */}
+      <div className="flex justify-end items-center w-full min-h-[40px] relative z-50">
+        <div className="flex flex-row items-center gap-6">
+          <Link href="/cart">
+           
+              <button className="bg-black hover:bg-transparent text-white hover:text-red-500 border-2 border-[#eb0028] rounded-full h-10 px-5 text-[13px] font-bold tracking-widest transition-all duration-200 uppercase cursor-pointer shadow-lg shadow-red-600/20">
+                Buy Now
+              </button>
+           
+          </Link>
+        </div>
+      </div>
+
       {/* Hero Header */}
-      <div className="text-center space-y-4 animate-scaleIn">
+      <div className="text-center space-y-4 animate-scaleIn mt-4">
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-[#eb0028] text-xs font-semibold uppercase tracking-wider">
           <Sparkles className="w-3.5 h-3.5" />
           <span>TEDxIITP 2026 is Coming Soon</span>
@@ -69,7 +83,7 @@ export default function IndexPage() {
                   placeholder="name@university.edu"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-white placeholder-neutral-500 focus:outline-none focus:border-[#eb0028] transition-colors duration-300"
+                  className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-white placeholder-neutral-500 focus:outline-none focus:border-[#eb0028] transition-colors duration-300 autofill:bg-transparent autofill:text-white"
                 />
               </div>
 
