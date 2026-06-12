@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Locations } from "./pindata";
 
 export default function HeroHomeRight() {
@@ -25,10 +26,12 @@ export default function HeroHomeRight() {
         mx-auto
       "
       >
-        <img
-          src="/map.png"
+        <Image
+          src="/map.svg"
           alt="Map"
-          className="w-full h-full object-contain"
+          fill
+          className="object-contain"
+          priority
         />
 
         {Locations.map((location) => (
@@ -42,10 +45,9 @@ export default function HeroHomeRight() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            <img
-              src="/locateicon2.png"
-              alt={location.name}
+            <div
               className="
+                relative
                 w-8 h-8
                 sm:w-14 sm:h-14
                 md:w-16 md:h-16
@@ -54,7 +56,14 @@ export default function HeroHomeRight() {
                 group-hover:scale-150
                 drop-shadow-[0_0_12px_rgba(235,0,40,0.8)]
               "
-            />
+            >
+              <Image
+                src="/locateicon2.svg"
+                alt={location.name}
+                fill
+                className="object-contain"
+              />
+            </div>
             <div
               className="
                 absolute

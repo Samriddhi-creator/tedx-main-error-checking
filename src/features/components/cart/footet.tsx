@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Compass } from "lucide-react";
 import { Bebas_Neue, Space_Grotesk, Ancizar_Serif } from "next/font/google";
 
@@ -99,16 +100,16 @@ export default function CartFooter() {
               </h4>
               <div className="flex justify-center gap-5">
                 <a href="https://www.instagram.com/tedxiitpatna/" className="w-10 h-10 bg-white text-black rounded-xl hover:bg-zinc-200 transition-colors hover:scale-110 flex items-center justify-center p-2 shadow-md">
-                  <img src="/image.png" alt="Instagram" className="w-5 h-5 object-contain" />
+                  <Image src="/image.png" alt="Instagram" width={20} height={20} className="w-5 h-5 object-contain" />
                 </a>
                 <a href="https://www.linkedin.com/company/tedxiitpatna/posts/?feedView=all" className="w-10 h-10 bg-white text-black rounded-xl hover:bg-zinc-200 hover:scale-110 transition-colors flex items-center justify-center p-2 shadow-md">
-                  <img src="/image copy.png" alt="LinkedIn" className="w-5 h-5 object-contain" />
+                  <Image src="/image copy.png" alt="LinkedIn" width={20} height={20} className="w-5 h-5 object-contain" />
                 </a>
                 <a href="https://www.facebook.com/tedxiitpatna" className="w-10 h-10 bg-white text-black rounded-xl hover:bg-zinc-200 hover:scale-110 transition-colors flex items-center justify-center p-2 shadow-md">
-                  <img src="/image copy 2.png" alt="Facebook" className="w-5 h-5 object-contain" />
+                  <Image src="/image copy 2.png" alt="Facebook" width={20} height={20} className="w-5 h-5 object-contain" />
                 </a>
                 <a href="https://twitter.com/tedxiitpatna" className="w-10 h-10 bg-white text-black rounded-xl hover:bg-zinc-200 hover:scale-110 transition-colors flex items-center justify-center p-2 shadow-md">
-                  <img src="/image copy 3.png" alt="Twitter" className="w-5 h-5 object-contain" />
+                  <Image src="/image copy 3.png" alt="Twitter" width={20} height={20} className="w-5 h-5 object-contain" />
                 </a>
               </div>
             </div>
@@ -121,9 +122,11 @@ export default function CartFooter() {
     href="mailto:tedxiitpatna@gmail.com" 
     className="text-sm font-medium tracking-wide text-zinc-400 hover:text-red-500 flex items-center justify-center gap-2.5 transition-colors mx-auto"
   >
-    <img 
+    <Image 
       src="/mail.png" 
       alt="Mail Link"
+      width={20}
+      height={20}
       className="w-5 h-5 object-contain" 
     />
     <span>tedxiitpatna@gmail.com</span>

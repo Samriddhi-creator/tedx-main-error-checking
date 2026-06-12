@@ -1,6 +1,7 @@
 "use client"; 
 
 import React from "react";
+import Image from "next/image";
 import CartNavbar from "./CartNavbar";
 import CartMain from "./CartMain";
 import CartFooter from "./footet"; // Kept your typo path "footet" as is
@@ -17,10 +18,12 @@ export default function CartPage() {
         <div className="absolute inset-0 bg-black/50 z-0" />
         
         {/* Background Image */}
-        <img
-          src={`${bgImg.src}`}
+        <Image
+          src={bgImg}
           alt="Cart background"
-          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-75"
+          fill
+          className="object-cover z-0 pointer-events-none opacity-75"
+          priority
         /> 
       
         {/* Actual Content Sitting Above the Background */}

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function HeroHomeLeft() {
   return (
     <div
@@ -9,9 +11,11 @@ export default function HeroHomeLeft() {
         shrink-0
       "
     >
-      <img
-        src="/terraIncognitaLogo.png"
+      <Image
+        src="/terraIncognitaLogo.svg"
         alt="Terra Incognita"
+        width={873}
+        height={318}
         className="
           w-full
           max-w-218.25
@@ -21,6 +25,7 @@ export default function HeroHomeLeft() {
           lg:max-h-79.5
           object-contain
         "
+        priority
       />
     </div>
   );
