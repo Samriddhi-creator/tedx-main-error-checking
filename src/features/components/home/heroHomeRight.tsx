@@ -26,7 +26,7 @@ export default function HeroHomeRight() {
       "
       >
         <img
-          src="/map.png"
+          src="/map.svg"
           alt="Map"
           className="w-full h-full object-contain"
         />
@@ -43,7 +43,7 @@ export default function HeroHomeRight() {
             }}
           >
             <img
-              src="/locateicon2.png"
+              src="/locateicon2.svg"
               alt={location.name}
               className="
                 w-8 h-8

@@ -10,7 +10,7 @@ export default function HeroHomeLeft() {
       "
     >
       <img
-        src="/terraIncognitaLogo.png"
+        src="/terraIncognitaLogo.svg"
         alt="Terra Incognita"
         className="
           w-full
