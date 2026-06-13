@@ -20,6 +20,7 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
+        const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
 
