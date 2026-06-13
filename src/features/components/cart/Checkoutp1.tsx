@@ -3,9 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; 
-import CartFooter from "./footet"; 
+
 import bgImg from "./background.png"; 
-import CartNavbar from "./CartNavbar"; 
+
 import { Bebas_Neue, Space_Grotesk, Ancizar_Serif } from "next/font/google";
 
 const bebasNeue = Bebas_Neue({
@@ -109,9 +109,7 @@ export default function Checkoutp1() {
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
       
-      <div className="w-full relative z-20">
-        <CartNavbar/>
-      </div>
+      
 
       <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20">
         
@@ -234,9 +232,7 @@ export default function Checkoutp1() {
         </div>
       </main>
 
-      <div className="w-full text-zinc-600 text-xs relative z-10">
-        <CartFooter />
-      </div>
+      
 
     </div>
   );

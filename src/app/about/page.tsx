@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image";
 import { team } from "data/teamData"
 import OrgCard from "@/src/components/about/OrgCard";
@@ -22,7 +21,7 @@ export default function About() {
             </span>
         </div>
         <div className="mx-auto">
-            <p className="text-[10px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-space font-thin tracking-[0.01em] text-center text-white">
+            <p className="text-[10px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-space font-light tracking-[0.01em] text-center text-white">
             Since 2016, TEDx IIT Patna has served as a crucible for ideas, dialogue, and imagination—bridging disciplines and perspectives to spark conversations that endure. With a consistent footfall of 1500+ attendees across past editions, it has become a space where curiosity meets clarity, and complexity gives way to connection. Through changing times and shifting landscapes, the platform has remained committed to elevating diverse voices and celebrating the nuance in thought. It stands not just as an event, but as an evolving archive of insight—where fleeting moments of expression form lasting interludes in the broader narrative of innovation and understanding.
             </p>
         </div>
@@ -83,7 +82,7 @@ export default function About() {
                                 <hr className="rounded-full border-[#AA0000] border-t-[6px] sm:border-t-[8px] w-[95%]"/>
                             </h2>
                         </div>
-                        <div className="justify-center w-full overflow-x-auto snap-x mandatory scroll-smooth flex gap-6 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="w-full justify-center overflow-x-auto snap-x mandatory scroll-smooth flex gap-8 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                             {sec.members.map((member) => (
                                 <div key={member.id} className="snap-aria flex-shrink-0">
                                     <OrgCard 

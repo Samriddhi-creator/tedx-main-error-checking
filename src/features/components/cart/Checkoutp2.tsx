@@ -2,10 +2,10 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; 
-import CartFooter from "./footet"; 
+
 import bgImg from "./background.png"; 
 import { Bebas_Neue, Space_Grotesk } from "next/font/google";
-import CartNavbar from "./CartNavbar"; 
+
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -104,11 +104,7 @@ export default function Checkoutp2() {
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
    
-      {/* 1. TOP NAVBAR */}
-      <div className="w-full relative z-20">
-        <CartNavbar />
-      </div>
-
+     
       {/* 2. MAIN INTERFACE BOX */}
       <main className="max-w-4xl w-full mx-auto border border-red-950/80  rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-0">
         
@@ -344,9 +340,7 @@ export default function Checkoutp2() {
       </main>
 
       {/* 3. BOTTOM FOOTER */}
-      <div className="w-full text-zinc-600 text-xs relative z-10">
-        <CartFooter />
-      </div>
+     
 
     </div>
   );

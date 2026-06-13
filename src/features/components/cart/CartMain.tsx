@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Trash2, Plus, Minus, ArrowRight, Compass } from "lucide-react";
 import { Bebas_Neue, Space_Grotesk } from "next/font/google";
+import { useRouter } from "next/navigation"; 
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -15,6 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export default function CartMain() {
+    const router = useRouter();
   const [items, setItems] = useState([
     {
       id: 1,
@@ -155,9 +157,10 @@ export default function CartMain() {
                 <div className="flex flex-col items-center gap-0.5">
                   <span className={`${spaceGrotesk.className} text-[13px] text-white font-lighter tracking-wide`}>Quantity</span>
                   <div className="flex items-center border border-white rounded bg-zinc-950/40 text-[11px] font-mono px-1">
-                    <button onClick={() => incrementQuantity(item.id)} className="p-1 text-white hover:text-white cursor-pointer"><Plus size={10} /></button>
+                    
+                  <button onClick={() => decrementQuantity(item.id)} className="p-1 text-white hover:text-white cursor-pointer"><Minus size={10} /></button>
                     <span className="px-2 font-bold w-4 text-center">{item.quantity}</span>
-                    <button onClick={() => decrementQuantity(item.id)} className="p-1 text-white hover:text-white cursor-pointer"><Minus size={10} /></button>
+                      <button onClick={() => incrementQuantity(item.id)} className="p-1 text-white hover:text-white cursor-pointer"><Plus size={10} /></button>
                   </div>
                 </div>
 
@@ -175,7 +178,7 @@ export default function CartMain() {
 
         {/* Navigation Action Links */}
         <div className="flex flex-row items-center justify-between">
-          <button className={`${spaceGrotesk.className} text-[20px] scale-y-135 font-bold uppercase tracking-wider flex items-center gap-2 text-white hover:text-red-500 transition-colors group`}>
+          <button onClick={() => router.push('/')} className={`${spaceGrotesk.className} text-[20px] scale-y-135 font-bold uppercase tracking-wider flex items-center gap-2 text-white hover:text-red-500 transition-colors group`}>
             <span className="text-red-600 group-hover:-translate-x-1 font-bold transition-transform">←</span> Continue Exploring
           </button>
           
