@@ -21,6 +21,13 @@ const cormorant = Cormorant({
 });
 
 const spaceGrotesk = Space_Grotesk({
+  weight: [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+  ],
   subsets: ['latin'],
   variable: '--font-space', 
 });
@@ -32,7 +39,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${bebasNeue.variable} ${cormorant.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${bebasNeue.variable} ${cormorant.variable} ${spaceGrotesk.variable} ${inter}`}>
       <body suppressHydrationWarning className={`bg-[#0a0a0a] bg-[url('/bg1.png')] bg-repeat bg-top bg-left text-white min-h-screen flex flex-col`}>
         {/* Navigation Bar */}
         <Navbar />
