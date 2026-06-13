@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; 
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 const navLinks = [
@@ -20,15 +21,16 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
+        const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
 
     return (
         <>
             <header className="relative w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden">
-                <div className="bg-black flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
+               <button onClick={() => router.push('/')}><div className="bg-black flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
                     <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[70%] h-auto" />
-                </div>
+                </div></button>
 
                 <div className="flex items-center gap-2 md:gap-4">
                     <a href="/cart" className="h-8 md:h-14 px-4 md:px-8 rounded-full border-[2px] md:border-[3px] border-red-700 text-white font-['Inter'] text-sm md:text-2xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">

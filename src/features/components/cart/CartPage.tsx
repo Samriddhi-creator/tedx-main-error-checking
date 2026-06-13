@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import CartNavbar from "./CartNavbar";
+
 import CartMain from "./CartMain";
-import CartFooter from "./footet"; // Kept your typo path "footet" as is
+
 import bgImg from "./background.png"; 
 
 export default function CartPage() {
@@ -28,14 +28,13 @@ export default function CartPage() {
       
         {/* Actual Content Sitting Above the Background */}
         <div className="relative z-10 flex-1 flex flex-col">
-          <CartNavbar />
+        
           <CartMain />
         </div>
 
       </div>
 
-      {/* 2. FOOTER SECTION (Outside the background wrapper) */}
-      <CartFooter />
+     
 
     </div>
   );
