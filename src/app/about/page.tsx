@@ -1,10 +1,18 @@
+"use client"
+
 import Image from "next/image";
 import { team } from "data/teamData"
 import OrgCard from "@/src/components/about/OrgCard";
 import AboutTed from "@/src/components/about/AboutTed";
+import { motion } from "framer-motion";
 export default function About() {
   return (
-    <div className="flex flex-col gap-8 sm:gap-10">
+    <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="flex flex-col gap-8 sm:gap-10"
+        >
         <div className="flex flex-row items-center justify-center">
             <span className="text-[#F3E9DC] font-bebas text-[30px] sm:text-[60px] md:text-[70px] lg:text-[90px] font-normal not-italic ">
             ABOUT&nbsp;&nbsp;
@@ -14,7 +22,7 @@ export default function About() {
             </span>
         </div>
         <div className="mx-auto">
-            <p className="text-[12px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-space font-light tracking-[0.01em] text-center text-white">
+            <p className="text-[10px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-space font-thin tracking-[0.01em] text-center text-white">
             Since 2016, TEDx IIT Patna has served as a crucible for ideas, dialogue, and imagination—bridging disciplines and perspectives to spark conversations that endure. With a consistent footfall of 1500+ attendees across past editions, it has become a space where curiosity meets clarity, and complexity gives way to connection. Through changing times and shifting landscapes, the platform has remained committed to elevating diverse voices and celebrating the nuance in thought. It stands not just as an event, but as an evolving archive of insight—where fleeting moments of expression form lasting interludes in the broader narrative of innovation and understanding.
             </p>
         </div>
@@ -27,7 +35,7 @@ export default function About() {
             </h2>
         </div>
         <div className="flex flex-row justify-evenly px-2 sm:px-4">
-            <div className="relative overflow-hidden border-[2px] sm:border-[2.5px] border-[#EB0028] h-[140px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
+            <div className="relative overflow-hidden border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
                 <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
@@ -44,7 +52,7 @@ export default function About() {
                     </h2>
                 </div>
             </div>
-            <div className="relative overflow-hidden  border-[#EB0028]  border-[2px] sm:border-[2.5px] border-[#EB0028] h-[140px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
+            <div className="relative overflow-hidden  border-[#EB0028]  border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
                 <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
@@ -75,7 +83,7 @@ export default function About() {
                                 <hr className="rounded-full border-[#AA0000] border-t-[6px] sm:border-t-[8px] w-[95%]"/>
                             </h2>
                         </div>
-                        <div className="w-full overflow-x-auto snap-x mandatory scroll-smooth flex gap-8 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="justify-center w-full overflow-x-auto snap-x mandatory scroll-smooth flex gap-6 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                             {sec.members.map((member) => (
                                 <div key={member.id} className="snap-aria flex-shrink-0">
                                     <OrgCard 
@@ -96,6 +104,6 @@ export default function About() {
             </p>
         </div>
         <AboutTed/>
-    </div>
+    </motion.div>
   );
 }
