@@ -6,6 +6,9 @@ import { Card } from "../components/ui/Card";
 import { Sparkles, Bell, Ticket, Users, Send } from "lucide-react";
 import Link from "next/link";
 import HeroHome from "@/src/features/components/home/heroHome";
+import AboutTheTheme from "../features/components/home/aboutTheTheme";
+import BuyTickets from "../features/components/home/buyTickects";
+import LogoLoopSection from "../features/components/home/LogoLoopSection";
 
 export default function IndexPage() {
   const [btnLoading, setBtnLoading] = React.useState(false);
@@ -28,11 +31,11 @@ export default function IndexPage() {
   return (
     <main
       className="min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: "url('/background.png')",
-      }}
     >
      <HeroHome/>
+     <AboutTheTheme/>
+     <BuyTickets/>
+     <LogoLoopSection/>
     </main>
   );
 }

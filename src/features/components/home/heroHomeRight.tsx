@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Locations } from "./pindata";
+import {Bebas_Neue} from "next/font/google";
 
 export default function HeroHomeRight() {
   return (
@@ -8,7 +9,7 @@ export default function HeroHomeRight() {
       className="
         flex justify-center lg:justify-end
         w-full lg:w-[calc(50%-14px)]
-        pt-[13.06vh] pb-[7.5vh]
+        pt-[9.06vh] pb-[7.5vh]
         pr-0 lg:pr-[2.5vw]
         px-4 lg:px-0
         shrink-0
@@ -49,11 +50,11 @@ export default function HeroHomeRight() {
               className="
                 relative
                 w-8 h-8
-                sm:w-14 sm:h-14
-                md:w-16 md:h-16
-                lg:w-18 lg:h-18
+                sm:w-22 sm:h-22
+                md:w-28 md:h-28
+                lg:w-32 lg:h-32
                 transition-all duration-300
-                group-hover:scale-150
+                group-hover:scale-135
                 drop-shadow-[0_0_12px_rgba(235,0,40,0.8)]
               "
             >
@@ -67,14 +68,13 @@ export default function HeroHomeRight() {
             <div
               className="
                 absolute
-                left-6 sm:left-8 md:left-10 lg:left-14
+                left-6 sm:left-8 md:left-18 lg:left-24
                 top-1/2 -translate-y-1/2
                 whitespace-nowrap
-                text-[10px] md:text-xs lg:text-sm
+                text-[14px] md:text-sm lg:text-md
                 text-white
-                opacity-0 group-hover:opacity-100
-                transition-opacity duration-300
                 pointer-events-none
+                font-bebus
               "
             >
               {location.name}
