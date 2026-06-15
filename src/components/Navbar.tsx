@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
     { label: "Home", href: "/" },
