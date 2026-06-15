@@ -1,4 +1,3 @@
-import { Button } from "@/src/components/ui/Button";
 import Image from "next/image";
 
 export default function AboutTheTheme() {
@@ -56,14 +55,28 @@ export default function AboutTheTheme() {
               </p>
             </div>
 
-            <Button
-              variant="primary"
-              size="md"
-              isLoading={false}
-              className="mt-8"
+            <button
+              className="
+              mt-8
+              px-4
+              py-3
+              rounded-full
+              border
+              border-[#B3031C]
+              text-[#D7D0C5]
+              bg-[#B3031C]
+              text-lg
+              font-large
+              tracking-[0.5px]
+              transition-all
+              duration-300
+              hover:bg-red-700/40
+              font-inter
+              uppercase
+              "
             >
-              WATCH THE REVEAL
-            </Button>
+              watch the reveal
+            </button>
           </div>
 
           <div className="hidden lg:flex lg:w-[55%] justify-end">

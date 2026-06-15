@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { Button } from "@/src/components/ui/Button"
 import { Bebas_Neue ,Space_Grotesk,Inter} from "next/font/google"
 
 export default function BuyTickects() {
