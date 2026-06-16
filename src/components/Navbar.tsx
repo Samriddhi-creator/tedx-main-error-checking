@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +22,7 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
-        const router = useRouter();
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
 
