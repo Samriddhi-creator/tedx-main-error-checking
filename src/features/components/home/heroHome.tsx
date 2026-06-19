@@ -1,6 +1,8 @@
 import HeroHomeLeft from "./heroHomeLeft";
 import HeroHomeRight from "./heroHomeRight";
+import { useEffect,useState } from "react";
 import { motion } from "framer-motion";
+import SpeakerHome from "./speakerhome"; 
 
 interface HomeHeroProps {
   activeSection: "home" | "about" | "closing";
@@ -13,8 +15,10 @@ export default function HomeHero({
   activeSection,
   setActiveSection,
 }: HomeHeroProps) {
+  
   return (
-    <motion.section
+    
+      <motion.section
       className="
         flex
         flex-col
@@ -35,5 +39,7 @@ export default function HomeHero({
         setActiveSection={setActiveSection}
       />
     </motion.section>
+
+    
   );
 }

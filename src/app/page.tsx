@@ -13,6 +13,7 @@ import { useEffect,useState } from "react";
 import { motion } from "framer-motion";
 import { useSectionStore } from "@/src/store/useSectionStore";
 import AboutTheTheme from "../features/components/home/aboutTheTheme";
+import SpeakerHome from "../features/components/home/speakerhome";
 
 export default function IndexPage() {
   const [btnLoading, setBtnLoading] = React.useState(false);
@@ -48,16 +49,17 @@ const setActiveSection = useSectionStore(
     <main
       className="h-auto bg-cover bg-center bg-no-repeat"
     >
-      <section className="relative h-auto overflow-hidden">
-     <HeroHome
+    <section className="relative h-auto overflow-hidden">
+    <HeroHome
     activeSection={activeSection}
     setActiveSection={setActiveSection}
-/>
+    />
      <AboutTheme
      activeSection={activeSection}
      />
      </section>
      <AboutTheTheme/>
+     <SpeakerHome/>
      <BuyTickets/>
      <LogoLoopSection/>
     </main>

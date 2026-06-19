@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter,FaHouse } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import { useSectionStore } from "@/src/store/useSectionStore";
-
 const navLinks = [
     { label: "Home", href: "/" },
     { label: "Events", href: "/events" },
@@ -22,7 +21,7 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
-        const router = useRouter();
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
     const setActiveSection = useSectionStore(

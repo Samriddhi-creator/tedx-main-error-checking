@@ -17,7 +17,7 @@ const socialLinks = [
 const quickLinks = [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
-    { label: "Pre - event", href: "/pre-event" },
+    { label: "Pre - event", href: "/funfair" },
     { label: "Past Editions", href: "/past-editions" },
     { label: "Speakers", href: "/speakers" },
     { label: "Your Cart", href: "/cart" },

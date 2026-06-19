@@ -6,7 +6,8 @@ import {
   DialogContent,
   DialogClose,
 } from "@/src/components/ui/dialog"; 
-import { X } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
+import Link from "next/link";
 
 interface SpeakerModalProps {
   speaker: Speaker;
@@ -44,6 +45,17 @@ export default function SpeakerModal({ speaker }: SpeakerModalProps) {
           <p className="mt-2 sm:mt-4  text-stone-300 text-[12px] md:text-sm lg:text-base font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
             {speaker.body}
           </p>
+          <div className="mt-2 sm:mt-4 text-white text-[12px] md:text-sm lg:text-base font-semibold font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
+            <Link 
+              href={speaker?.ytLink || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5  hover:underline font-medium transition-colors duration-150"
+            >
+              <ExternalLink size={16} className="flex-shrink-0" />
+              <span>{speaker?.ytLink}</span>
+            </Link>
+          </div>
         </div>
       </div>
     </DialogContent>
