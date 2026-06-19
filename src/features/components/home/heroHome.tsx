@@ -1,26 +1,39 @@
 import HeroHomeLeft from "./heroHomeLeft";
 import HeroHomeRight from "./heroHomeRight";
-import { useEffect,useState } from "react";
+import { motion } from "framer-motion";
 
-export default function HomeHero() {
-  const [isMobile, setIsMobile]=useState(false);
+interface HomeHeroProps {
+  activeSection: "home" | "about" | "closing";
+  setActiveSection: (
+    section: "home" | "about" | "closing"
+  ) => void;
+}
 
-  useEffect(()=>{
-    const checkScreen=()=>{
-      setIsMobile(window.innerWidth<768);
-    }
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-     return () => {
-      window.removeEventListener("resize", checkScreen);
-    };
-  },[768]);
-
-  
+export default function HomeHero({
+  activeSection,
+  setActiveSection,
+}: HomeHeroProps) {
   return (
-    <section className="flex flex-col lg:flex-row w-full h-auto">
-      <HeroHomeLeft />
-      {!isMobile && <HeroHomeRight />}
-    </section>
+    <motion.section
+      className="
+        flex
+        flex-col
+        lg:flex-row
+        w-full
+        lg:h-screen
+      "
+      animate={{
+        opacity: activeSection === "about" ? 0.3 : 1,
+      }}
+      transition={{
+        duration: 0.8,
+      }}
+    >
+      <HeroHomeLeft activeSection={activeSection} />
+      <HeroHomeRight
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
+    </motion.section>
   );
 }

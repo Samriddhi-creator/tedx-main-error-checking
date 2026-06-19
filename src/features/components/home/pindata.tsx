@@ -9,8 +9,8 @@ export const Locations:location[]=[
     {
         name:"Speaker",
         href:"/speakers",
-        topInPercentage:14,
-        leftInPercentage:52,
+        topInPercentage:78,
+        leftInPercentage:85,
     },
     {
         name:"Sponsors",
@@ -31,9 +31,15 @@ export const Locations:location[]=[
         leftInPercentage:23,
     },
     {
+        name:"About The Theme",
+        href:"#",
+        topInPercentage:14,
+        leftInPercentage:52,
+    },
+    {
         name:"About Us",
-        href:"/aboutUs",
-        topInPercentage:78,
-        leftInPercentage:85,
+        href:"/aboutus",
+        topInPercentage:88,
+        leftInPercentage:55,
     }
 ];

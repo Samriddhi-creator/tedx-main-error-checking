@@ -6,15 +6,30 @@ import { Card } from "../components/ui/Card";
 import { Sparkles, Bell, Ticket, Users, Send } from "lucide-react";
 import Link from "next/link";
 import HeroHome from "@/src/features/components/home/heroHome";
-import AboutTheTheme from "../features/components/home/aboutTheTheme";
+import AboutTheme from "../features/components/home/aboutTheThemeTransition/aboutTheme";
 import BuyTickets from "../features/components/home/buyTickects";
 import LogoLoopSection from "../features/components/home/LogoLoopSection";
+import { useEffect,useState } from "react";
+import { motion } from "framer-motion";
+import { useSectionStore } from "@/src/store/useSectionStore";
+import AboutTheTheme from "../features/components/home/aboutTheTheme";
 
 export default function IndexPage() {
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [subscribed, setSubscribed] = React.useState(false);
   const [acceptTerms, setAcceptTerms] = React.useState(false);
   const [email, setEmail] = React.useState("");
+  const activeSection = useSectionStore(
+  (state) => state.activeSection
+);
+
+const setActiveSection = useSectionStore(
+  (state) => state.setActiveSection
+);
+
+  useEffect(() => {
+  console.log(activeSection);
+}, [activeSection]);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,10 +44,19 @@ export default function IndexPage() {
   };
 
   return (
+    
     <main
-      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      className="h-auto bg-cover bg-center bg-no-repeat"
     >
-     <HeroHome/>
+      <section className="relative h-auto overflow-hidden">
+     <HeroHome
+    activeSection={activeSection}
+    setActiveSection={setActiveSection}
+/>
+     <AboutTheme
+     activeSection={activeSection}
+     />
+     </section>
      <AboutTheTheme/>
      <BuyTickets/>
      <LogoLoopSection/>
