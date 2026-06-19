@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
+import { useEffect } from "react"
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -24,11 +25,21 @@ export default function Navbar() {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > window.innerHeight);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <>
-            <header className="relative w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden">
-                <div className="bg-black/50 flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
+            <header className={`sticky top-0 z-50 w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"
+                }`}>
+                <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
                     <a href="/" className="flex items-center justify-center w-full h-full">
                         <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[70%] h-auto" />
                     </a>
