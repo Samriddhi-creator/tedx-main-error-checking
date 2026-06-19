@@ -1,23 +1,52 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Locations } from "./pindata";
-import {Bebas_Neue} from "next/font/google";
+import { motion } from "framer-motion";
 
-export default function HeroHomeRight() {
+interface Props {
+  activeSection: "home" | "about" | "closing";
+  setActiveSection: (
+    section: "home" | "about" | "closing"
+  ) => void;
+}
+
+export default function HeroHomeRight({
+  activeSection,
+  setActiveSection,
+}: Props) {
   return (
     <div
-      className="
-        flex justify-center lg:justify-end
-        w-full lg:w-[calc(50%-14px)]
-        pt-[9.06vh] pb-[7.5vh]
-        pr-0 lg:pr-[2.5vw]
-        px-4 lg:px-0
-        shrink-0
-      "
-    >
-      <div
-        className="
-        relative
+  className="
+    hidden
+    lg:flex
+    justify-end
+    w-[calc(50%-14px)]
+    pt-[9.06vh]
+    pb-[7.5vh]
+    pr-[2.5vw]
+    shrink-0
+  "
+>
+      <motion.div
+  animate={{
+  scale:
+  activeSection === "about" ||
+  activeSection === "closing"
+    ? 3.5
+    : 1,
+
+y:
+  activeSection === "about" ||
+  activeSection === "closing"
+    ? 500
+    : 0,
+}}
+  transition={{
+    duration: 1,
+    ease: "easeInOut",
+  }}
+  className="
+  relative
         w-[85%]
         sm:w-[90%]
         md:w-full
@@ -39,6 +68,12 @@ export default function HeroHomeRight() {
           <Link
             key={location.name}
             href={location.href}
+            onClick={(e) => {
+              if (location.name === "About The Theme") {
+                e.preventDefault();
+                setActiveSection("about");
+              }
+            }}
             className="group absolute cursor-pointer"
             style={{
               left: `${location.leftInPercentage}%`,
@@ -81,7 +116,8 @@ export default function HeroHomeRight() {
             </div>
           </Link>
         ))}
-      </div>
+      </motion.div>
     </div>
+    
   );
 }

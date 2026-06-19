@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function AboutTheTheme() {
   return (
     <section className="w-full py-12 lg:py-14 overflow-x-hidden">
-      <div className="pl-6 lg:pl-16 pr-6 lg:pr-0">
+      <div className="px-4 sm:px-8 lg:pl-16 lg:pr-0 text-center lg:text-left mx-auto">
         <h1
           className="
             font-bebas
@@ -18,16 +18,15 @@ export default function AboutTheTheme() {
           About The Theme
         </h1>
 
-        
-        <div className="flex mt-4">
-          <div className="w-full lg:w-[45%] lg:pr-12">
+        <div className="flex flex-col lg:flex-row mt-4">
+          <div className="w-full lg:w-[45%] lg:pr-12 flex flex-col items-center lg:items-start">
             <div
               className="
                 mt-8
                 font-space
                 text-[#D7D0C5]
                 font-light
-                text-[18px]
+                text-[15px]
                 md:text-[18px]
                 xl:text-[22px]
                 tracking-[0.64px]
@@ -57,22 +56,22 @@ export default function AboutTheTheme() {
 
             <button
               className="
-              mt-8
-              px-4
-              py-3
-              rounded-full
-              border
-              border-[#B3031C]
-              text-[#D7D0C5]
-              bg-[#B3031C]
-              text-lg
-              font-large
-              tracking-[0.5px]
-              transition-all
-              duration-300
-              hover:bg-red-700/40
-              font-inter
-              uppercase
+                mt-8
+                px-4
+                py-3
+                rounded-full
+                border
+                border-[#B3031C]
+                text-[#D7D0C5]
+                bg-[#B3031C]
+                text-lg
+                font-large
+                tracking-[0.5px]
+                transition-all
+                duration-300
+                hover:bg-red-700/40
+                font-inter
+                uppercase
               "
             >
               watch the reveal

@@ -1,38 +1,45 @@
 import HeroHomeLeft from "./heroHomeLeft";
 import HeroHomeRight from "./heroHomeRight";
 import { useEffect,useState } from "react";
+import { motion } from "framer-motion";
 import SpeakerHome from "./speakerhome"; 
 
-export default function HomeHero() {
-  const [isMobile, setIsMobile]=useState(false);
+interface HomeHeroProps {
+  activeSection: "home" | "about" | "closing";
+  setActiveSection: (
+    section: "home" | "about" | "closing"
+  ) => void;
+}
 
-  useEffect(()=>{
-    const checkScreen=()=>{
-      setIsMobile(window.innerWidth<768);
-    }
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-     return () => {
-      window.removeEventListener("resize", checkScreen);
-    };
-  },[768]);
-
+export default function HomeHero({
+  activeSection,
+  setActiveSection,
+}: HomeHeroProps) {
   
   return (
-    // The main wrapper uses flex-col so components stack cleanly on top of each other
-    <div className="flex flex-col w-full min-h-screen bg-black text-white">
-      
-      {/* SECTION 1: HERO (Takes up the first full screen) */}
-      <section className="flex flex-col lg:flex-row w-full min-h-screen snap-start">
-        <HeroHomeLeft />
-        <HeroHomeRight />
-      </section>
-      
-      {/* SECTION 2: SPEAKER PAGE (Takes up the second full screen just beneath) */}
-      <section className="w-full min-h-screen bg-zinc-950 snap-start">
-        <SpeakerHome />
-      </section>
+    
+      <motion.section
+      className="
+        flex
+        flex-col
+        lg:flex-row
+        w-full
+        lg:h-screen
+      "
+      animate={{
+        opacity: activeSection === "about" ? 0.3 : 1,
+      }}
+      transition={{
+        duration: 0.8,
+      }}
+    >
+      <HeroHomeLeft activeSection={activeSection} />
+      <HeroHomeRight
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
+    </motion.section>
 
-    </div>
+    
   );
 }
