@@ -1,5 +1,29 @@
 export const team=[
     {
+        id:"prod",
+        title:"Production",
+        members:[
+            {id:1, name:"Kartik Sen", img:"/pic.png"},
+            {id:2, name:"Riddhesh Dalal", img:"/pic.png"},
+        ]
+    },
+    {
+        id:"design",
+        title:"Design",
+        members:[
+            {id:1, name:"Anura Saoji", img:"/pic.png"},
+            {id:2, name:"Darshini Shah", img:"/pic.png"},
+        ]
+    },
+    {
+        id:"web",
+        title:"Web Development",
+        members:[
+            {id:1, name:"Hardik Batwal", img:"/pic.png"},
+            {id:2, name:"Mrinal Satyarthi", img:"/pic.png"},
+        ]
+    },
+    {
         id:"pnc",
         title:"Planning and Curation",
         members:[
@@ -12,42 +36,18 @@ export const team=[
         id:"mpr",
         title:"Media and Public Relations",
         members:[
-            {id:1, name:"Vismith Shetty", img:"/pic.png"},
+            {id:1, name:"Vishmith Shetty", img:"/pic.png"},
             {id:2, name:"Priyam Das", img:"/pic.png"},
             {id:3, name:"Pratichi Maheshwari", img:"/pic.png"},
-        ]
-    },
-    {
-        id:"design",
-        title:"Design",
-        members:[
-            {id:1, name:"Anura Saoji", img:"/pic.png"},
-            {id:2, name:"Darshini Shah", img:"/pic.png"},
         ]
     },
     {
         id:"spons",
         title:"Sponsorship",
         members:[
-            {id:1, name:"Viddhi Patel", img:"/pic.png"},
+            {id:1, name:"Vidhi Patel", img:"/pic.png"},
             {id:2, name:"Devyansh Pandey", img:"/pic.png"},
             {id:3, name:"Tushar BHarti", img:"/pic.png"},
-        ]
-    },
-    {
-        id:"web",
-        title:"Web Development",
-        members:[
-            {id:1, name:"Hardik Batwal", img:"/pic.png"},
-            {id:2, name:"Mrinal Satyarthi", img:"/pic.png"},
-        ]
-    },
-    {
-        id:"prod",
-        title:"Production",
-        members:[
-            {id:1, name:"Kartik Sen", img:"/pic.png"},
-            {id:2, name:"Riddhesh Dalal", img:"/pic.png"},
         ]
     },
     {
