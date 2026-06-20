@@ -22,7 +22,7 @@ export default function SpeakerModal({ speaker }: SpeakerModalProps) {
         <DialogClose className="absolute -top-7 -right-4 md:-top-2 md:-right-2 p-1 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-all bg-stone-700/50 md:bg-transparent">
           <X className="w-5 h-5 stroke-[1.5]" />
         </DialogClose>
-        <div className="relative w-[200px] sm:w-[350px] md:w-[250px] lg:w-[350px] aspect-square flex-shrink-0">
+        <div className="relative w-[200px] sm:w-[350px] md:w-[250px] lg:w-[350px] aspect-square flex-shrink-0 bg-white">
           <Image
             src={speaker.image}
             alt={speaker.name}
@@ -35,25 +35,22 @@ export default function SpeakerModal({ speaker }: SpeakerModalProps) {
           />
         </div>
         <div className="flex flex-col flex-grow text-center md:text-left pt-2">
-          <h2 className="lg:text-[48px] md:text-[30px] sm:text-[30px] text-[20px]  font-medium uppercase tracking-wide text-white font-bebas leading-none">
-            ABOUT
-          </h2>
-          <h3 className="lg:text-[24px] md:text-[20px] sm:text-[18px] text-[16px] font-bold font-sourceSans text-[#B61713]">
+          <h2 className="lg:text-[48px] md:text-[30px] sm:text-[30px] text-[20px]  font-medium uppercase tracking-wide text-[#B61713] font-bebas leading-none">
             {speaker.name}
-          </h3>
-          
+          </h2>
           <p className="mt-2 sm:mt-4  text-stone-300 text-[12px] md:text-sm lg:text-base font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
             {speaker.body}
           </p>
-          <div className="mt-2 sm:mt-4 text-white text-[12px] md:text-sm lg:text-base font-semibold font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
+          <div className=" flex flex-col mt-2 sm:mt-4 text-white text-[12px] md:text-sm lg:text-base font-semibold font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
+            <span>Spoke On: {speaker.talk}</span>
             <Link 
               href={speaker?.ytLink || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5  hover:underline font-medium transition-colors duration-150"
+              className="inline-flex items-center text-center justify-center gap-1.5 font-sourceSans  hover:underline font-medium transition-colors duration-150"
             >
               <ExternalLink size={16} className="flex-shrink-0" />
-              <span>{speaker?.ytLink}</span>
+              <span>Watch talk on YouTube</span>
             </Link>
           </div>
         </div>

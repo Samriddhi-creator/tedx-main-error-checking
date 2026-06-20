@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 export default function Theme() {
   return (
-    <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto px-4 text-white">
+    <div className="flex flex-col gap-6 w-full  text-white">
       
       <style>{`
         @keyframes letterSwing {
@@ -31,11 +31,11 @@ export default function Theme() {
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
         
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
-          <h1 className="font-lemon text-4xl sm:text-6xl md:text-7xl tracking-wider leading-tight uppercase">
-            Veiled <br />
-            <span className="flex flex-row items-start justify-center">Ver
-              <span className="text-[#EB0028] text-5xl sm:text-7xl md:text-8xl animate-swing-a mx-[-1px]">
-                A
+          <h1 className="relative font-lemon text-4xl sm:text-6xl md:text-7xl leading-tight uppercase">
+            Veiled<br />
+            <span className="relative flex flex-row gap-8 sm:gap-18">Ver
+              <span className="text-[#EB0028] -z-10 absolute sm:-top-[75%] sm:left-[33%] -top-[55%] left-[35%] tracking-[0] leading-[normal] whitespace-nowrap text-inner-shadow text-[64px] sm:text-[100px] md:text-[140px] animate-swing-a">
+              A
               </span>
               city
             </span>
@@ -43,12 +43,12 @@ export default function Theme() {
         </div>
 
         <div className="w-full md:w-1/2 flex justify-center items-center">
-          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
+          <div className="w-full max-w-[70vw] sm:max-w-[50vw] md:max-w-[50vw]">
             <Image
-              src="/images/VV.png"
+              src="/vv.png"
               alt="Veiled Veracity Artwork"
-              width={600}
-              height={600}
+              width={1200}
+              height={1200}
               priority
               className="w-full h-auto object-contain"
             />
