@@ -18,7 +18,7 @@ export default function SpeakerHome() {
 
   if (!currentPage) {
     return (
-      <div style={{ backgroundColor: '#0a0505', minHeight: '100vh', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{  minHeight: '100vh', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ letterSpacing: '2px' }}>LOADING SPEAKER CONFIGURATION...</p>
       </div>
     );

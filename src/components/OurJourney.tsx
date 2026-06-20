@@ -1,5 +1,5 @@
-"use client";
-
+ "use client";
+import Link from "next/link";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,13 +10,13 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const editions = [
-    { id: 1, year: 2025, title: "Kaleidoscopic Interludes", description: `"Kaleidoscopic" evokes vibrant, ever-shifting patterns—glimpses of identity refracted through time and experience. "Interludes" suggests pauses in life's rhythm—transitional moments that carry quiet transformation."`, side: "right", image: "/images/KI.png" },
-    { id: 2, year: 2024, title: "Veiled Veracity", description: `"Veiled Veracity" reminds us that even in confusion, hope leads us to clarity. It urges us to confront illusions and seek truth with courage. "Veiled" hints at hidden truths, while "Veracity" emphasizes honesty in our search for meaning`, side: "left", image: "/images/VV.png" },
-    { id: 3, year: 2023, title: "Prisms of Perception", description: `Prisms of Perception" explores how our view of the world, like light through a prism, is shaped by various factors. It shows that by shifting perspective, we reveal new ideas and solutions, fostering innovation and understanding.`, side: "right", image: "/images/PoP.png" },
-    { id: 4, year: 2022, title: "Infinite Affinities", description: `At TEDxIITPatna, we believe dreams become reality together. Infinite Affinities celebrates unity, shared effort, and the humanity that connects us. Each of us has a role—to inspire a brighter future.`, side: "left", image: "/images/IA.png" },
-    { id: 5, year: 2021, title: "Roar", description: `The 3rd Edition of TEDxIIT Patna, Roar – The Acoustic of Strength, celebrated resilience and inner power. When we overcome fear and take charge of our thoughts, we unlock the strength to face any challenge. Unleash your inner roar and join us on the path to a stronger self.`, side: "right", image: "/images/Ro.png" },
-    { id: 6, year: 2019, title: "Metamorphosis", description: `The 2nd Edition of TEDxIITPatna, Metamorphosis, embraced change as a constant force. It highlighted how transformation brings growth and how adapting is key. Experts explored its impact on technology, entertainment, and societal values.`, side: "left", image: "/images/MM.png" },
-    { id: 7, year: 2016, title: "Shedding Off Feathers", description: `TEDxIITPatna believes that building anything new is possible when we let go of the old. Just as birds shed their feathers, allowing the new ones to embrace, taking them afresh to infinite skies, bringing out change is an inevitable part of one's life to keep walking the course of life.`, side: "right", image: "/images/SoF.png" },
+    { id: 1, year: 2025, title: "Kaleidoscopic Interludes", description: `"Kaleidoscopic" evokes vibrant, ever-shifting patterns—glimpses of identity refracted through time and experience. "Interludes" suggests pauses in life's rhythm—transitional moments that carry quiet transformation."`, side: "right", image: "/images/KI.png" ,link:"#"},
+    { id: 2, year: 2024, title: "Veiled Veracity", description: `"Veiled Veracity" reminds us that even in confusion, hope leads us to clarity. It urges us to confront illusions and seek truth with courage. "Veiled" hints at hidden truths, while "Veracity" emphasizes honesty in our search for meaning`, side: "left", image: "/images/VV.png" ,link:"#"},
+    { id: 3, year: 2023, title: "Prisms of Perception", description: `Prisms of Perception" explores how our view of the world, like light through a prism, is shaped by various factors. It shows that by shifting perspective, we reveal new ideas and solutions, fostering innovation and understanding.`, side: "right", image: "/images/PoP.png",link:"#" },
+    { id: 4, year: 2022, title: "Infinite Affinities", description: `At TEDxIITPatna, we believe dreams become reality together. Infinite Affinities celebrates unity, shared effort, and the humanity that connects us. Each of us has a role—to inspire a brighter future.`, side: "left", image: "/images/IA.png",link:"infinite" },
+    { id: 5, year: 2021, title: "Roar", description: `The 3rd Edition of TEDxIIT Patna, Roar – The Acoustic of Strength, celebrated resilience and inner power. When we overcome fear and take charge of our thoughts, we unlock the strength to face any challenge. Unleash your inner roar and join us on the path to a stronger self.`, side: "right", image: "/images/Ro.png" ,link:"roar"},
+    { id: 6, year: 2019, title: "Metamorphosis", description: `The 2nd Edition of TEDxIITPatna, Metamorphosis, embraced change as a constant force. It highlighted how transformation brings growth and how adapting is key. Experts explored its impact on technology, entertainment, and societal values.`, side: "left", image: "/images/MM.png",link:"/metamorphosis" },
+    { id: 7, year: 2016, title: "Shedding Off Feathers", description: `TEDxIITPatna believes that building anything new is possible when we let go of the old. Just as birds shed their feathers, allowing the new ones to embrace, taking them afresh to infinite skies, bringing out change is an inevitable part of one's life to keep walking the course of life.`, side: "right", image: "/images/SoF.png",link:"shedding" },
 ];
 
 export default function OurJourney() {
@@ -327,7 +327,7 @@ export default function OurJourney() {
                             {/* Left side — shows content when edition.side === "left" */}
                             <div className="journey-entry entry-left w-full md:w-1/2 md:pr-16 flex flex-col justify-center items-center md:items-start mb-4 md:mb-0">
                                 {edition.side === "left" && (
-                                    <div className="flex flex-col items-center md:items-start w-full">
+                                   <Link href={edition.link} className="w-full">  <div className="flex flex-col items-center md:items-start w-full">
                                         <Image
                                             src={edition.image}
                                             alt={edition.title}
@@ -340,7 +340,7 @@ export default function OurJourney() {
                                             <h2 className="text-white font-bold text-lg uppercase text-center md:text-left">{edition.title} ({edition.year})</h2>
                                             <p className="text-white/60 text-sm mt-2 text-center md:text-left">{edition.description}</p>
                                         </div>
-                                    </div>
+                                    </div></Link>
                                 )}
                             </div>
 
@@ -353,20 +353,22 @@ export default function OurJourney() {
                             {/* Right side — shows content when edition.side === "right" */}
                             <div className="journey-entry entry-right w-full md:w-1/2 md:pl-16 flex flex-col justify-center items-center md:items-end">
                                 {edition.side === "right" && (
-                                    <div className="flex flex-col items-center md:items-end w-full">
-                                        <Image
-                                            src={edition.image}
-                                            alt={edition.title}
-                                            width={720}
-                                            height={720}
-                                            className="object-contain mb-4 w-full md:w-[440px] md:h-[440px]"
-                                            priority
-                                        />
-                                        <div style={{ fontFamily: 'var(--font-space)' }}>
-                                            <h2 className="text-white font-bold text-lg uppercase text-center md:text-right">{edition.title} ({edition.year})</h2>
-                                            <p className="text-white/60 text-sm mt-2 text-center md:text-right">{edition.description}</p>
-                                        </div>
-                                    </div>
+                                   <Link href={edition.link} className="w-full">
+                                     <div className="flex flex-col items-center md:items-end w-full">
+                                         <Image
+                                             src={edition.image}
+                                             alt={edition.title}
+                                             width={720}
+                                             height={720}
+                                             className="object-contain mb-4 w-full md:w-[440px] md:h-[440px]"
+                                             priority
+                                         />
+                                         <div style={{ fontFamily: 'var(--font-space)' }}>
+                                             <h2 className="text-white font-bold text-lg uppercase text-center md:text-right">{edition.title} ({edition.year})</h2>
+                                             <p className="text-white/60 text-sm mt-2 text-center md:text-right">{edition.description}</p>
+                                         </div>
+                                     </div>
+                                   </Link>
                                 )}
                             </div>
 
@@ -381,4 +383,4 @@ export default function OurJourney() {
             </div>
         </section>
     );
-}
+} 

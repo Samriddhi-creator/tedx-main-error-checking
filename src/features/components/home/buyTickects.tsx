@@ -42,13 +42,15 @@ export default function BuyTickects() {
                             className="flex items-center justify-center"
                             style={{ width: "clamp(180px, 20vw, 384px)" }}
                         >
-                            <Image
-                                src="/logo.svg"
-                                alt="TEDxIITPatna"
-                                width={527}
-                                height={108}
-                                className="w-full h-auto"
-                            />
+                           // Find your existing Image component for the logo and update it like this:
+                       <Image 
+                        src="/logo.svg" 
+                        alt="TEDx Logo" 
+                        width={120} 
+                        height={40} 
+                        className="w-32 h-auto"
+                        priority   
+/> 
                         </div>
                         <h1 className="uppercase text-3xl md:text-4xl text-white font-bebas">
                             expedition access pass
