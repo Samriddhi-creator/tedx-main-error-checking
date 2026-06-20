@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter, FaHouse } from "react-icons/fa6";
 import { useSectionStore } from "@/src/store/useSectionStore";
@@ -23,6 +23,7 @@ const socialLinks = [
 
 export default function Navbar() {
     const router = useRouter();
+    const pathname = usePathname();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
     const [scrolled, setScrolled] = useState(false);
@@ -36,9 +37,14 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Auto-close sidebar on page change / history navigation (e.g. back/forward arrow clicks)
+    useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
+
     return (
         <>
-            <header className={`sticky top-0 z-50 w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+            <header className={`sticky top-0 z-[110] w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
                     <a href="/" className="flex items-center justify-center w-full h-full">
                         <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[70%] h-auto" />
@@ -60,10 +66,10 @@ export default function Navbar() {
                     </button>*/}
                     <button
                         onClick={() => setOpen(!open)}
-                        className="size-8 md:size-14 bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30">
-                        <span className="w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-transform duration-300" />
-                        <span className="w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-opacity duration-300" />
-                        <span className="w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-transform duration-300" />
+                        className="size-8 md:size-14 bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[120]">
+                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[5px] md:translate-y-[8px] rotate-45" : ""}`} />
+                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[5px] md:-translate-y-[8px] -rotate-45" : ""}`} />
                     </button>
                 </div>
             </header>
@@ -122,13 +128,6 @@ export default function Navbar() {
                         ))}
                     </div>
                 </div>
-
-                <button
-                    onClick={() => setOpen(false)}
-                    className={`absolute top-[9px] md:top-[13px] right-4 md:right-12 size-8 md:size-14 rounded-full border-2 border-white flex items-center justify-center text-white text-sm md:text-xl hover:bg-white/10 transition-all duration-500 transform ${open ? "rotate-0 scale-100 opacity-100 delay-200" : "rotate-90 scale-75 opacity-0"}`}
-                >
-                    ✕
-                </button>
             </div>
         </>
     );
