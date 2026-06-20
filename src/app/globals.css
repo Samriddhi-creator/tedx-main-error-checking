@@ -28,6 +28,21 @@
     scrollbar-width: none;
   }
 }
+.text-inner-shadow {
+  color: transparent;
+  background:
+    linear-gradient(
+      to bottom,
+      #ff0033 0%,
+      #ff0033 55%,
+      #470707 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  text-shadow:
+    0 12px 8px rgba(71, 7, 7, 0.6);
+}
 
 @layer base {
   body {

@@ -30,9 +30,9 @@ export default function Theme() {
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
         
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
-          <h1 className="font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
+          <h1 className="relative font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
             Prisms Of
-            <span className="text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-sans align-top ml-1 animate-swing-x">
+            <span className=" text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-molend align-top -ml-1 -mt-2 sm:-mt-2.5 animate-swing-x">
               X
             </span> 
             <br />

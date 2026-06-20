@@ -9,4 +9,5 @@ export interface Speaker {
     updatedAt?: Date;
     year: number;
     ytLink?:string;
+    talk?:string;
 }
