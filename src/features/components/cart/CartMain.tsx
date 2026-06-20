@@ -168,9 +168,7 @@ export default function CartMain() {
                   ${item.price}
                 </span>
 
-                <button onClick={() => removeItem(item.id)} className="text-zinc-500 hover:text-red-500 transition-colors cursor-pointer">
-                  <Trash2 size={16} className="fill-current" />
-                </button>
+               
               </div>
             </div>
           ))}
