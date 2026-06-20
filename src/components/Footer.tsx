@@ -1,4 +1,7 @@
+"use client"
 import Image from "next/image";
+import { useRef } from "react"
+import { useState } from "react"
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
 
 const leftLinks = [
@@ -21,17 +24,40 @@ const quickLinks = [
     { label: "Past Editions", href: "/past-editions" },
     { label: "Speakers", href: "/speakers" },
     { label: "Your Cart", href: "/cart" },
+    { label: "Refund Policy", href: "/refund-policy" }
 ];
 
 export default function Footer() {
+    const rulerRef = useRef<HTMLDivElement>(null);
+    const [spotX, setSpotX] = useState<number | null>(null);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = rulerRef.current?.getBoundingClientRect();
+        if (rect) setSpotX(e.clientX - rect.left);
+    };
+
+    const handleMouseLeave = () => setSpotX(null);
     return (
         <footer className="bg-black text-white flex flex-col mt-0">
             {/* Ruler */}
-            <div className="w-full flex h-[40px] overflow-hidden relative flex-shrink-0">
+            <div
+                ref={rulerRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="w-full flex h-[40px] overflow-hidden relative flex-shrink-0 cursor-crosshair"
+            >
                 <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
                 <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
                 <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
                 <div className="absolute inset-0 bg-black/40" />
+                {spotX !== null && (
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: `radial-gradient(circle 80px at ${spotX}px 50%, rgba(220,38,38,0.4) 0%, transparent 100%)`,
+                        }}
+                    />
+                )}
             </div>
 
             {/* Main content */}
