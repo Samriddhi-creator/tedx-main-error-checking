@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
@@ -20,11 +20,10 @@ export default function Theme() {
 
       <div>
         <Link 
-          className="text-[20px] sm:text-[28px] items-center text-[#EB0028CC] font-space hover:underline flex flex-row gap-2" 
+          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
         >
-          <ArrowLeft />
-          Go Back
+          <ChevronLeft size={50} />
         </Link>
       </div>
 

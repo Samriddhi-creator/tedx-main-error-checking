@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
@@ -19,11 +19,10 @@ export default function Theme() {
 
       <div>
         <Link 
-          className="text-[20px] sm:text-[28px] items-center text-[#EB0028CC] font-space hover:underline flex flex-row gap-2" 
+          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
         >
-          <ArrowLeft />
-          Go Back
+          <ChevronLeft size={50} />
         </Link>
       </div>
 
@@ -45,7 +44,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
             <img
-              src="/prism.png"
+              src="/prism2.png"
               alt="Prisms of Perception Artwork"
               loading="eager"
               className="w-full h-auto object-contain block"
