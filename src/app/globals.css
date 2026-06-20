@@ -15,8 +15,6 @@
   --font-inter: var(--font-inter), sans-serif;
   --font-sourceSans: var(--font-sourceSans), sans-serif;
   --font-albertSans: var(--font-albertSans), sans-serif;
-  --font-lemon: var(--font-lemon), sans-serif;
-  --font-molend: var(--font-molend), sans-serif;
 }
 
 @layer utilities {
@@ -77,6 +75,9 @@
 }
 
 @theme inline {
+  /* 2. Map the utility configuration flag inline */
+  --font-panton: var(--font-panton-caps);
+  
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
