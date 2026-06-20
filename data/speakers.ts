@@ -10,7 +10,9 @@ export const SpeakersData: Speaker[] = [
         title: "The Power of Positive Thinking",
         body: "Flute Naveen as now he is called, a household name in India, started in 1984 with an Ilaiyaraaja song. And since then there has been no turning back. Recording sessions with all the musical giants across languages places him as the numero uno flautist in India. He has toured the world, invented instruments, collaborated with international artists and made some timeless music and memories. When he performs live, it is the passion, the memories and his wide experience he brings to the stage with effortless charm.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     //Chirag Arya
     {
@@ -20,7 +22,9 @@ export const SpeakersData: Speaker[] = [
         title: "Transforming Industries with AI: The Journey of 169Pi",
         body: "Chirag Arya is the Co-Founder & COO of 169Pi, a pioneering AI company transforming industries through cutting-edge artificial intelligence solutions. A proud alumnus of De Montfort University (DMU), he has been recognised in the first-ever AI category of Forbes India 30 Under 30 for his groundbreaking contributions. With a proven track record of leveraging AI and emerging technologies to address complex, real-world challenges across diverse industry verticals, Chirag blends innovation, strategy, and execution to create scalable solutions that deliver measurable impact.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Plabita Borthakur
     {
@@ -30,7 +34,9 @@ export const SpeakersData: Speaker[] = [
         title: "The Art of Versatility: Plabita Borthakur's Journey in the Entertainment Industry",
         body: "Plabita Borthakur is a multi talented artist who has carved a distinct space for herself with her natural charm and versatility. From making a memorable debut in Lipstick Under My Burkha to winning hearts with performances in acclaimed series like Breathe Into The Shadows, Bombay Begums, Escaype Live and Pyar Testing, she has consistently impressed both critics and audiences with her effortless screen presence. Known for her grounded personality, creative spirit, and constant exploration of new horizons, Plabita stands out as one of the most promising and inspiring talents of her generation.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Dr. Ramachandra Budihal
     {
@@ -40,7 +46,9 @@ export const SpeakersData: Speaker[] = [
         title: "Building Embodied AI for a Human-Centric Future: Insights from Dr. Ramachandra Budihal",
         body: "Three+ decades in AI, robotics, and XR - and a lifetime in ancient Indian wisdom. With geek credentials spanning three decades, Dr. Ramachandra Budihal is a technologist and storyteller at the crossroads of cutting-edge innovation and India's timeless knowledge heritage. As Fellow and Global Head at Wipro, he has pioneered work in AI, robotics, autonomous systems, and XR - including completing India's first experiential autonomous vehicle for complex Indian roads. Now, he is embarking on building embodied Al for robots that can co-exist with humans, guided by the tenets of ancient Indic wisdom..",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Lakshmi Mohanbabu
     {
@@ -50,7 +58,9 @@ export const SpeakersData: Speaker[] = [
         title: "Bridging Realms: The Interactions Project by Lakshmi Mohanbabu",
         body: "Lakshmi Mohanbabu is the architect of the Interactions Project—A vision to bring together people from all walks of life by bridging disciplines and cultures, combining art, engineering, science, and technology to create a platform of interaction that leads to collaboration. The project has achieved historic milestones: the World's First Art Installation on the Ocean floor at a depth of 7 kilometers, and the First to span the two extremes of human reach: Outer Space above and the Deep Ocean below—transcending boundaries to connect across every realm of experience and existence, across the world and beyond.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Anshumaan Pushkar
     {
@@ -60,7 +70,9 @@ export const SpeakersData: Speaker[] = [
         title: "From Theatre to OTT: Anshumaan Pushkar's Journey in the Entertainment Industry",
         body: "Anshumaan Pushkar, an actor from Mokama, Bihar, began his artistic journey in Mumbai's theatre circuit before. He first caught attention with his breakout role as Rocky in Netflix's Jamtara - Sabka Number Ayega, where his raw and gripping performance stood out. He followed this with Gauri Bhaiya in 12th Fail and the layered Rishi Ranjan in Hotstar's Grahan, both of which further showcased his ability to bring honesty and intensity to his characters. From his theatre roots to becoming one of the most promising names in the OTT space, his journey reflects both persistence and passion, qualities that continue to define his growing body of work.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Dr. Asif Ekbal
     {
@@ -70,7 +82,9 @@ export const SpeakersData: Speaker[] = [
         title: "Pioneering AI Research and Innovation: The Journey of Dr. Asif Ekbal",
         body: "Dr. Asif Ekbal is a Professor of Computer Science and Engineering at IIT Patna, and a leading researcher in Artificial Intelligence, Natural Language Processing, and Machine Learning. With over 300 publications in premier venues, he has led major projects with industry leaders like Accenture, Samsung, Wipro, and Flipkart, as well as government bodies including MeitY and SERB. An ACM Distinguished Speaker and consistently listed among the world's top 2% scientists (Stanford), he has been honored with the INAE Best Innovative Project Award, the JSPS Fellowship (Japan), and the Young Faculty Research Fellowship of India.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // Sachin Rai
     {
@@ -80,7 +94,9 @@ export const SpeakersData: Speaker[] = [
         title: "The Art of Wildlife Photography: A Journey with Sachin Rai",
         body: "Sachin Rai is an acclaimed wildlife photographer whose lens has explored the wild for over two decades, from the tiger forests of India to the savannas of Africa and rainforests of Costa Rica. Renowned for capturing both the grandeur of predators and the delicate lives of lesser-known species such as rediscovering the rare Ramanella anamalaeinsis frog, his work has been featured globally and honored with awards including the DJ Memorial Photo Contest and multiple recognitions from Sanctuary Asia. Beyond accolades, he mentors aspiring photographers and leads immersive expeditions, using storytelling and imagery to inspire a deeper respect for nature and its fragile ecosystems.",
         isPublished: true,
-        year: 2025
+        year: 2025,
+        ytLink:"https://www.youtube.com/",
+        talk:"abcd"
     },
     // year 2024 speakers
     // Priyanka Tripathi

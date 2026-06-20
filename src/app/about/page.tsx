@@ -22,7 +22,7 @@ export default function About() {
         </div>
         <div className="mx-auto">
             <p className="text-[10px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-space font-light tracking-[0.01em] text-center text-white">
-            Since 2016, TEDx IIT Patna has served as a crucible for ideas, dialogue, and imagination—bridging disciplines and perspectives to spark conversations that endure. With a consistent footfall of 1500+ attendees across past editions, it has become a space where curiosity meets clarity, and complexity gives way to connection. Through changing times and shifting landscapes, the platform has remained committed to elevating diverse voices and celebrating the nuance in thought. It stands not just as an event, but as an evolving archive of insight—where fleeting moments of expression form lasting interludes in the broader narrative of innovation and understanding.
+            Since 2016, TEDxIIT Patna has served as a crucible for ideas, dialogue, and imagination-bridging disciplines and perspectives to spark conversations that endure. With a consistent footfall of 1500+ attendees across past editions, it has become a space where curiosity meets clarity, and complexity gives way to connection. Through changing times and shifting landscapes, the platform has remained committed to elevating diverse voices and celebrating the nuance in thought. It stands not just as an event, but as an evolving archive of insight-where fleeting moments of expression form lasting interludes in the broader narrative of innovation and understanding.
             </p>
         </div>
         <div className="flex justify-center">
@@ -34,40 +34,76 @@ export default function About() {
             </h2>
         </div>
         <div className="flex flex-row justify-evenly px-2 sm:px-4">
-            <div className="relative overflow-hidden border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
-                <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
-                    <div className="relative w-full h-full">
-                        <Image src="/pic.png" alt="" fill sizes="(max-w-7xl) 100vw" className="object-contain object-bottom" priority/>
+            <motion.div
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true }}>
+                <div className="relative overflow-hidden border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
+                    <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
+
+                    <div className="absolute inset-0 bg-black/40" />
+
+                    <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
+                        <div className="relative w-full h-full">
+                        <Image 
+                            src="/pic.png" 
+                            alt="" 
+                            fill 
+                            sizes="100vw" 
+                            className="object-contain object-bottom" 
+                            priority
+                        />
+                        </div>
+                    </div>
+
+                    <div className="absolute bottom-0.5 left-3 z-30 flex flex-col select-none pointer-events-none">
+                        <span className="text-white font-space text-[15px] sm:text-[20px] md:text-[25px] lg:text-[30px] font-light tracking-wide mb-1">
+                        Organizer
+                        </span>
+
+                        <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
+                        Kavya Mahajan
+                        </h2>
                     </div>
                 </div>
-                <div className="absolute bottom-0.5 left-3 z-30 flex flex-col select-none pointer-events-none">
-                    <span className="text-white font-space text-[15px] sm:text-[20px] md:text-[25px] lg:text-[30px] font-light tracking-wide mb-1">
-                    Organizer
-                    </span>
-                    <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px]  font-white tracking-wider uppercase leading-none drop-shadow-lg">
-                    Kavya Mahajan
-                    </h2>
-                </div>
-            </div>
-            <div className="relative overflow-hidden  border-[#EB0028]  border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
-                <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
-                    <div className="relative w-full h-full">
-                        <Image src="/pic.png" alt="" fill sizes="(max-w-7xl) 100vw" className="object-contain object-bottom" priority/>
+            </motion.div>
+
+
+            <motion.div
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true }}>
+                    <div className="relative overflow-hidden border-[2px] sm:border-[2.5px] border-[#EB0028] h-[120px] sm:h-[250px] md:h-[320px] lg:h-[460px] xl:h-[500px] aspect-square rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-lg shadow-red-600">
+                    <Image src="/bg2.png" alt="background" fill className="object-cover opacity-60"/>
+
+                    <div className="absolute inset-0 bg-black/40" />
+
+                    <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[75%] w-full">
+                        <div className="relative w-full h-full">
+                        <Image 
+                            src="/pic.png" 
+                            alt="" 
+                            fill 
+                            sizes="100vw" 
+                            className="object-contain object-bottom" 
+                            priority
+                        />
+                        </div>
+                    </div>
+
+                    <div className="absolute bottom-0.5 left-3 z-30 flex flex-col select-none pointer-events-none">
+                        <span className="text-white font-space text-[15px] sm:text-[20px] md:text-[25px] lg:text-[30px] font-light tracking-wide mb-1">
+                        Organizer
+                        </span>
+
+                        <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
+                        Ashmit Malik
+                        </h2>
                     </div>
                 </div>
-                <div className="absolute bottom-0.5 left-3 z-30 flex flex-col select-none pointer-events-none">
-                    <span className="text-white font-space text-[15px] sm:text-[20px] md:text-[25px] lg:text-[30px] font-light tracking-wide mb-1">
-                    Organizer
-                    </span>
-                    <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
-                    Ashmit Malik
-                    </h2>
-                </div>
-            </div>
+            </motion.div>
         </div>
         <div className="text-[#F3E9DC] text-[40px] sm:text-[90px] md:text-[100px] lg:text-[120px] font-normal text-center font-bebas">
             CORE TEAM

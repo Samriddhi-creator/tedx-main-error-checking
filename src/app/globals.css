@@ -15,47 +15,8 @@
   --font-inter: var(--font-inter), sans-serif;
   --font-sourceSans: var(--font-sourceSans), sans-serif;
   --font-albertSans: var(--font-albertSans), sans-serif;
-  
-  /* 1. Register the font family token map here */
-  --font-panton: var(--font-panton-caps), sans-serif;
 }
 
-/* app/globals.css */
-@keyframes glowPulse {
-  0%, 100% {
-    text-shadow:
-      0 0 4px #fff,
-      0 0 10px #ff2a2a,
-      0 0 20px #ff2a2a,
-      0 0 40px #ff0000,
-      0 0 80px #cc0000;
-  }
-  50% {
-    text-shadow:
-      0 0 6px #fff,
-      0 0 16px #ff4444,
-      0 0 32px #ff2a2a,
-      0 0 60px #ff0000,
-      0 0 120px #cc0000;
-  }
-}
-
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-    opacity: 1;
-  }
-  20%, 22%, 24%, 55% {
-    opacity: 0.85;
-  }
-}
-
-.animate-glow-pulse {
-  animation: glowPulse 2.4s ease-in-out infinite;
-}
-
-.animate-flicker {
-  animation: flicker 4s linear infinite;
-}
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -64,6 +25,21 @@
     -ms-overflow-style: none; 
     scrollbar-width: none;
   }
+}
+.text-inner-shadow {
+  color: transparent;
+  background:
+    linear-gradient(
+      to bottom,
+      #ff0033 0%,
+      #ff0033 55%,
+      #470707 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  text-shadow:
+    0 12px 8px rgba(71, 7, 7, 0.6);
 }
 
 @layer base {

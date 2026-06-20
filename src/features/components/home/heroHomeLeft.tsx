@@ -1,32 +1,111 @@
-import Image from "next/image";
+'use client';
 
-export default function HeroHomeLeft() {
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+interface Props {
+  activeSection: "home" | "about" | "closing";
+}
+
+export default function HeroHomeLeft({
+  activeSection,
+}: Props) {
   return (
     <div
-      className="
-        flex items-center justify-center
-        w-full lg:w-[calc(50%-14px)]
-        pl-[4.58vw]
-        py-16 lg:py-0
-        shrink-0
-      "
-    >
-      <Image
-        src="/terraIncognitaLogo.svg"
-        alt="Terra Incognita"
-        width={873}
-        height={318}
+  className="
+    flex
+    items-center
+    justify-center
+    w-full
+    lg:w-[calc(50%-14px)]
+    px-2 md:px-4 lg:px-6
+    lg:pl-[4.58vw]
+    pt-12 md:pt-18 lg:pt-24
+    pb-8
+    lg:py-0
+    shrink-0
+  "
+>
+      <motion.div
+        animate={{
+          x:
+            activeSection === "about" ||
+            activeSection === "closing"
+              ? -1200
+              : 0,
+
+          opacity:
+            activeSection === "about" ||
+            activeSection === "closing"
+              ? 0
+              : 1,
+        }}
+        transition={{
+          duration: 1,
+          ease: [0.76, 0, 0.24, 1],
+        }}
         className="
+          relative
           w-full
-          max-w-218.25
-          lg:w-[45.47vw]
-          lg:max-w-218.25
-          h-auto
-          lg:max-h-79.5
-          object-contain
+          max-w-[650px]
+          lg:max-w-[873px]
+          aspect-[873/318]
+          select-none
         "
-        priority
-      />
+      >
+        {/* BASE LAYER: Logo without the needle */}
+        <Image
+          src="/terraIncognitaLogoWithoutNeedle.svg"
+          alt="Terra Incognita"
+          width={873}
+          height={318}
+          className="
+            w-full
+            h-auto
+            object-contain
+            pointer-events-none
+          "
+          priority
+        />
+
+        {/* ADJUSTED POSITION FOR THE "O" IN INCOGNITA */}
+        <div 
+          className="
+            absolute 
+            left-[39.2%] 
+            top-[68%] 
+            -translate-x-1/2 
+            -translate-y-1/2 
+            w-[10%] 
+            aspect-square 
+            flex 
+            items-center 
+            justify-center
+          "
+        >
+          <motion.div 
+            className="w-full h-full flex items-center justify-center cursor-pointer"
+            whileHover={{ 
+              rotate: 360,
+              transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] } 
+            }}
+          >
+            <Image
+              src="/compass_needle.svg"
+              alt="Compass Needle"
+              width={100}
+              height={100}
+              className="
+                w-[90%] 
+                h-[90%] 
+                object-contain
+              "
+              priority
+            />
+          </motion.div>
+        </div>
+
+      </motion.div>
     </div>
   );
 }
