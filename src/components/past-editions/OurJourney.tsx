@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Image from "next/image";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { useRouter } from "next/navigation";
+import { useJourneyStore } from "@/src/store/useJourneyStore";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -30,24 +31,32 @@ export default function OurJourney() {
     const boatPathRef = useRef<SVGSVGElement>(null);
     const pathRef = useRef<SVGPathElement>(null);
 
-    useEffect(() => {
-        //Force scroll to top on mount
-        window.scrollTo(0, 0);
-        // force reload on back navigation
-        const handlePageShow = (e: PageTransitionEvent) => {
-            if (e.persisted) {
-                window.location.reload();
-            }
-        };
-        window.addEventListener('pageshow', handlePageShow);
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const flyInTl = useRef<gsap.core.Timeline | null>(null);
 
-        //Smooth scroll setup
+    const router = useRouter();
+    const rulerProgress = useJourneyStore((state) => state.rulerProgress);
+
+    // Manual rotation state for 3D gallery
+    const [rotationY, setRotationY] = useState(0);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const currentRot = useRef(0);
+
+    useEffect(() => {
+        // Smooth scroll setup
         const lenis = new Lenis({ duration: 2 });
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        
+        lenis.on('scroll', ScrollTrigger.update);
+
+        function update(time: number) {
+            lenis.raf(time * 1000);
         }
-        requestAnimationFrame(raf);
+
+        gsap.ticker.add(update);
+        gsap.ticker.lagSmoothing(0);
 
         if (!timelineRef.current) return;
         if (typeof window === "undefined") return;
@@ -55,7 +64,7 @@ export default function OurJourney() {
         const isMobile = window.innerWidth < 768;
 
         if (isMobile) {
-            //Mobile: fade up per row
+            // Mobile: fade up per row
             document.querySelectorAll(".edition-row").forEach(row => {
                 gsap.fromTo(row,
                     { opacity: 0, y: 40 },
@@ -72,7 +81,7 @@ export default function OurJourney() {
                 );
             });
 
-            //Mobile: animate divider lines
+            // Mobile: animate divider lines
             document.querySelectorAll(".mobile-divider").forEach(divider => {
                 gsap.fromTo(divider,
                     { scaleY: 0, opacity: 0 },
@@ -90,20 +99,19 @@ export default function OurJourney() {
             });
 
         } else {
-            //Desktop: hide all rows initially
+            // Desktop: hide all rows initially
             document.querySelectorAll(".edition-row").forEach(row => {
                 gsap.set(row, { opacity: 0 });
             });
 
-            //Desktop: show first dot and first row on load
+            // Desktop: show first dot and first row on load
             if (dotsRef.current[0]) gsap.set(dotsRef.current[0], { opacity: 1 });
             const firstRow = document.querySelector(".edition-row") as HTMLElement;
             if (firstRow) gsap.set(firstRow, { opacity: 1, y: 0 });
 
-            //Desktop: checkpoint + boat — inside setTimeout so layout is settled
+            // Desktop: checkpoint + boat
             setTimeout(() => {
-
-                //Checkpoint animation
+                // Checkpoint animation
                 editions.slice(0, -1).forEach((_, index) => {
                     const currentDot = dotsRef.current[index];
                     const nextDot = dotsRef.current[index + 1];
@@ -113,16 +121,13 @@ export default function OurJourney() {
 
                     if (!currentDot || !nextDot || !segment || !timelineRef.current) return;
 
-                    // calculate dot positions relative to timeline container
                     const containerTop = timelineRef.current.getBoundingClientRect().top + window.scrollY;
                     const fromY = currentDot.getBoundingClientRect().top + window.scrollY - containerTop;
                     const toY = nextDot.getBoundingClientRect().top + window.scrollY - containerTop;
 
-                    // set segment start position (collapsed at current dot)
                     segment.setAttribute("y1", String(fromY));
                     segment.setAttribute("y2", String(fromY));
 
-                    // trigger sequence when next entry enters viewport
                     ScrollTrigger.create({
                         trigger: nextEntry,
                         start: "top 100%",
@@ -131,13 +136,9 @@ export default function OurJourney() {
                         fastScrollEnd: true,
                         onEnter: () => {
                             const tl = gsap.timeline();
-                            // 1. draw line down to next dot
                             tl.to(segment, { attr: { y2: toY }, duration: 0.6, ease: "power4.out" })
-                                // 2. pop in next dot
                                 .to(nextDot, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out" }, "-=0.1")
-                                // 3. fade in island
                                 .fromTo(nextIsland, { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, "-=0.2")
-                                // 4. fade in next entry row
                                 .fromTo(nextEntry,
                                     { opacity: 0, y: 30 },
                                     { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.1"
@@ -146,11 +147,10 @@ export default function OurJourney() {
                     });
                 });
 
-                //Boat Path Animation
+                // Boat Path Animation
                 if (boatRef.current && pathRef.current && timelineRef.current) {
                     const containerTop = timelineRef.current.getBoundingClientRect().top + window.scrollY;
 
-                    // get dot positions relative to timeline container
                     const dotPositions = dotsRef.current.map(dot => {
                         if (!dot) return { x: 0, y: 0 };
                         const rect = dot.getBoundingClientRect();
@@ -160,7 +160,6 @@ export default function OurJourney() {
                         };
                     });
 
-                    // build SVG path connecting all dots with bezier curves
                     let pathD = `M ${dotPositions[0].x} ${dotPositions[0].y}`;
 
                     const p0 = dotPositions[0];
@@ -191,13 +190,10 @@ export default function OurJourney() {
 
                     pathRef.current.setAttribute("d", pathD);
 
-                    // get total path length for dash animation
                     const pathLength = pathRef.current.getTotalLength();
                     pathRef.current.style.strokeDasharray = String(pathLength);
                     pathRef.current.style.strokeDashoffset = String(pathLength);
 
-                    // animate path drawing in sync with scroll
-                    // ends when last dot hits center of screen
                     gsap.to(pathRef.current, {
                         strokeDashoffset: 0,
                         ease: "none",
@@ -206,13 +202,12 @@ export default function OurJourney() {
                             start: "top center",
                             endTrigger: dotsRef.current[6],
                             end: "center center",
-                            scrub: 2,
+                            scrub: true,
                         }
                     });
 
                     gsap.set(boatRef.current, { opacity: 1 });
 
-                    // subtle rocking motion on inner div
                     gsap.to(boatInnerRef.current, {
                         rotate: 5,
                         duration: 1.5,
@@ -221,7 +216,6 @@ export default function OurJourney() {
                         repeat: -1,
                     });
 
-                    // boat follows path scrubbed to scroll
                     gsap.to(boatRef.current, {
                         motionPath: {
                             path: "#boatPath",
@@ -235,155 +229,304 @@ export default function OurJourney() {
                             start: "top center",
                             endTrigger: dotsRef.current[6],
                             end: "center center",
-                            scrub: 2,
+                            scrub: true,
                         }
                     });
                 }
-
             }, 200);
         }
 
-        //Cleanup on unmount and cleanup all GSAP instances so they reinitialize on back
+        // Setup 3D Gallery Fly-In Timeline
+        if (carouselRef.current && cardsRef.current.length > 0 && overlayRef.current) {
+            flyInTl.current = gsap.timeline({ paused: true });
+
+            const finalZ = isMobile ? 300 : 500;
+
+            cardsRef.current.forEach((card, i) => {
+                if (!card) return;
+                const angle = (360 / editions.length) * i;
+                
+                // Final destination state
+                gsap.set(card, {
+                    "--card-rot": `${angle}deg`,
+                    "--card-z": `${finalZ}px`,
+                    "--card-x": "0px",
+                    "--card-y": "0px",
+                    "--card-scale": 1,
+                    "--card-opacity": 1,
+                });
+
+                // Fly-in animation
+                flyInTl.current?.from(card, {
+                    "--card-z": "-1500px",
+                    "--card-y": `${gsap.utils.random(-1000, 1000)}px`,
+                    "--card-x": `${gsap.utils.random(-1000, 1000)}px`,
+                    "--card-rot": `${angle + gsap.utils.random(-180, 180)}deg`,
+                    "--card-opacity": 0,
+                    "--card-scale": 0.1,
+                    duration: 1,
+                    ease: "power3.inOut"
+                }, 0);
+            });
+
+            flyInTl.current.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0);
+        }
+
         return () => {
             lenis.destroy();
+            gsap.ticker.remove(update);
             ScrollTrigger.getAll().forEach(t => t.kill());
             gsap.globalTimeline.clear();
-            window.removeEventListener('pageshow', handlePageShow);
         };
 
     }, []);
 
+    // Effect to toggle body overflow scroll lock
+    useEffect(() => {
+        if (rulerProgress > 0.02) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [rulerProgress]);
+
+    const handlePointerDown = (e: React.PointerEvent) => {
+        isDragging.current = true;
+        startX.current = e.clientX;
+    };
+
+    const handlePointerMove = (e: React.PointerEvent) => {
+        if (!isDragging.current) return;
+        const diff = e.clientX - startX.current;
+        setRotationY(currentRot.current + diff * 0.3);
+    };
+
+    const handlePointerUp = () => {
+        isDragging.current = false;
+        currentRot.current = rotationY;
+    };
+
+    const handleWheel = (e: React.WheelEvent) => {
+        if (rulerProgress >= 0.4) {
+            setRotationY(prev => prev - e.deltaY * 0.1);
+            currentRot.current = rotationY - e.deltaY * 0.1;
+        }
+    };
+
+    // Calculate normalized progress (0 to 1) for the fly-in transition
+    const t = Math.min(rulerProgress / 0.4, 1);
+    const isOverlayActive = rulerProgress > 0.02;
+
     return (
-        <section
-            className="relative w-full min-h-screen px-4 py-16"
-            style={{
-                backgroundImage: `url('/images/bg1.png'), url('/images/bg2.png')`,
-                backgroundRepeat: 'repeat-y, repeat-y',
-                backgroundPosition: 'top, center',
-                backgroundSize: '100%, 100%',
-            }}
-        >
-            {/* Black overlay over background */}
-            <div className="absolute inset-0 bg-black/40 z-0" />
-
-            {/* Page title */}
-            <Image
-                src="/ourjourney.svg"
-                alt="Our Journey"
-                width={800}
-                height={200}
-                className="relative z-10 mx-auto mb-24 w-[90%] md:w-[800px]"
-                priority
-            />
-
-            {/* Timeline container */}
-            <div ref={timelineRef} className="relative z-10 max-w-5xl mx-auto overflow-visible">
-
-                {/* Hidden SVG line segments — used for checkpoint animation */}
-                <svg
-                    className="hidden absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none w-[2px]"
-                    style={{ height: "100%" }}
-                    overflow="visible"
-                >
-                    {editions.slice(0, -1).map((_, index) => (
-                        <line
-                            key={index}
-                            ref={el => { segmentsRef.current[index] = el; }}
-                            x1="1" y1="0"
-                            x2="1" y2="0"
-                            stroke="rgba(255,255,255,1)"
-                            strokeWidth="1.5"
-                        />
-                    ))}
-                </svg>
-
-                {/* Boat path SVG — draws as boat moves (desktop only) */}
-                <svg
-                    ref={boatPathRef}
-                    className="hidden md:block absolute left-0 top-0 pointer-events-none w-full"
-                    style={{ height: "100%" }}
-                    overflow="visible"
-                >
-                    <path
-                        ref={pathRef}
-                        id="boatPath"
-                        fill="none"
-                        stroke="rgba(255,255,255,1)"
-                    />
-                </svg>
-
-                {/* Boat — outer div follows path, inner div handles rocking */}
+        <>
+            {/* 3D Gallery Overlay */}
+            <div 
+                ref={overlayRef} 
+                className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center pt-10"
+                style={{ 
+                    opacity: t,
+                    pointerEvents: rulerProgress >= 0.4 ? "auto" : "none",
+                    display: isOverlayActive ? "flex" : "none"
+                }}
+            >
+                {/* 3D Perspective Container — free of opacity and backdrop-filter to prevent 3D flattening */}
                 <div
-                    ref={boatRef}
-                    className="hidden md:block absolute z-20 pointer-events-none opacity-0"
+                    style={{
+                        perspective: "2000px",
+                        transformStyle: "preserve-3d",
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        touchAction: "none"
+                    }}
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerLeave={handlePointerUp}
+                    onWheel={handleWheel}
                 >
-                    <div ref={boatInnerRef}>
-                        <Image
-                            src="/sship.png"
-                            alt="ship"
-                            width={100}
-                            height={100}
-                            className="object-contain"
-                        />
+                    {/* 3D Carousel Rotator */}
+                    <div 
+                        ref={carouselRef}
+                        className="relative w-[280px] h-[400px] md:w-[350px] md:h-[500px]"
+                        style={{ 
+                            transformStyle: "preserve-3d",
+                            transform: `rotateY(${rotationY}deg)`,
+                            transition: isDragging.current ? "none" : "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                        }}
+                    >
+                        {editions.map((edition, i) => {
+                            const angle = (360 / editions.length) * i;
+                            const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+                            const finalZ = isMobile ? 300 : 500;
+                            
+                            // Calculate transform parameters dynamically based on progress t
+                            const cardZ = -1500 + (finalZ + 1500) * t;
+                            const cardRot = angle - 180 * (1 - t);
+                            const cardOpacity = t;
+                            const cardScale = 0.1 + 0.9 * t;
+
+                            return (
+                                <div 
+                                    key={edition.id}
+                                    ref={el => { cardsRef.current[i] = el; }}
+                                    className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center rounded-2xl border-[2.5px] border-[#EB0028]/40 bg-black/80 backdrop-blur-md p-4 hover:border-[#EB0028] transition-colors cursor-pointer group shadow-lg"
+                                    onClick={() => router.push(edition.href)}
+                                    style={{
+                                        transform: `rotateY(${cardRot}deg) translateZ(${cardZ}px) scale(${cardScale})`,
+                                        opacity: cardOpacity,
+                                    }}
+                                >
+                                    {/* Image container */}
+                                    <div className="w-full flex-[1.5] rounded-xl mb-4 overflow-hidden border border-white/10 group-hover:border-[#EB0028]/50 transition-colors relative">
+                                        <Image
+                                            src={edition.image}
+                                            alt={edition.title}
+                                            fill
+                                            sizes="(max-width: 768px) 280px, 350px"
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            priority={i === 0}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                    </div>
+                                    <div className="flex-[1] flex flex-col items-center w-full">
+                                        <h2 className="text-[#F3E9DC] font-bebas text-2xl md:text-3xl uppercase text-center mb-1 leading-none drop-shadow-md">
+                                            {edition.title}
+                                        </h2>
+                                        <span className="text-[#EB0028] font-space font-bold text-sm md:text-base mb-2">{edition.year}</span>
+                                        <p className="text-white/70 text-[10px] md:text-xs text-center line-clamp-4 font-space px-2">
+                                            {edition.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
-
-                {/* Edition rows */}
-                {editions.map((edition, index) => (
-                    <div key={edition.id}>
-                        <div className="edition-row relative flex flex-col md:flex-row items-center mb-0 md:mb-64 overflow-visible">
-
-                            {/* Island background — desktop only, animates in with content */}
-                            <div
-                                ref={el => { islandsRef.current[index] = el; }}
-                                className={`hidden md:block absolute -z-10 pointer-events-none ${edition.islandClass}`}
-                            >
-                                <Image src={edition.island} alt="" width={800} height={800} className="opacity-60" />
-                            </div>
-
-                            {/* Left side — shows content when edition.side === "left" */}
-                            <div className="journey-entry entry-left w-full md:w-1/2 md:pr-16 flex flex-col justify-center items-center md:items-start mb-4 md:mb-0 md:mt-16">
-                                {edition.side === "left" && (
-                                    <a href={edition.href} className="flex flex-col items-center md:items-start w-full cursor-pointer hover:opacity-80 transition-opacity">
-                                        <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
-                                        <div style={{ fontFamily: 'var(--font-space)' }}>
-                                            <h2 className="text-white font-bold text-lg uppercase text-center md:text-left">{edition.title} ({edition.year})</h2>
-                                            <p className="text-white/60 text-sm mt-2 text-center md:text-left">{edition.description}</p>
-                                        </div>
-                                    </a>
-                                )}
-                            </div>
-
-                            {/* Map pin dot — hidden on mobile, GSAP reveals on desktop */}
-                            <div
-                                ref={el => { dotsRef.current[index] = el; }}
-                                className={`hidden md:block absolute z-10 opacity-0 ${edition.dotClass}`}
-                            >
-                                <Image src="/locateicon2.svg" alt="" width={80} height={80} className="object-contain" />
-                            </div>
-
-                            {/* Right side — shows content when edition.side === "right" */}
-                            <div className="journey-entry entry-right w-full md:w-1/2 md:pl-16 flex flex-col justify-center items-center md:items-end md:mt-16">
-                                {edition.side === "right" && (
-                                    <a href={edition.href} className="flex flex-col items-center md:items-end w-full cursor-pointer hover:opacity-80 transition-opacity">
-                                        <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
-                                        <div style={{ fontFamily: 'var(--font-space)' }}>
-                                            <h2 className="text-white font-bold text-lg uppercase text-center md:text-right">{edition.title} ({edition.year})</h2>
-                                            <p className="text-white/60 text-sm mt-2 text-center md:text-right">{edition.description}</p>
-                                        </div>
-                                    </a>
-                                )}
-                            </div>
-
-                        </div>
-
-                        {/* Mobile divider line between entries — animated by GSAP */}
-                        {index < editions.length - 1 && (
-                            <div className="mobile-divider md:hidden w-px h-40 bg-white/30 mx-auto my-8" />
-                        )}
-                    </div>
-                ))}
+                {/* Hint Text */}
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 font-space text-xs tracking-widest pointer-events-none">
+                    {rulerProgress >= 0.4 ? "DRAG TO ROTATE" : "KEEP SCROLLING RULER..."}
+                </div>
             </div>
-        </section>
+
+            {/* Original Boat Background */}
+            <section
+                className="relative w-full min-h-screen px-4 py-16 overflow-x-hidden"
+                style={{
+                    backgroundImage: `url('/images/bg1.png'), url('/images/bg2.png')`,
+                    backgroundRepeat: 'repeat-y, repeat-y',
+                    backgroundPosition: 'top, center',
+                    backgroundSize: '100%, 100%',
+                }}
+            >
+                <div className="absolute inset-0 bg-black/40 z-0" />
+
+                <Image
+                    src="/ourjourney.svg"
+                    alt="Our Journey"
+                    width={800}
+                    height={200}
+                    className="relative z-10 mx-auto mb-24 w-[90%] md:w-[800px]"
+                    priority
+                />
+
+                <div ref={timelineRef} className="relative z-10 max-w-5xl mx-auto overflow-visible">
+                    <svg
+                        className="hidden absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none w-[2px]"
+                        style={{ height: "100%" }}
+                        overflow="visible"
+                    >
+                        {editions.slice(0, -1).map((_, index) => (
+                            <line
+                                key={index}
+                                ref={el => { segmentsRef.current[index] = el; }}
+                                x1="1" y1="0"
+                                x2="1" y2="0"
+                                stroke="rgba(255,255,255,1)"
+                                strokeWidth="1.5"
+                            />
+                        ))}
+                    </svg>
+
+                    <svg
+                        ref={boatPathRef}
+                        className="hidden md:block absolute left-0 top-0 pointer-events-none w-full"
+                        style={{ height: "100%" }}
+                        overflow="visible"
+                    >
+                        <path
+                            ref={pathRef}
+                            id="boatPath"
+                            fill="none"
+                            stroke="rgba(255,255,255,1)"
+                        />
+                    </svg>
+
+                    <div
+                        ref={boatRef}
+                        className="hidden md:block absolute z-20 pointer-events-none opacity-0"
+                    >
+                        <div ref={boatInnerRef}>
+                            <Image
+                                src="/sship.png"
+                                alt="ship"
+                                width={100}
+                                height={100}
+                                className="object-contain"
+                            />
+                        </div>
+                    </div>
+
+                    {editions.map((edition, index) => (
+                        <div key={edition.id}>
+                            <div className="edition-row relative flex flex-col md:flex-row items-center mb-0 md:mb-64 overflow-visible">
+                                <div
+                                    ref={el => { islandsRef.current[index] = el; }}
+                                    className={`hidden md:block absolute -z-10 pointer-events-none ${edition.islandClass}`}
+                                >
+                                    <Image src={edition.island} alt="" width={800} height={800} className="opacity-60" />
+                                </div>
+
+                                <div className="journey-entry entry-left w-full md:w-1/2 md:pr-16 flex flex-col justify-center items-center md:items-start mb-4 md:mb-0 md:mt-16">
+                                    {edition.side === "left" && (
+                                        <a href={edition.href} className="flex flex-col items-center md:items-start w-full cursor-pointer hover:opacity-80 transition-opacity">
+                                            <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
+                                            <div style={{ fontFamily: 'var(--font-space)' }}>
+                                                <h2 className="text-white font-bold text-lg uppercase text-center md:text-left">{edition.title} ({edition.year})</h2>
+                                                <p className="text-white/60 text-sm mt-2 text-center md:text-left">{edition.description}</p>
+                                            </div>
+                                        </a>
+                                    )}
+                                </div>
+
+                                <div
+                                    ref={el => { dotsRef.current[index] = el; }}
+                                    className={`hidden md:block absolute z-10 opacity-0 ${edition.dotClass}`}
+                                >
+                                    <Image src="/locateicon2.svg" alt="" width={80} height={80} className="object-contain" />
+                                </div>
+
+                                <div className="journey-entry entry-right w-full md:w-1/2 md:pl-16 flex flex-col justify-center items-center md:items-end md:mt-16">
+                                    {edition.side === "right" && (
+                                        <a href={edition.href} className="flex flex-col items-center md:items-end w-full cursor-pointer hover:opacity-80 transition-opacity">
+                                            <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
+                                            <div style={{ fontFamily: 'var(--font-space)' }}>
+                                                <h2 className="text-white font-bold text-lg uppercase text-center md:text-right">{edition.title} ({edition.year})</h2>
+                                                <p className="text-white/60 text-sm mt-2 text-center md:text-right">{edition.description}</p>
+                                            </div>
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                            {index < editions.length - 1 && (
+                                <div className="mobile-divider md:hidden w-px h-40 bg-white/30 mx-auto my-8" />
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </>
     );
 }
