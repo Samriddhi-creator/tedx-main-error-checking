@@ -31,15 +31,10 @@ export const Locations:location[]=[
         leftInPercentage:23,
     },
     {
-        name:"About The Theme",
-        href:"#",
+        name:"About Us",
+        href:"/aboutUs",
         topInPercentage:14,
         leftInPercentage:52,
     },
-    {
-        name:"About Us",
-        href:"/aboutus",
-        topInPercentage:88,
-        leftInPercentage:55,
-    }
+    
 ];

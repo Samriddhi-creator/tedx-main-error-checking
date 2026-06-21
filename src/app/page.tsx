@@ -6,12 +6,10 @@ import { Card } from "../components/ui/Card";
 import { Sparkles, Bell, Ticket, Users, Send } from "lucide-react";
 import Link from "next/link";
 import HeroHome from "@/src/features/components/home/heroHome";
-import AboutTheme from "../features/components/home/aboutTheThemeTransition/aboutTheme";
 import BuyTickets from "../features/components/home/buyTickects";
 import LogoLoopSection from "../features/components/home/LogoLoopSection";
 import { useEffect,useState } from "react";
 import { motion } from "framer-motion";
-import { useSectionStore } from "@/src/store/useSectionStore";
 import AboutTheTheme from "../features/components/home/aboutTheTheme";
 import SpeakerHome from "../features/components/home/speakerhome";
 
@@ -20,18 +18,7 @@ export default function IndexPage() {
   const [subscribed, setSubscribed] = React.useState(false);
   const [acceptTerms, setAcceptTerms] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const activeSection = useSectionStore(
-  (state) => state.activeSection
-);
-
-const setActiveSection = useSectionStore(
-  (state) => state.setActiveSection
-);
-
-  useEffect(() => {
-  console.log(activeSection);
-}, [activeSection]);
-
+  
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !acceptTerms) return;
@@ -50,13 +37,7 @@ const setActiveSection = useSectionStore(
       className="h-auto bg-cover bg-center bg-no-repeat"
     >
     <section className="relative h-auto overflow-hidden">
-    <HeroHome
-    activeSection={activeSection}
-    setActiveSection={setActiveSection}
-    />
-     <AboutTheme
-     activeSection={activeSection}
-     />
+    <HeroHome/>
      </section>
      <AboutTheTheme/>
      <SpeakerHome/>

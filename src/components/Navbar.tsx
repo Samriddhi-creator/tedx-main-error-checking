@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter,FaHouse } from "react-icons/fa6";
-import { useSectionStore } from "@/src/store/useSectionStore";
 const navLinks = [
     { label: "Home", href: "/" },
     { label: "Events", href: "/events" },
@@ -24,9 +23,7 @@ export default function Navbar() {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState<string | null>(null);
-    const setActiveSection = useSectionStore(
-  (state) => state.setActiveSection
-);
+    
 
     return (
         <>
@@ -41,25 +38,6 @@ export default function Navbar() {
                     <a href="/cart" className="h-8 md:h-14 px-4 md:px-8 rounded-full border-[2px] md:border-[3px] border-red-700 text-white font-['Inter'] text-sm md:text-2xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
                         Buy Now
                     </a>
-                    <button
-                        onClick={() => {
-                            setActiveSection("home");
-                            setOpen(false);
-                        }}
-                        className="
-                            size-8 md:size-14
-                            rounded-full
-                            border-2 border-red-500
-                            flex items-center justify-center
-                            text-white
-                            hover:scale-110
-                            transition-all duration-300
-                            bg-red-500
-                            hidden lg:flex
-                        "
-                    >
-                        <FaHouse />
-                    </button>
                     <button
                         onClick={() => setOpen(!open)}
                         className="size-8 md:size-14 bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30">

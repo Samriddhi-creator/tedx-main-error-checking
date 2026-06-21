@@ -1,44 +1,22 @@
 import HeroHomeLeft from "./heroHomeLeft";
 import HeroHomeRight from "./heroHomeRight";
-import { useEffect,useState } from "react";
-import { motion } from "framer-motion";
-import SpeakerHome from "./speakerhome"; 
 
-interface HomeHeroProps {
-  activeSection: "home" | "about" | "closing";
-  setActiveSection: (
-    section: "home" | "about" | "closing"
-  ) => void;
-}
-
-export default function HomeHero({
-  activeSection,
-  setActiveSection,
-}: HomeHeroProps) {
+export default function HomeHero() {
   
   return (
     
-      <motion.section
+      <section
       className="
         flex
         flex-col
         lg:flex-row
         w-full
-        lg:h-screen
+        h-auto
       "
-      animate={{
-        opacity: activeSection === "about" ? 0.3 : 1,
-      }}
-      transition={{
-        duration: 0.8,
-      }}
-    >
-      <HeroHomeLeft activeSection={activeSection} />
-      <HeroHomeRight
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
-    </motion.section>
+      >
+      <HeroHomeLeft />
+      <HeroHomeRight/>
+    </section>
 
     
   );

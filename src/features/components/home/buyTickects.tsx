@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { Bebas_Neue, Space_Grotesk, Inter } from "next/font/google"
+import Link from "next/link"
 
 export default function BuyTickets() {
 return (
@@ -156,8 +157,7 @@ return (
                 <p>GENERAL ACCESS</p>
                 <p>LIMITED PASSES</p>
             </div>
-            <button
-                className="
+            <Link href="/cart" className="
                 mt-4
                 md:mt-8
                 px-4
@@ -173,15 +173,12 @@ return (
                 duration-300
                 hover:bg-red-700/40
                 font-inter
-                "
-            >
-                Buy Now
-            </button>
+                cursor-pointer
+                ">Get Tickects</Link>
+            
         </div>
 
     </div>
 </div>
-
 )
-
 }

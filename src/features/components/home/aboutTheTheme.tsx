@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutTheTheme() {
   return (
-    <section className="w-full py-12 lg:py-14 overflow-x-hidden">
+    <section className="w-full py-12 lg:py-19 overflow-x-hidden">
       <div className="px-4 sm:px-8 lg:pl-16 lg:pr-0 text-center lg:text-left mx-auto">
         <h1
           className="
