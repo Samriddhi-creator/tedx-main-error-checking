@@ -3,13 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-interface Props {
-  activeSection: "home" | "about" | "closing";
-}
-
-export default function HeroHomeLeft({
-  activeSection,
-}: Props) {
+export default function HeroHomeLeft() {
   return (
     <div
   className="
@@ -20,30 +14,13 @@ export default function HeroHomeLeft({
     lg:w-[calc(50%-14px)]
     px-2 md:px-4 lg:px-6
     lg:pl-[4.58vw]
-    pt-12 md:pt-18 lg:pt-24
-    pb-8
+    pt-0
     lg:py-0
     shrink-0
+    lg:-mt-4
   "
 >
-      <motion.div
-        animate={{
-          x:
-            activeSection === "about" ||
-            activeSection === "closing"
-              ? -1200
-              : 0,
-
-          opacity:
-            activeSection === "about" ||
-            activeSection === "closing"
-              ? 0
-              : 1,
-        }}
-        transition={{
-          duration: 1,
-          ease: [0.76, 0, 0.24, 1],
-        }}
+      <div
         className="
           relative
           w-full
@@ -105,7 +82,7 @@ export default function HeroHomeLeft({
           </motion.div>
         </div>
 
-      </motion.div>
+      </div>
     </div>
   );
 }

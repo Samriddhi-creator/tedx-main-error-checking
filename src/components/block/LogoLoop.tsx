@@ -144,42 +144,86 @@ const useAnimationLoop = (
 
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
 
-    if (seqWidth > 0) {
-      offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
-      track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
-    }
+    // Do not start until LogoLoop has measured its width.
+    if (!track || seqWidth <= 0) return;
 
     const animate = (timestamp: number) => {
-      if (lastTimestampRef.current === null) lastTimestampRef.current = timestamp;
-      const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
+      if (lastTimestampRef.current === null) {
+        lastTimestampRef.current = timestamp;
+      }
+
+      const deltaTime =
+        Math.max(0, timestamp - lastTimestampRef.current) / 1000;
+
       lastTimestampRef.current = timestamp;
 
-      const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
+      const target =
+        isHovered && hoverSpeed !== undefined
+          ? hoverSpeed
+          : targetVelocity;
 
-      const easing = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
-      velocityRef.current += (target - velocityRef.current) * easing;
+      const easing =
+        1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
 
-      if (seqWidth > 0) {
-        let nextOffset = offsetRef.current + velocityRef.current * deltaTime;
-        nextOffset = ((nextOffset % seqWidth) + seqWidth) % seqWidth;
-        offsetRef.current = nextOffset;
-        track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
-      }
+      velocityRef.current +=
+        (target - velocityRef.current) * easing;
+
+      let nextOffset =
+        offsetRef.current + velocityRef.current * deltaTime;
+
+      nextOffset =
+        ((nextOffset % seqWidth) + seqWidth) % seqWidth;
+
+      offsetRef.current = nextOffset;
+
+      track.style.transform = `translate3d(${-nextOffset}px, 0, 0)`;
 
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    rafRef.current = requestAnimationFrame(animate);
+    const startAnimation = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+
+      // Important: reset timestamp when returning to this page.
+      lastTimestampRef.current = null;
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        startAnimation();
+      }
+    };
+
+    startAnimation();
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      lastTimestampRef.current = null;
-    };
-  }, [targetVelocity, seqWidth, isHovered, hoverSpeed, trackRef]);
-};
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
 
+      lastTimestampRef.current = null;
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+    };
+  }, [
+    targetVelocity,
+    seqWidth,
+    isHovered,
+    hoverSpeed,
+    trackRef,
+  ]);
+};
 export const LogoLoop = memo(function LogoLoop({
   logos,
   speed = 80,
