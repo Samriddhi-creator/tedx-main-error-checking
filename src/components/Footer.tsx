@@ -1,5 +1,8 @@
+"use client"
 import Image from "next/image";
+import React, { useRef, useState } from "react"
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
+import { useJourneyStore } from "@/src/store/useJourneyStore";
 
 const leftLinks = [
     { label: "TED Website", href: "https://www.ted.com/" },
@@ -21,17 +24,109 @@ const quickLinks = [
     { label: "Past Editions", href: "/past-editions" },
     { label: "Speakers", href: "/speakers" },
     { label: "Your Cart", href: "/cart" },
+    { label: "Refund Policy", href: "/refund-policy" }
 ];
 
 export default function Footer() {
+    const rulerRef = useRef<HTMLDivElement>(null);
+    const [spotX, setSpotX] = useState<number | null>(null);
+    const setRulerProgress = useJourneyStore((state) => state.setRulerProgress);
+    
+    const isDraggingRuler = useRef(false);
+    const startX = useRef(0);
+    const startScrollLeft = useRef(0);
+
+    const handleGlobalMouseMove = React.useCallback((e: MouseEvent) => {
+        if (!isDraggingRuler.current || !rulerRef.current) return;
+        const walk = (e.clientX - startX.current) * 2; // scroll speed multiplier
+        rulerRef.current.scrollLeft = startScrollLeft.current - walk;
+
+        // Update progress directly on drag to avoid browser scroll event delays
+        const { scrollLeft, scrollWidth, clientWidth } = rulerRef.current;
+        const maxScroll = scrollWidth - clientWidth;
+        if (maxScroll > 0) {
+            setRulerProgress(scrollLeft / maxScroll);
+        }
+    }, [setRulerProgress]);
+
+    const handleGlobalMouseUp = React.useCallback(() => {
+        isDraggingRuler.current = false;
+        window.removeEventListener("mousemove", handleGlobalMouseMove);
+        window.removeEventListener("mouseup", handleGlobalMouseUp);
+    }, [handleGlobalMouseMove]);
+
+    const handleMouseDown = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        isDraggingRuler.current = true;
+        startX.current = e.clientX;
+        startScrollLeft.current = rulerRef.current?.scrollLeft || 0;
+        e.preventDefault(); // Prevent text selection/drag behaviors
+        window.addEventListener("mousemove", handleGlobalMouseMove);
+        window.addEventListener("mouseup", handleGlobalMouseUp);
+    }, [handleGlobalMouseMove, handleGlobalMouseUp]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = rulerRef.current?.getBoundingClientRect();
+        if (rect) setSpotX(e.clientX - rect.left);
+    };
+
+    const handleMouseLeave = () => {
+        setSpotX(null);
+    };
+
+    const handleScroll = () => {
+        if (rulerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = rulerRef.current;
+            const maxScroll = scrollWidth - clientWidth;
+            if (maxScroll > 0) {
+                setRulerProgress(scrollLeft / maxScroll);
+            }
+        }
+    };
+
+    React.useEffect(() => {
+        return () => {
+            window.removeEventListener("mousemove", handleGlobalMouseMove);
+            window.removeEventListener("mouseup", handleGlobalMouseUp);
+        };
+    }, [handleGlobalMouseMove, handleGlobalMouseUp]);
+
     return (
-        <footer className="bg-black text-white flex flex-col mt-0">
+        <footer className="bg-black text-white flex flex-col mt-0 overflow-x-hidden relative z-[60]">
             {/* Ruler */}
-            <div className="w-full flex h-[40px] overflow-hidden relative flex-shrink-0">
-                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
-                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
-                <Image src="/ruler.svg" alt="Ruler" width={500} height={40} className="flex-1 h-full object-cover object-top w-full" />
-                <div className="absolute inset-0 bg-black/40" />
+            <div className="w-full relative h-[40px] bg-black border-t border-red-900/30">
+                <div
+                    ref={rulerRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    onScroll={handleScroll}
+                    className="w-full h-full overflow-x-auto overflow-y-hidden flex items-end cursor-grab active:cursor-grabbing select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                >
+                    {/* CSS Ruler - guaranteed horizontal scroll width */}
+                    <div className="flex items-end justify-between h-full w-[3500px] shrink-0 px-[25vw] pb-[2px]">
+                        {Array.from({ length: 300 }).map((_, i) => (
+                            <div 
+                                key={i}
+                                className={`w-[2px] shrink-0 bg-red-800 ${
+                                    i % 10 === 0 ? 'h-[24px]' : 
+                                    i % 5 === 0 ? 'h-[16px]' : 
+                                    'h-[8px] opacity-40'
+                                }`}
+                            />
+                        ))}
+                    </div>
+                </div>
+                
+                {/* Fixed overlays that don't scroll */}
+                <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+                {spotX !== null && (
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: `radial-gradient(circle 80px at ${spotX}px 50%, rgba(220,38,38,0.4) 0%, transparent 100%)`,
+                        }}
+                    />
+                )}
             </div>
 
             {/* Main content */}

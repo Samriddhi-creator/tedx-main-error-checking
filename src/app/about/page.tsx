@@ -4,7 +4,6 @@ import { team } from "data/teamData"
 import OrgCard from "@/src/components/about/OrgCard";
 import AboutTed from "@/src/components/about/AboutTed";
 import { motion } from "framer-motion";
-import Theme from "@/src/components/about/AboutTheme";
 export default function About() {
   return (
     <motion.div

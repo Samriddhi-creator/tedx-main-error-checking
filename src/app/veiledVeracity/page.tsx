@@ -1,15 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
-    <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto px-4 text-white">
+    <div className="flex flex-col gap-6 w-full  text-white">
       
       <style>{`
         @keyframes letterSwing {
-          0%, 100% { transform: rotate(-5deg); }
-          50% { transform: rotate(5deg); }
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(360deg); }
         }
         .animate-swing-a {
           display: inline-block;
@@ -20,35 +20,46 @@ export default function Theme() {
 
       <div>
         <Link 
-          className="text-[20px] sm:text-[28px] items-center text-[#EB0028CC] font-space hover:underline flex flex-row gap-2" 
+          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
         >
-          <ArrowLeft />
-          Go Back
+          <ChevronLeft size={50} />
         </Link>
       </div>
 
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
         
-        <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
-          <h1 className="font-lemon text-4xl sm:text-6xl md:text-7xl tracking-wider leading-tight uppercase">
-            Veiled <br />
-            <span className="flex flex-row items-start justify-center">Ver
-              <span className="text-[#EB0028] text-5xl sm:text-7xl md:text-8xl animate-swing-a mx-[-1px]">
-                A
-              </span>
-              city
-            </span>
-          </h1>
+        <div className="w-full md:w-1/2 flex justify-center items-center">
+          <div className="relative w-full max-w-[50vw] sm:max-w-[40vw] md:max-w-[40vw] pb-[15%]">
+            
+            {/* 1. Main Text Backdrop Layer ("VEILED VER CITY") */}
+            <Image
+              src="/vv1.png"
+              alt="Veiled Veracity Text Backdrop"
+              width={1200}
+              height={1200}
+              priority
+              className="relative z-10 w-full h-auto object-contain"
+            />
+            <Image
+              src="/a.png"
+              alt="Red Triangle Icon Accent"
+              width={600}
+              height={600}
+              priority
+              className="absolute z-0 top-[24%] left-[35.4%] md:top-[28%] w-[27%] h-auto object-contain animate-swing-a"
+            />
+            
+          </div>
         </div>
 
         <div className="w-full md:w-1/2 flex justify-center items-center">
-          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
+          <div className="w-full max-w-[70vw] sm:max-w-[50vw] md:max-w-[50vw]">
             <Image
-              src="/images/VV.png"
+              src="/vv.png"
               alt="Veiled Veracity Artwork"
-              width={600}
-              height={600}
+              width={1200}
+              height={1200}
               priority
               className="w-full h-auto object-contain"
             />

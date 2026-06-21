@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
@@ -19,20 +19,19 @@ export default function Theme() {
 
       <div>
         <Link 
-          className="text-[20px] sm:text-[28px] items-center text-[#EB0028CC] font-space hover:underline flex flex-row gap-2" 
+          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
         >
-          <ArrowLeft />
-          Go Back
+          <ChevronLeft size={50} />
         </Link>
       </div>
 
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
         
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
-          <h1 className="font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
+          <h1 className="relative font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
             Prisms Of
-            <span className="text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-sans align-top ml-1 animate-swing-x">
+            <span className=" text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-molend align-top -ml-1 -mt-2 sm:-mt-2.5 animate-swing-x">
               X
             </span> 
             <br />
@@ -45,7 +44,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
             <img
-              src="/prism.png"
+              src="/prism2.png"
               alt="Prisms of Perception Artwork"
               loading="eager"
               className="w-full h-auto object-contain block"
