@@ -8,6 +8,7 @@ const leftLinks = [
     { label: "TED Website", href: "https://www.ted.com/" },
     { label: "Terms and Conditions", href: "https://www.ted.com/participate/organize-a-local-tedx-event/before-you-start/tedx-rules" },
     { label: "About TEDx", href: "https://www.ted.com/about/programs-initiatives/tedx-program" },
+    { label: "Refund Policy", href: "/refund-policy" }
 ];
 
 const socialLinks = [
@@ -20,18 +21,17 @@ const socialLinks = [
 const quickLinks = [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
-    { label: "Pre - event", href: "/funfair" },
-    { label: "Past Editions", href: "/past-editions" },
     { label: "Speakers", href: "/speakers" },
-    { label: "Your Cart", href: "/cart" },
-    { label: "Refund Policy", href: "/refund-policy" }
+    /*{ label: "Past Editions", href: "/past-editions" },
+    { label: "Pre - event", href: "/funfair" },
+    { label: "Your Cart", href: "/cart" },*/
 ];
 
 export default function Footer() {
     const rulerRef = useRef<HTMLDivElement>(null);
     const [spotX, setSpotX] = useState<number | null>(null);
     const setRulerProgress = useJourneyStore((state) => state.setRulerProgress);
-    
+
     const isDraggingRuler = useRef(false);
     const startX = useRef(0);
     const startScrollLeft = useRef(0);
@@ -105,18 +105,17 @@ export default function Footer() {
                     {/* CSS Ruler - guaranteed horizontal scroll width */}
                     <div className="flex items-end justify-between h-full w-[3500px] shrink-0 px-[25vw] pb-[2px]">
                         {Array.from({ length: 300 }).map((_, i) => (
-                            <div 
+                            <div
                                 key={i}
-                                className={`w-[2px] shrink-0 bg-red-800 ${
-                                    i % 10 === 0 ? 'h-[24px]' : 
-                                    i % 5 === 0 ? 'h-[16px]' : 
-                                    'h-[8px] opacity-40'
-                                }`}
+                                className={`w-[2px] shrink-0 bg-red-800 ${i % 10 === 0 ? 'h-[24px]' :
+                                    i % 5 === 0 ? 'h-[16px]' :
+                                        'h-[8px] opacity-40'
+                                    }`}
                             />
                         ))}
                     </div>
                 </div>
-                
+
                 {/* Fixed overlays that don't scroll */}
                 <div className="absolute inset-0 bg-black/40 pointer-events-none" />
                 {spotX !== null && (
@@ -176,7 +175,7 @@ export default function Footer() {
                     <h3 className="font-sans text-base md:text-4xl font-bold text-red-600 md:ml-24">Quick Links</h3>
                     {quickLinks.map((link) => (
                         <a key={link.label} href={link.href}
-                            className="flex items-center gap-1 text-white font-['Ancizar_Serif'] text-[10px] md:text-2xl hover:text-red-500 transition-colors md:ml-24">
+                            className="flex items-center gap-1 text-white font-['Ancizar_Serif'] text-[10px] md:text-2xl hover:text-red-500 transition-colors md:ml-24 mt-3 md:mt-2">
                             <span className="text-red-600">
                                 <Image src="/compass.svg" alt="•" width={12} height={12} className="md:w-[14px] md:h-[14px]" />
                             </span> {link.label}

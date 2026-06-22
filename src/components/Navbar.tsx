@@ -7,6 +7,7 @@ import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter, FaHouse } from "rea
 const navLinks = [
     { label: "Home", href: "/" },
     { label: "Events", href: "/events" },
+    { label: "Pre-events", href: "/funfair" },
     { label: "Past Editions", href: "/past-editions" },
     { label: "Sponsors", href: "/sponsors" },
     { label: "About Us", href: "/about" },
@@ -43,24 +44,24 @@ export default function Navbar() {
 
     return (
         <>
-            <header className={`sticky top-0 z-[110] w-full h-[50px] md:h-[80px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+            <header className={`sticky top-0 z-[110] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
-                    <a href="/" className="flex items-center justify-center w-full h-full">
-                        <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[70%] h-auto" />
+                    <a href="/" className="flex items-center md:justify-center ml-6 w-full h-full">
+                        <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[56%] h-auto" />
                     </a>
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-4">
-                    <a href="/cart" className="h-8 md:h-14 px-4 md:px-8 rounded-full border-[2px] md:border-[3px] border-red-700 text-white font-['Inter'] text-sm md:text-2xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
+                    <a href="/cart" className="h-[26px] md:h-[45px] px-3 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
                         Buy Now
                     </a>
-                    
+
                     <button
                         onClick={() => setOpen(!open)}
-                        className="size-8 md:size-14 bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[120]">
-                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[5px] md:translate-y-[8px] rotate-45" : ""}`} />
-                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
-                        <span className={`w-3 md:w-5 h-[2px] md:h-[3px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[5px] md:-translate-y-[8px] -rotate-45" : ""}`} />
+                        className="size-[24px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[4px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[120] cursor-pointer">
+                        <span className={`w-[10px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[5px] md:translate-y-[6px] rotate-45" : ""}`} />
+                        <span className={`w-[10px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+                        <span className={`w-[10px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[5px] md:-translate-y-[6px] -rotate-45" : ""}`} />
                     </button>
                 </div>
             </header>
