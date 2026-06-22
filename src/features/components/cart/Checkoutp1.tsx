@@ -1,7 +1,7 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import React, { useState } from "react";
+import Image from "next/image"; 
 import { useRouter } from "next/navigation"; 
 
 import bgImg from "./background.png"; 
@@ -25,12 +25,34 @@ const ancizarSerif = Ancizar_Serif({
   adjustFontFallback: false
 });
 
-export default function Checkoutp1() {
+interface Checkoutp1Props {
+  onNext: () => void;
+}
+
+export default function Checkoutp1({ onNext }: Checkoutp1Props) {
   const router = useRouter();
   
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  // PRE-FILL FIX: Initializing states directly from localStorage if they exist
+  const [name, setName] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("explorer_name") || "";
+    }
+    return "";
+  });
+
+  const [email, setEmail] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("explorer_email") || "";
+    }
+    return "";
+  });
+
+  const [phone, setPhone] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("explorer_phone") || "";
+    }
+    return "";
+  });
 
   const [errors, setErrors] = useState({
     name: false,
@@ -39,8 +61,21 @@ export default function Checkoutp1() {
     phoneInvalid: false,
   });
 
+  // Sync state if user navigates back while the component stays mounted
+  useEffect(() => {
+    const savedName = localStorage.getItem("explorer_name");
+    const savedEmail = localStorage.getItem("explorer_email");
+    const savedPhone = localStorage.getItem("explorer_phone");
+
+    if (savedName) setName(savedName);
+    if (savedEmail) setEmail(savedEmail);
+    if (savedPhone) setPhone(savedPhone);
+  }, []);
+
   const handleTransmission = () => {
-    localStorage.clear();
+    localStorage.removeItem("explorer_name");
+    localStorage.removeItem("explorer_email");
+    localStorage.removeItem("explorer_phone");
     router.push("/cart");
   };
 
@@ -79,15 +114,13 @@ export default function Checkoutp1() {
     localStorage.setItem("explorer_email", email);
     localStorage.setItem("explorer_phone", phone);
 
-    router.push("/checkoutp2");
+    onNext();
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
+    <div className="min-h-full h-full bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
       
-      {/* BULLETPROOF CHROME AUTOFILL OVERRIDE 
-        This injects the raw CSS rule to force a black background and white text when autofilled 
-      */}
+      {/* BULLETPROOF CHROME AUTOFILL OVERRIDE */}
       <style dangerouslySetInnerHTML={{__html: `
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
@@ -104,13 +137,11 @@ export default function Checkoutp1() {
         src={bgImg}
         alt="Cart background"
         fill
-        className="object-cover z-0 pointer-events-none opacity-75"
+        className="object-cover z-0 pointer-events-none opacity-100"
         priority
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
       
-      
-
       <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20">
         
         <div className="flex justify-between items-center px-6 py-4 bg-black border-b border-red-950/50">
@@ -118,9 +149,11 @@ export default function Checkoutp1() {
             <p className={`${bebasNeue.className} text-xs uppercase text-white tracking-widest font-normal`}>Checkout Protocol</p>
             <h2 className={`text-xl font-semibold scale-y-125 ${spaceGrotesk.className} tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
           </div>
-        <Link href="/cart"> <button className="text-xs text-zinc-400 hover:text-white flex items-center gap-1.5 uppercase tracking-wide group transition-colors">
-            <span className="text-red-600 font-bold group-hover:scale-110 transition-transform">✕</span> Abort
-          </button></Link> 
+          <Link href="/cart"> 
+            <button className="text-xs text-zinc-400 hover:text-white flex items-center gap-1.5 uppercase tracking-wide group transition-colors">
+              <span className="text-red-600 font-bold group-hover:scale-110 transition-transform">✕</span> Abort
+            </button>
+          </Link> 
         </div>
 
         <div className="flex flex-col md:flex-row min-h-[420px]">
@@ -151,11 +184,12 @@ export default function Checkoutp1() {
               <h3 className={`text-[30px] ${spaceGrotesk.className} font-normal uppercase tracking-tighter text-white`}>Transmission Details</h3>
               <p className={`text-[17px] ${spaceGrotesk.className} text-white font-normal mb-10 tracking-wide`}>Please identify yourself for the expedition log</p>
 
-              <div className="space-y-8 max-w-md">
+              <div className="space-y-10 max-w-md">
                 
-                <div>
+                {/* NAME INPUT BLOCK */}
+                <div className="relative pb-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>Explorer Designation :</label>
+                    <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>Enter Name :</label>
                     <input 
                       type="text" 
                       name="name"
@@ -170,12 +204,13 @@ export default function Checkoutp1() {
                       }`}
                     />
                   </div>
-                  {errors.name && <p className="text-[10px] text-red-500 sm:ml-46 mt-1">This destination identification coordinate field cannot be blank.</p>}
+                  {errors.name && <p className="text-[10px] text-red-500 sm:left-46 absolute top-[100%] left-0 mt-0.5">This destination identification coordinate field cannot be blank.</p>}
                 </div>
 
-                <div>
+                {/* EMAIL INPUT BLOCK */}
+                <div className="relative pb-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>✉️ Comm Link :</label>
+                    <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>Enter Email-address :</label>
                     <input 
                       type="email" 
                       name="email"
@@ -190,30 +225,31 @@ export default function Checkoutp1() {
                       }`}
                     />
                   </div>
-                  {errors.email && <p className="text-[10px] text-red-500 sm:ml-46 mt-1">A valid core comm directory link route is required.</p>}
+                  {errors.email && <p className="text-[10px] text-red-500 sm:left-46 absolute top-[100%] left-0 mt-0.5">A valid core comm directory link route is required.</p>}
                 </div>
 
-                <div>
+                {/* PHONE INPUT BLOCK */}
+                <div className="relative pb-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-  <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>📞 Priority Frequency :</label>
-  <input 
-    type="tel" 
-    name="phone"
-    autoComplete="off" /* Prevents browser autofill panel from forcing the white overlay style here */
-    value={phone}
-    onChange={handlePhoneChange}
-    placeholder="Phone Number" 
-    className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-600 transition-colors ${
-      errors.phone || errors.phoneInvalid ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
-    }`}
-    style={{
-      backgroundColor: 'transparent',
-      WebkitBackgroundClip: 'text', /* Prevents internal Webkit backgrounds from rendering */
-    }}
-  />
-</div>
-                  {errors.phone && <p className="text-[10px] text-red-500 sm:ml-46 mt-1">Secure log transmissions require a priority frequency link line.</p>}
-                  {errors.phoneInvalid && <p className="text-[10px] text-red-500 sm:ml-46 mt-1">Priority frequency configuration protocol requires exactly 10 digits.</p>}
+                    <label className={`${spaceGrotesk.className} text-sm text-white w-44 font-light tracking-wide`}>Enter Phone-Number:</label>
+                    <input
+                      type="tel" 
+                      name="phone"
+                      autoComplete="off"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      placeholder="Phone Number" 
+                      className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-600 transition-colors ${
+                        errors.phone || errors.phoneInvalid ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
+                      }`}
+                      style={{
+                        backgroundColor: 'transparent',
+                        WebkitBackgroundClip: 'text',
+                      }}
+                    />
+                  </div>
+                  {errors.phone && <p className="text-[10px] text-red-500 sm:left-46 absolute top-[100%] left-0 mt-0.5">Secure log transmissions require a priority frequency link line.</p>}
+                  {errors.phoneInvalid && <p className="text-[10px] text-red-500 sm:left-46 absolute top-[100%] left-0 mt-0.5">Priority frequency configuration protocol requires exactly 10 digits.</p>}
                 </div>
 
               </div>
@@ -231,8 +267,6 @@ export default function Checkoutp1() {
           </div>
         </div>
       </main>
-
-      
 
     </div>
   );

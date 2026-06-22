@@ -57,9 +57,9 @@ export default function TedxThemeSection() {
         </div>
 
         {/* About the Theme Box */}
-        <div className="w-full mt-24 sm:mt-36 md:mt-48 mb-8"> 
+        <div className="w-full mt-24 sm:mt-36 md:mt-120 mb-8"> 
           {/* The main box panel */}
-          <div className="flex flex-col p-6 sm:p-8 md:p-12 bg-[#BC1918]/10 border border-[#EB0028CC] sm:border-2 rounded-2xl items-center text-white shadow-2xl backdrop-blur-sm">
+          <div className="flex flex-col p-6 sm:p-8 md:p-12 bg-[#BC1918]/10 border border-[#EB0028CC] sm:border-2 rounded-2xl items-center text-white shadow-2xl ">
             
             {/* Heading */}
             <h2 className="font-[family-name:var(--font-bebas-neue)] text-3xl sm:text-5xl md:text-6xl tracking-wide text-center mb-6 uppercase">
