@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, UIEvent, MouseEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import SpeakerCard from "@/src/components/pastSpeakers/SpeakerCard";
 import { speakerServices } from "@/services/speakerServices";
 import { Speaker } from "@/types/speaker";
@@ -11,6 +11,8 @@ const YEARS = ["2025","2024","2023","2022","2021","2019"];
 
 export default function PastSpeakers() {
   const [selectedYear, setSelectedYear] = useState("2025");
+  const [scrollingYear, setScrollingYear] = useState("2025");
+  
   const [activeIdx, setActiveIdx] = useState(0);
   const [currentSpeakers, setSpeakers] = useState<Speaker[] | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -18,6 +20,7 @@ export default function PastSpeakers() {
   
   const isInternalScrolling = useRef(false);
   const scrollDebounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const dataFetchTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const dragTracker = useRef({
     isDragging: false,
@@ -120,6 +123,11 @@ export default function PastSpeakers() {
     const distance = (x - dragTracker.current.startX) * walkMultiplier;
     
     container.scrollLeft = dragTracker.current.startScrollLeft - distance;
+    
+    const centerIndex = getCenteredElementIndex(container);
+    if (YEARS[centerIndex] && YEARS[centerIndex] !== scrollingYear) {
+      setScrollingYear(YEARS[centerIndex]);
+    }
   };
 
   const handleMouseUpOrLeave = (e: MouseEvent<HTMLDivElement>, type: "years" | "speakers") => {
@@ -132,8 +140,14 @@ export default function PastSpeakers() {
 
     const centerIndex = getCenteredElementIndex(container);
     if (type === "years") {
-      if (YEARS[centerIndex] && YEARS[centerIndex] !== selectedYear) {
-        setSelectedYear(YEARS[centerIndex]);
+      if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
+      
+      const targetedYear = YEARS[centerIndex];
+      if (targetedYear) {
+        setScrollingYear(targetedYear);
+        if (targetedYear !== selectedYear) {
+          setSelectedYear(targetedYear);
+        }
       }
       centerElementByIndex(yearsRef.current, centerIndex, "smooth");
     } else {
@@ -156,14 +170,25 @@ export default function PastSpeakers() {
   const handleYearsScroll = (e: UIEvent<HTMLDivElement>) => {
     if (isInternalScrolling.current || dragTracker.current.isDragging) return;
 
-    const centerIndex = getCenteredElementIndex(e.currentTarget);
-    if (YEARS[centerIndex] && YEARS[centerIndex] !== selectedYear) {
-      setSelectedYear(YEARS[centerIndex]);
+    const targetContainer = e.currentTarget;
+    const centerIndex = getCenteredElementIndex(targetContainer);
+    const currentOverYear = YEARS[centerIndex];
+    if (currentOverYear && currentOverYear !== scrollingYear) {
+      setScrollingYear(currentOverYear);
     }
+    if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
+    dataFetchTimeout.current = setTimeout(() => {
+      if (currentOverYear && currentOverYear !== selectedYear) {
+        setSelectedYear(currentOverYear);
+      }
+    }, 200); 
   };
 
   const handleYearClick = (year: string, idx: number) => {
     if (dragTracker.current.isDragging) return;
+    if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
+    
+    setScrollingYear(year);
     setSelectedYear(year);
     centerElementByIndex(yearsRef.current, idx, "smooth");
   };
@@ -176,7 +201,7 @@ export default function PastSpeakers() {
 
   return (
     <div className="min-h-screen text-white gap-2 sm:gap-4 flex flex-col items-center overflow-hidden relative ">
-      <h2 className="lg:text-[100px] md:text-[80px] sm:text-[70px] text-[50px] xl:text-[110px] uppercase tracking-[0.04rem] sm:tracking-[0.08rem] text-center font-bebas text-[#F3E9DC] leading-tight  ">
+      <h2 className="lg:text-[100px] md:text-[80px] sm:text-[70px] text-[50px] xl:text-[110px] uppercase tracking-[0.04rem] sm:tracking-[0.08rem] text-center font-bebas text-[#F3E9DC] leading-tight">
         Past Speakers
       </h2>
       
@@ -196,15 +221,15 @@ export default function PastSpeakers() {
           }}
         >
           {YEARS.map((year, idx) => {
-            const isSelected = selectedYear === year;
+            const isVisualSelected = scrollingYear === year;
             return (
               <button
                 key={year}
                 onClick={() => handleYearClick(year, idx)}
                 className={`relative px-5 sm:px-8 lg:px-10 py-1.5 text-[18px] sm:text-[22px] lg:text-[28px] font-albertSans tracking-wider rounded-full border snap-center flex-shrink-0 transition-all duration-500 ease-out select-none
-                    ${isSelected ? "border-[#B3031C] text-white " : "border-[#B3031C] text-zinc-500 hover:text-zinc-300 scale-95"}`}
+                    ${isVisualSelected ? "border-[#B3031C] text-white " : "border-[#B3031C] text-zinc-500 hover:text-zinc-300 scale-95"}`}
               >
-                {isSelected && (
+                {isVisualSelected && (
                   <motion.div
                     layoutId="activeYearBg"
                     className="absolute inset-0 bg-gradient-to-r from-[#EB0028] to-[#B3031C] rounded-full -z-10"
@@ -233,21 +258,19 @@ export default function PastSpeakers() {
             scrollSnapType: "x mandatory"
           }}
         >
-          <AnimatePresence mode="popLayout">
-            {!currentSpeakers ? (
-              <SpeakersSkeleton />
-            ) : (
-              currentSpeakers.map((speaker, idx) => (
-                <div key={speaker._id} className="snap-center flex-shrink-0 select-none">
-                  <SpeakerCard
-                    speaker={speaker}
-                    isSelected={idx === activeIdx}
-                    onClick={() => handleSpeakerClick(idx)}
-                  />
-                </div>
-              ))
-            )}
-          </AnimatePresence>
+          {!currentSpeakers ? (
+            <SpeakersSkeleton />
+          ) : (
+            currentSpeakers.map((speaker, idx) => (
+              <div key={speaker._id} className="snap-center flex-shrink-0 select-none">
+                <SpeakerCard
+                  speaker={speaker}
+                  isSelected={idx === activeIdx}
+                  onClick={() => handleSpeakerClick(idx)}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
