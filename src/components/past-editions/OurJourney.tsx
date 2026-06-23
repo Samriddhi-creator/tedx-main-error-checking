@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -48,7 +48,7 @@ export default function OurJourney() {
     useEffect(() => {
         // Smooth scroll setup
         const lenis = new Lenis({ duration: 2 });
-        
+
         lenis.on('scroll', ScrollTrigger.update);
 
         function update(time: number) {
@@ -245,7 +245,7 @@ export default function OurJourney() {
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
                 const angle = (360 / editions.length) * i;
-                
+
                 // Final destination state
                 gsap.set(card, {
                     "--card-rot": `${angle}deg`,
@@ -320,10 +320,10 @@ export default function OurJourney() {
     return (
         <>
             {/* 3D Gallery Overlay */}
-            <div 
-                ref={overlayRef} 
+            <div
+                ref={overlayRef}
                 className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center pt-10"
-                style={{ 
+                style={{
                     opacity: t,
                     pointerEvents: rulerProgress >= 0.4 ? "auto" : "none",
                     display: isOverlayActive ? "flex" : "none"
@@ -348,10 +348,10 @@ export default function OurJourney() {
                     onWheel={handleWheel}
                 >
                     {/* 3D Carousel Rotator */}
-                    <div 
+                    <div
                         ref={carouselRef}
                         className="relative w-[280px] h-[400px] md:w-[350px] md:h-[500px]"
-                        style={{ 
+                        style={{
                             transformStyle: "preserve-3d",
                             transform: `rotateY(${rotationY}deg)`,
                             transition: isDragging.current ? "none" : "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
@@ -361,7 +361,7 @@ export default function OurJourney() {
                             const angle = (360 / editions.length) * i;
                             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
                             const finalZ = isMobile ? 300 : 500;
-                            
+
                             // Calculate transform parameters dynamically based on progress t
                             const cardZ = -1500 + (finalZ + 1500) * t;
                             const cardRot = angle - 180 * (1 - t);
@@ -369,7 +369,7 @@ export default function OurJourney() {
                             const cardScale = 0.1 + 0.9 * t;
 
                             return (
-                                <div 
+                                <div
                                     key={edition.id}
                                     ref={el => { cardsRef.current[i] = el; }}
                                     className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center rounded-2xl border-[2.5px] border-[#EB0028]/40 bg-black/80 backdrop-blur-md p-4 hover:border-[#EB0028] transition-colors cursor-pointer group shadow-lg"
@@ -491,13 +491,13 @@ export default function OurJourney() {
 
                                 <div className="journey-entry entry-left w-full md:w-1/2 md:pr-16 flex flex-col justify-center items-center md:items-start mb-4 md:mb-0 md:mt-16">
                                     {edition.side === "left" && (
-                                        <a href={edition.href} className="flex flex-col items-center md:items-start w-full cursor-pointer hover:opacity-80 transition-opacity">
+                                        <Link href={edition.href} className="flex flex-col items-center md:items-start w-full cursor-pointer hover:opacity-80 transition-opacity">
                                             <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
                                             <div style={{ fontFamily: 'var(--font-space)' }}>
                                                 <h2 className="text-white font-bold text-lg uppercase text-center md:text-left">{edition.title} ({edition.year})</h2>
                                                 <p className="text-white/60 text-sm mt-2 text-center md:text-left">{edition.description}</p>
                                             </div>
-                                        </a>
+                                        </Link>
                                     )}
                                 </div>
 
@@ -510,13 +510,13 @@ export default function OurJourney() {
 
                                 <div className="journey-entry entry-right w-full md:w-1/2 md:pl-16 flex flex-col justify-center items-center md:items-end md:mt-16">
                                     {edition.side === "right" && (
-                                        <a href={edition.href} className="flex flex-col items-center md:items-end w-full cursor-pointer hover:opacity-80 transition-opacity">
+                                        <Link href={edition.href} className="flex flex-col items-center md:items-end w-full cursor-pointer hover:opacity-80 transition-opacity">
                                             <Image src={edition.image} alt={edition.title} width={720} height={720} className="object-contain mb-0 w-full md:w-[320px]" priority />
                                             <div style={{ fontFamily: 'var(--font-space)' }}>
                                                 <h2 className="text-white font-bold text-lg uppercase text-center md:text-right">{edition.title} ({edition.year})</h2>
                                                 <p className="text-white/60 text-sm mt-2 text-center md:text-right">{edition.description}</p>
                                             </div>
-                                        </a>
+                                        </Link>
                                     )}
                                 </div>
                             </div>
