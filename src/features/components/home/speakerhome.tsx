@@ -8,30 +8,25 @@ export default function SpeakerHome() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [activeSidebarSpeakerId, setActiveSidebarSpeakerId] = useState<number | null>(null);
 
-
   const currentPage: SpeakerPageData = SPEAKER_PAGES[activeIndex] || SPEAKER_PAGES[0];
 
   useEffect(() => {
     setActiveSidebarSpeakerId(null);
   }, [activeIndex]);
 
-
   if (!currentPage) {
     return (
-      <div style={{  minHeight: '100vh', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ letterSpacing: '2px' }}>LOADING SPEAKER CONFIGURATION...</p>
       </div>
     );
   }
 
-
   const currentSidebarList = currentPage.sidebarSpeakers || [];
 
-  
   const selectedSidebarSpeaker = currentSidebarList.find(
     (speaker) => speaker.id === activeSidebarSpeakerId
   );
-
 
   const displayImage = selectedSidebarSpeaker ? selectedSidebarSpeaker.image : currentPage.mainSpeaker?.image;
   const displayTitle = selectedSidebarSpeaker ? "PANEL SPEAKER" : currentPage.mainSpeaker?.name;
@@ -70,7 +65,7 @@ export default function SpeakerHome() {
         position: 'relative'
       }}>
         
-        
+        {/* SIDEBAR NAVIGATION COLUMN */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <h2 style={{
             textTransform: 'uppercase',
@@ -143,7 +138,7 @@ export default function SpeakerHome() {
           </div>
         </div>
 
-        
+        {/* FEATURED SPEAKERS PORTRAIT BOX */}
         <div style={{
           width: '100%',
           height: '560px',
@@ -164,7 +159,7 @@ export default function SpeakerHome() {
           />
         </div>
 
-   
+        {/* DETAILS PANEL & ACTION CONTROLS */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -175,18 +170,18 @@ export default function SpeakerHome() {
         }}>
     
           <div style={{ marginBottom: 'auto', marginTop: '40px' }}>
+            {/* MODIFIED: Reduced weight to 600 (semi-bold) and matched your layout fonts */}
             <h3 style={{
               fontSize: '48px',
-              fontWeight: '900',
+              fontWeight: '600',
               textTransform: 'uppercase',
               letterSpacing: '1px',
               margin: '0 0 8px 0',
-              fontFamily: 'Impact, sans-serif'
+              fontFamily: 'system-ui, -apple-system, sans-serif'
             }}>
               {displayTitle}
             </h3>
             
-
             <div style={{ width: '80px', height: '5px', backgroundColor: '#b30000', marginBottom: '20px' }} />
 
             <h4 style={{
@@ -209,11 +204,9 @@ export default function SpeakerHome() {
             }}>
               {displayDescription}
             </p>
-
-          
           </div>
 
-        
+          {/* NEXT / PREV CAROUSEL CONTROLS */}
           <div style={{
             display: 'flex',
             gap: '20px',
@@ -221,67 +214,50 @@ export default function SpeakerHome() {
             marginBottom: '20px',
             marginRight: '40px'
           }}>
+            
+            <style>{`
+              .scale-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                width: 150px;
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0.8;
+                transform: scale(1);
+                transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+                outline: none;
+              }
+              .scale-btn:hover {
+                opacity: 1;
+              }
+              .scale-btn:active {
+                transform: scale(0.94);
+              }
+            `}</style>
+
             {/* LEFT BUTTON */}
-            <button 
-              onClick={handlePrev}
-              style={{ 
-                background: 'none', 
-                border: 'none', 
-                cursor: 'pointer', 
-                padding: 0, 
-                width: '150px', 
-                height: '150px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                opacity: 0.8,
-                transition: 'opacity 0.2s'
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.8')}
-            >
+            <button onClick={handlePrev} className="scale-btn">
               <img 
-                src="/image 13.png" 
+                src="/image 13.svg" 
                 alt="Previous Page" 
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'contain' 
-                }} 
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
             </button>
 
             {/* RIGHT BUTTON */}
-            <button 
-              onClick={handleNext}
-              style={{ 
-                background: 'none', 
-                border: 'none', 
-                cursor: 'pointer', 
-                padding: 0, 
-                width: '150px', 
-                height: '150px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                opacity: 0.8,
-                transition: 'opacity 0.2s' 
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.8')}
-            >
+            <button onClick={handleNext} className="scale-btn">
               <img 
-                src="/image 14.png" 
+                src="/image 14.svg" 
                 alt="Next Page" 
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'contain' 
-                }} 
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
             </button>
-          </div>
 
+          </div>
         </div>
 
       </div>

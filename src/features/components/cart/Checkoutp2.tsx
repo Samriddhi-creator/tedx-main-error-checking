@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation"; 
+import React, { useState, useEffect, useRef } from "react";
 
 import bgImg from "./background.png"; 
 import { Bebas_Neue, Space_Grotesk } from "next/font/google";
-
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -17,19 +15,68 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
-export default function Checkoutp2() {
-  const router = useRouter();
-  const [locationType, setLocationType] = useState("in-campus");
+interface Checkoutp2Props {
+  onNext: () => void;
+  onBack: () => void;
+  onStepChange?: (stepNumber: number) => void;
+}
+
+export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2Props) {
+  // PRE-FILL CONFIGURATION: Initializing states directly from localStorage values if available
+  const [locationType, setLocationType] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("location_type") || "in-campus";
+    }
+    return "in-campus";
+  });
 
   // In-Campus State Trackers
-  const [sector, setSector] = useState("");
-  const [room, setRoom] = useState("");
+  const [sector, setSector] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("hostel_sector") || "";
+    }
+    return "";
+  });
+  
+  const [room, setRoom] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("room_coordinate") || "";
+    }
+    return "";
+  });
+  
+  // Custom Dropdown Open/Close UI State
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Out-of-Campus State Trackers
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const [address, setAddress] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("out_address") || "";
+    }
+    return "";
+  });
+  
+  const [city, setCity] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("out_city") || "";
+    }
+    return "";
+  });
+  
+  const [state, setState] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("out_state") || "";
+    }
+    return "";
+  });
+  
+  const [postalCode, setPostalCode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("out_postal") || "";
+    }
+    return "";
+  });
 
   // Validation Error Flag Trackers
   const [errors, setErrors] = useState({
@@ -41,6 +88,36 @@ export default function Checkoutp2() {
     postalCode: false,
   });
 
+  const SECTORS = ["CV Raman", "Aryabhatta", "Kalam", "Asima"];
+
+  // Sync state cleanly if navigation steps trigger re-renders
+  useEffect(() => {
+    const savedType = localStorage.getItem("location_type");
+    if (savedType) {
+      setLocationType(savedType);
+      if (savedType === "in-campus") {
+        setSector(localStorage.getItem("hostel_sector") || "");
+        setRoom(localStorage.getItem("room_coordinate") || "");
+      } else {
+        setAddress(localStorage.getItem("out_address") || "");
+        setCity(localStorage.getItem("out_city") || "");
+        setState(localStorage.getItem("out_state") || "");
+        setPostalCode(localStorage.getItem("out_postal") || "");
+      }
+    }
+  }, []);
+
+  // Close custom dropdown when clicking anywhere outside of it
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -51,12 +128,15 @@ export default function Checkoutp2() {
       setErrors(prev => ({
         ...prev,
         sector: sectorInvalid,
-        room: roomEmpty
+        room: roomEmpty,
+        address: false,
+        city: false,
+        state: false,
+        postalCode: false
       }));
 
       if (sectorInvalid || roomEmpty) return;
 
-      // FIXED: Persist In-Campus tracking references down to localStorage
       localStorage.setItem("location_type", "in-campus");
       localStorage.setItem("hostel_sector", sector);
       localStorage.setItem("room_coordinate", room);
@@ -69,6 +149,8 @@ export default function Checkoutp2() {
 
       setErrors(prev => ({
         ...prev,
+        sector: false,
+        room: false,
         address: addressEmpty,
         city: cityEmpty,
         state: stateEmpty,
@@ -77,7 +159,6 @@ export default function Checkoutp2() {
 
       if (addressEmpty || cityEmpty || stateEmpty || postalEmpty) return;
 
-      // FIXED: Persist Out-of-Campus address matrix strings down to localStorage
       localStorage.setItem("location_type", "out-campus");
       localStorage.setItem("out_address", address);
       localStorage.setItem("out_city", city);
@@ -85,12 +166,11 @@ export default function Checkoutp2() {
       localStorage.setItem("out_postal", postalCode);
     }
 
-    // All clear -> Forward to Manifest Review Step
-    router.push("/checkoutp3");
+    onNext();
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
+    <div className="min-h-full h-full bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
       
       {/* BACKGROUND GRAPHIC */}
       <div 
@@ -104,32 +184,36 @@ export default function Checkoutp2() {
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
    
-     
-      {/* 2. MAIN INTERFACE BOX */}
-      <main className="max-w-4xl w-full mx-auto border border-red-950/80  rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-0">
+      {/* MAIN INTERFACE BOX */}
+      <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20">
         
         {/* Title Block Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b bg-black  border-red-950/50">
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-red-950/50">
           <div>
             <p className={`${spaceGrotesk.className} text-[12px] uppercase text-white tracking-widest font-lighter`}>Checkout Protocol</p>
             <h2 className={`${spaceGrotesk.className} text-xl font-semibold scale-y-125 tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
           </div>
-        <Link href="/cart"> <button className={`${spaceGrotesk.className} text-xs text-white hover:text-red-500 flex items-center gap-1.5 uppercase tracking-wide group transition-colors`}>
-            <span className="text-red-500 group-hover:scale-110 transition-transform">✕</span> Abort
-          </button></Link> 
+          <Link href="/cart"> 
+            <button className={`${spaceGrotesk.className} text-xs text-white hover:text-red-500 flex items-center gap-1.5 uppercase tracking-wide group transition-colors`}>
+              <span className="text-red-500 group-hover:scale-110 transition-transform">✕</span> Abort
+            </button>
+          </Link> 
         </div>
 
         {/* Content Segment Wrapper */}
-        <div className="flex flex-col md:flex-row min-h-[420px]">
+        <div className="flex flex-col md:flex-row min-h-[460px]">
           
           {/* LEFT SIDE: Progress Tracker */}
-          <div className="w-full md:w-1/4 p-6 border-b bg-black md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between  relative">
+          <div className="w-full md:w-1/4 p-6 border-b bg-black md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between relative">
             <div className="space-y-6 relative">
               <p className={`${spaceGrotesk.className} text-[10px] uppercase text-zinc-500 tracking-widest font-bold`}>Progress</p>
               
-              <div className="flex items-center gap-3">
+              <div 
+                className="flex items-center gap-3 cursor-pointer" 
+                onClick={() => onStepChange && onStepChange(1)}
+              >
                 <span className="text-red-600 text-[10px] font-bold">✓</span>
-                <span className="text-xs text-zinc-500 font-normal tracking-wide">Coordinates</span>
+                <span className="text-xs text-zinc-500 font-normal tracking-wide hover:text-zinc-300 transition-colors">Coordinates</span>
               </div>
               
               <div className="flex items-center gap-3 pl-0.5">
@@ -143,7 +227,10 @@ export default function Checkoutp2() {
               </div>
             </div>
 
-            <button onClick={() => router.push("/checkoutp1")} className="mt-12 md:mt-0 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors cursor-pointer">
+            <button 
+              onClick={onBack} 
+              className="mt-12 md:mt-0 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors cursor-pointer"
+            >
               ← BACK
             </button>
           </div>
@@ -158,62 +245,93 @@ export default function Checkoutp2() {
                 Designate the drop point for your artifacts and passes
               </p>
 
-              <div className="space-y-3 max-w-md">
-                
-                {/* Segmented Location Tabs */}
-                <div className="inline-flex bg-[#303030] p-1 border border-zinc-800 rounded-lg mb-4">
-                  <button 
-                    onClick={() => setLocationType("in-campus")}
-                    className={`${spaceGrotesk.className} px-4 py-1.5 text-xs font-lighter tracking-wide transition-all rounded-md ${
-                      locationType === "in-campus" 
-                        ? "bg-black border border-zinc-700 text-white shadow-md" 
-                        : "text-white hover:text-red-500"
-                    }`}
-                  >
-                    In Campus
-                  </button>
-                  <button 
-                    onClick={() => setLocationType("out-campus")}
-                    className={`${spaceGrotesk.className} px-4 py-1.5 text-xs font-lighter tracking-wide transition-all rounded-md ${
-                      locationType === "out-campus" 
-                        ? "bg-black border border-zinc-700 text-white shadow-md" 
-                        : "text-white hover:text-red-500"
-                    }`}
-                  >
-                    Out of Campus
-                  </button>
-                </div>
+              {/* Location Selector Tabs */}
+              <div className="inline-flex bg-[#303030] p-1 border border-zinc-800 rounded-lg mb-6">
+                <button 
+                  type="button"
+                  onClick={() => setLocationType("in-campus")}
+                  className={`${spaceGrotesk.className} px-4 py-1.5 text-xs font-lighter tracking-wide transition-all rounded-md ${
+                    locationType === "in-campus" 
+                      ? "bg-black border border-zinc-700 text-white shadow-md" 
+                      : "text-white hover:text-red-500"
+                  }`}
+                >
+                  In Campus
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => setLocationType("out-campus")}
+                  className={`${spaceGrotesk.className} px-4 py-1.5 text-xs font-lighter tracking-wide transition-all rounded-md ${
+                    locationType === "out-campus" 
+                      ? "bg-black border border-zinc-700 text-white shadow-md" 
+                      : "text-white hover:text-red-500"
+                  }`}
+                >
+                  Out of Campus
+                </button>
+              </div>
 
+              {/* Height-stable container */}
+              <div className="max-w-md min-h-[290px]">
+                
                 {/* IN CAMPUS VIEW */}
                 {locationType === "in-campus" && (
-                  <div className="space-y-6 ml-5">
+                  <div className="space-y-8 ml-5">
                     
-                    {/* Dropdown Menu Option */}
-                    <div>
+                    {/* CUSTOM DROPDOWN SELECT ROUTINE */}
+                    <div className="relative" ref={dropdownRef}>
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-                        <label className={`${spaceGrotesk.className} text-xs scale-y-125 text-white w-24 font-lighter tracking-wide`}>Hostel Sector :</label>
-                        <select 
-                          value={sector}
-                          onChange={(e) => {
-                            setSector(e.target.value);
-                            if (e.target.value !== "") setErrors(p => ({ ...p, sector: false }));
-                          }}
-                          className={`${spaceGrotesk.className} bg-[#2a2a2a] border py-1.5 text-xs text-white focus:outline-none tracking-wide cursor-pointer w-44 font-normal rounded transition-colors ${
-                            errors.sector ? "border-red-600" : "border-white"
+                        <label className={`${spaceGrotesk.className} text-xs scale-y-125 text-white w-24 font-lighter tracking-wide`}>
+                          Hostel Sector :
+                        </label>
+                        
+                        {/* Selector Trigger Button */}
+                        <button
+                          type="button"
+                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                          className={`${spaceGrotesk.className} bg-[#2a2a2a] border px-3 py-1.5 text-xs text-white text-left tracking-wide cursor-pointer w-44 font-normal rounded flex items-center justify-between transition-colors ${
+                            errors.sector ? "border-red-600 focus:border-red-600" : "border-white"
                           }`}
                         >
-                          <option value="">SECTOR</option>
-                          <option value="CV Raman">CV Raman</option>
-                          <option value="Aryabhatta">Aryabhatta</option>
-                          <option value="Kalam">Kalam</option>
-                          <option value="Asima">Asima</option>
-                        </select>
+                          <span className={sector ? "text-white" : "text-zinc-400"}>
+                            {sector || "SECTOR"}
+                          </span>
+                          <span className={`text-[9px] text-zinc-400 transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`}>
+                            ▼
+                          </span>
+                        </button>
                       </div>
-                      {errors.sector && <p className="text-[10px] text-red-500 mt-1 sm:ml-25">Please designate an active hostel deployment sector block.</p>}
+
+                      {/* Floating Dropdown Options Panel */}
+                      {isDropdownOpen && (
+                        <div className="absolute left-25 top-full mt-1 w-44 bg-[#1a1a1a] border border-zinc-800 rounded shadow-2xl z-50 overflow-hidden">
+                          {SECTORS.map((sec) => (
+                            <button
+                              key={sec}
+                              type="button"
+                              onClick={() => {
+                                setSector(sec);
+                                setErrors(p => ({ ...p, sector: false }));
+                                setIsDropdownOpen(false);
+                              }}
+                              className={`${spaceGrotesk.className} w-full text-left px-3 py-2 text-xs text-zinc-300 hover:bg-red-600 hover:text-white transition-colors uppercase tracking-wider`}
+                            >
+                              {sec}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Dropdown Error Warning */}
+                      {errors.sector && (
+                        <p className="text-[10px] text-red-500 mt-1 sm:ml-25 absolute left-0 top-full">
+                          Please designate an active hostel deployment sector block.
+                        </p>
+                      )}
                     </div>
 
-                    {/* Room Input element */}
-                    <div>
+                    {/* Room Input component */}
+                    <div className="relative pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         <label className={`${spaceGrotesk.className} text-xs text-white w-34 scale-y-125 font-lighter tracking-wide`}>Room / Coordinate :</label>
                         <input 
@@ -229,18 +347,15 @@ export default function Checkoutp2() {
                           }`}
                         />
                       </div>
-                      {errors.room && <p className="text-[10px] text-red-500 mt-1 sm:ml-25">Specify room parameters to establish drop-point routing maps.</p>}
+                      {errors.room && <p className="text-[10px] text-red-500 mt-1 sm:ml-36 absolute left-0 top-full">Specify room parameters to establish drop-point routing maps.</p>}
                     </div>
-
                   </div>
                 )}
 
                 {/* OUT OF CAMPUS VIEW */}
                 {locationType === "out-campus" && (
-                  <div className="space-y-6 ml-5">
-                    
-                    {/* Address Line */}
-                    <div>
+                  <div className="space-y-8 ml-5">
+                    <div className="relative">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         <label className="text-xs text-zinc-400 w-44 font-normal tracking-wide">Address Line :</label>
                         <input 
@@ -256,13 +371,11 @@ export default function Checkoutp2() {
                           }`}
                         />
                       </div>
-                      {errors.address && <p className="text-[10px] text-red-500 mt-1 sm:ml-46">Address route coordinates are required.</p>}
+                      {errors.address && <p className="text-[10px] text-red-500 mt-1 sm:ml-46 absolute left-0 top-full">Address route coordinates are required.</p>}
                     </div>
 
-                    {/* City and State Grid Container */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* City Column */}
-                      <div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                      <div className="relative">
                         <div className="flex flex-row items-center gap-2">
                           <label className="text-xs text-zinc-400 w-16 font-normal tracking-wide">City :</label>
                           <input 
@@ -277,11 +390,10 @@ export default function Checkoutp2() {
                             }`}
                           />
                         </div>
-                        {errors.city && <p className="text-[10px] text-red-500 mt-1 ml-18">Specify City location.</p>}
+                        {errors.city && <p className="text-[10px] text-red-500 mt-1 ml-18 absolute left-0 top-full">Specify City location.</p>}
                       </div>
                       
-                      {/* State Column */}
-                      <div>
+                      <div className="relative">
                         <div className="flex flex-row items-center gap-2">
                           <label className="text-xs text-zinc-400 w-16 font-normal tracking-wide sm:pl-2">State :</label>
                           <input 
@@ -296,12 +408,11 @@ export default function Checkoutp2() {
                             }`}
                           />
                         </div>
-                        {errors.state && <p className="text-[10px] text-red-500 mt-1 sm:ml-18">Specify State sector.</p>}
+                        {errors.state && <p className="text-[10px] text-red-500 mt-1 sm:ml-18 absolute left-0 top-full">Specify State sector.</p>}
                       </div>
                     </div>
 
-                    {/* Postal Code */}
-                    <div>
+                    <div className="relative pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         <label className="text-xs text-zinc-400 w-44 font-normal tracking-wide">Postal Code :</label>
                         <input 
@@ -316,9 +427,8 @@ export default function Checkoutp2() {
                           }`}
                         />
                       </div>
-                      {errors.postalCode && <p className="text-[10px] text-red-500 mt-1 sm:ml-46">Valid postal sequence routing key required.</p>}
+                      {errors.postalCode && <p className="text-[10px] text-red-500 mt-1 sm:ml-46 absolute left-0 top-full">Valid postal sequence routing key required.</p>}
                     </div>
-
                   </div>
                 )}
 
@@ -338,10 +448,6 @@ export default function Checkoutp2() {
           </div>
         </div>
       </main>
-
-      {/* 3. BOTTOM FOOTER */}
-     
-
     </div>
   );
 }

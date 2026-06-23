@@ -48,9 +48,9 @@ export default function FunFairSection() {
     }}>
       
       {/* Title Header Layout Area */}
-      <div style={{ textAlign: 'center', maxWidth: '850px', marginTop: '0px',marginBottom:'30pxpx'}}>
+      <div style={{ textAlign: 'center', maxWidth: '850px', marginTop: '0px', marginBottom: '30px' }}>
         <h1 
-          className={`${bebasNeue.className} text-[40px] font-bold  scale-y-120`}
+          className={`${bebasNeue.className} text-[40px] font-bold scale-y-120`}
           style={{
             fontSize: '72px',
             marginTop: '0px', 
@@ -109,7 +109,7 @@ export default function FunFairSection() {
             position: 'relative',
             width: '440px',
             height: '440px',
-            marginLeft:'0px',
+            marginLeft: '0px',
             backgroundImage: "url('/image 56.png')", 
             backgroundSize: '100% 100%',
             backgroundRepeat: 'no-repeat',
@@ -135,7 +135,7 @@ export default function FunFairSection() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN:  */}
+        {/* RIGHT COLUMN: Grid Thumbnails */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
@@ -151,7 +151,6 @@ export default function FunFairSection() {
                   position: 'relative',
                   width: '230px',
                   height: '210px',
-
                   backgroundImage: `url('${photo.frameSrc}')`, 
                   backgroundSize: '100% 100%',
                   backgroundRepeat: 'no-repeat',
@@ -160,11 +159,7 @@ export default function FunFairSection() {
                   justifyContent: 'center',
                   transition: 'transform 0.2s ease',
                   transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                  
-          
-                  outline: isSelected ? '4px solid #0099ff' : 'none',
-                  borderRadius: isSelected ? '12px' : '0px',
-                  boxShadow: isSelected ? '0 10px 25px rgba(0,153,255,0.4)' : 'none',
+                  // REMOVED: Blue outline, border-radius changes, and blue drop shadow styling to preserve raw asset edges.
                 }}
               >
               
