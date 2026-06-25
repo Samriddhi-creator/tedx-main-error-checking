@@ -228,7 +228,7 @@ export default function CartMain() {
           </div>
         </div>
 
-        {/* DESKTOP SIDEBAR PANEL: (Hidden on Mobile) */}
+        {/* DESKTOP SIDEBAR PANEL */}
         <div className="hidden md:block md:col-span-1 md:mt-29">
           <div className="bg-black/95 border-[1.5px] border-[#FE1212] rounded-[24px] p-3 pt-5 flex flex-col shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-4 mb-6">
@@ -264,8 +264,9 @@ export default function CartMain() {
               <span className={`${spaceGrotesk.className} text-[20px] font-mono text-white`}>${grandTotal.toFixed(2)}</span>
             </div>
 
+            {/* MODIFIED: Changed text-sm arrow container mapping to match text-xl height properties */}
             <Link href={subtotal > 0 ? "/checkout" : "#"} className={`w-full text-white text-[20px] font-bold uppercase tracking-widest mt-3 py-3.5 rounded-lg flex items-center justify-center gap-2 mb-6 shadow-lg transition-all ${subtotal > 0 ? "bg-[#B90000] hover:opacity-90 active:scale-[0.99]" : "bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"}`}>
-              Proceed to Pay <span className="text-sm">→</span>
+              Proceed to Pay <span className="text-xl font-black">→</span>
             </Link>
           </div>
         </div>
@@ -275,16 +276,13 @@ export default function CartMain() {
       {/* MOBILE EXPANDABLE BOTTOM DRAWER INTERFACE */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
         
-        {/* Semi-transparent tint overlay backdrop */}
         {isDrawerOpen && <div onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 transition-opacity duration-300" />}
 
-        {/* The Drawer Content Element */}
         <div 
           className={`relative bg-zinc-950 border-t-[2px] border-[#FE1212] rounded-t-[24px] px-5 pb-5 pt-2 text-white z-50 shadow-[0_-12px_40px_rgba(0,0,0,0.9)] transition-all duration-300 transform ${
             isDrawerOpen ? "translate-y-0" : "translate-y-[calc(100%-80px)]"
           }`}
         >
-          {/* Centered Trigger Handle Area */}
           <div 
             onClick={() => setIsDrawerOpen(!isDrawerOpen)} 
             className="w-full flex flex-col items-center justify-center py-2 cursor-pointer group"
@@ -295,13 +293,11 @@ export default function CartMain() {
             </div>
           </div>
 
-          {/* INTERNAL CONTENT (Shown completely when expanded) */}
           <div className={`transition-all duration-300 overflow-y-auto ${isDrawerOpen ? "max-h-[340px] opacity-100 my-4" : "max-h-0 opacity-0 pointer-events-none"}`}>
-            <h3 className={`${bebasNeue.className} text-xl tracking-wider text-[#C30000] uppercase border-b border-zinc-900 pb-2 mb-3`}>
+            <h3 className={`${bebasNeue.className} textxl tracking-wider text-[#C30000] uppercase border-b border-zinc-900 pb-2 mb-3`}>
               Itemized Manifest
             </h3>
             
-            {/* Display Separated List Items */}
             <div className="space-y-2.5 font-mono text-sm max-h-[140px] overflow-y-auto pr-1 mb-4">
               {activeItems.length === 0 ? (
                 <p className="text-zinc-600 italic text-xs">No active items inside kit.</p>
@@ -315,7 +311,6 @@ export default function CartMain() {
               )}
             </div>
 
-            {/* Display Separated Calculations Breakdown */}
             <div className={`${spaceGrotesk.className} space-y-2 text-xs text-zinc-400 border-t border-zinc-900 pt-3`}>
               <div className="flex justify-between"><span>Items Subtotal</span><span className="text-white">${subtotal.toFixed(2)}</span></div>
               <div className="flex justify-between"><span>Convenience Fee</span><span className="text-white">${convenienceFee.toFixed(2)}</span></div>
@@ -323,7 +318,6 @@ export default function CartMain() {
             </div>
           </div>
 
-          {/* FIXED BOTTOM ACTION PANEL BAR LAYER */}
           <div className="grid grid-cols-12 items-center border-t border-zinc-900/60 pt-3 mt-1">
             <div className="col-span-6 flex flex-col">
               <span className={`${spaceGrotesk.className} text-[11px] uppercase tracking-wider text-zinc-500 font-bold`}>
@@ -349,7 +343,6 @@ export default function CartMain() {
         </div>
       </div>
 
-      {/* Explore, Discover, Inspire Navigation Links */}
       <div className="w-full flex justify-center pb-28 md:pb-8 pt-4 relative z-10">
         <div className={`${spaceGrotesk.className} flex flex-row items-center gap-6 text-base sm:text-[20px] font-bold tracking-widest text-gray-400 uppercase`}>
           <span className="hover:text-red-500 cursor-pointer transition-colors">Explore</span>

@@ -9,7 +9,7 @@ export interface Speaker {
 
 export interface SpeakerPageData {
   pageId: number;
-  pageTitle: string;
+
   mainSpeaker: {
     name: string;
     displayName: string;
@@ -22,7 +22,7 @@ export interface SpeakerPageData {
 export const SPEAKER_PAGES: SpeakerPageData[] = [
   {
     pageId: 1,
-    pageTitle: "EXPLORERS",
+   
     mainSpeaker: {
       name: "SPEAKER 1",
       displayName: "Elon Musk",
@@ -37,7 +37,7 @@ export const SPEAKER_PAGES: SpeakerPageData[] = [
   },
   {
     pageId: 2,
-    pageTitle: "INNOVATORS",
+
     mainSpeaker: {
       name: "SPEAKER 2",
       displayName: "Sundar Pichai",
@@ -52,7 +52,7 @@ export const SPEAKER_PAGES: SpeakerPageData[] = [
   },
   {
     pageId: 3,
-    pageTitle: "ARTISTS",
+ 
     mainSpeaker: {
       name: "SPEAKER 3",
       displayName: "Tina dabi",
