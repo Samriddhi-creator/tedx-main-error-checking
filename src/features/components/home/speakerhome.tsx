@@ -2,6 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { SPEAKER_PAGES, SpeakerPageData } from '../../../data/page';
+import { Bebas_Neue, Space_Grotesk } from "next/font/google";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function SpeakerHome() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -70,21 +81,21 @@ export default function SpeakerHome() {
       backgroundColor: '#0a0505',
       color: '#ffffff',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '60px 40px',
+      padding: '40px 20px',
       boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
     }}>
       
-      {/* INJECTED CSS TO HIDE SCROLLBAR AND KEEP CONTROLS STABLE */}
+      {/* INJECTED RESPONSIVE LAYOUT STYLES */}
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
         .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
 
         .scale-btn {
@@ -92,8 +103,8 @@ export default function SpeakerHome() {
           border: none;
           cursor: pointer;
           padding: 0;
-          width: 150px;
-          height: 150px;
+          width: 80px;
+          height: 80px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -102,43 +113,128 @@ export default function SpeakerHome() {
           transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
           outline: none;
         }
+        @media (min-width: 768px) {
+          .scale-btn {
+            width: 150px;
+            height: 150px;
+          }
+        }
         .scale-btn:hover {
           opacity: 1;
         }
         .scale-btn:active {
           transform: scale(0.94);
         }
+
+        /* Responsive structural control handling layout shifting */
+        .speaker-grid {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 24px;
+        }
+        .thumb-column {
+          display: flex;
+          flex-direction: row;
+          order: 2;
+          gap: 12px;
+          overflow-x: auto;
+          padding-bottom: 4px;
+          justify-content: center;
+        }
+        .portrait-column {
+          width: 100%;
+          height: 340px;
+          order: 1;
+        }
+        .details-column {
+          width: 100%;
+          order: 3;
+          display: flex;
+          flex-direction: column;
+          padding-left: 0;
+        }
+
+        /* Consolidated true inline heading block wrapper layout styles */
+        .title-underline-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: fit-content;
+          margin-bottom: 24px;
+        }
+        .heading-title {
+          font-size: clamp(40px, 7vw, 64px);
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          transform: scaleY(1.25);
+          margin: 0;
+          display: inline-block;
+        }
+        .red-line {
+          width: 100%;
+          height: 5px;
+          background-color: #b30000;
+          margin-top: 12px;
+        }
+
+        .content-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        @media (min-width: 1024px) {
+          .speaker-grid {
+            display: grid;
+            grid-template-columns: 70px 480px 1fr;
+            gap: 40px;
+            align-items: start;
+          }
+          .thumb-column {
+            flex-direction: column;
+            order: unset;
+            max-height: 560px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            justify-content: flex-start;
+            padding-bottom: 0;
+          }
+          .portrait-column {
+            height: 560px;
+            order: unset;
+          }
+          .details-column {
+            height: 560px;
+            order: unset;
+            padding-left: 20px;
+            justify-content: space-between;
+          }
+          .content-block {
+            align-items: flex-start;
+            text-align: left;
+          }
+          .title-underline-container {
+            align-items: flex-start;
+            margin-left: 150px;
+          }
+        }
       `}} />
 
-      <div style={{
-        width: '100%',
-        maxWidth: '1200px',
-        display: 'grid',
-        gridTemplateColumns: '70px 480px 1fr', 
-        gap: '40px',
-        alignItems: 'start', 
-        position: 'relative'
-      }}>
+      <div className="speaker-grid" style={{ maxWidth: '1200px', position: 'relative' }}>
         
-        {/* LEFT COLUMN: VERTICAL SMALL PHOTOS (SCROLLBAR HIDDEN) */}
-        <div 
-          className="no-scrollbar"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-            maxHeight: '560px',
-            overflowY: 'auto',
-            paddingRight: '5px'
-          }}
-        >
-      
+        {/* THUMBNAILS PANEL */}
+        <div className="thumb-column no-scrollbar">
           {/* MAIN SPEAKER THUMBNAIL */}
           <div
             onClick={() => setActiveSidebarSpeakerId(null)}
             style={{
-              width: '65px',
-              height: '65px',
+              width: '55px',
+              height: '55px',
+              flexShrink: 0,
               cursor: 'pointer',
               borderRadius: '4px',
               overflow: 'hidden',
@@ -163,8 +259,9 @@ export default function SpeakerHome() {
                 key={sidebarSpeaker.id}
                 onClick={() => setActiveSidebarSpeakerId(sidebarSpeaker.id)}
                 style={{
-                  width: '65px',
-                  height: '65px',
+                  width: '55px',
+                  height: '55px',
+                  flexShrink: 0,
                   cursor: 'pointer',
                   borderRadius: '4px',
                   overflow: 'hidden',
@@ -185,11 +282,9 @@ export default function SpeakerHome() {
           })}
         </div>
 
-        {/* MIDDLE COLUMN: FEATURED MAIN PHOTO PORTRAIT BOX */}
-        <div style={{
-          width: '100%',
-          height: '560px',
-          borderRadius: '32px',
+        {/* FEATURED MAIN PHOTO PORTRAIT BOX */}
+        <div className="portrait-column" style={{
+          borderRadius: '24px',
           overflow: 'hidden',
           border: '2px solid rgba(230, 28, 28, 0.6)', 
           boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
@@ -206,47 +301,43 @@ export default function SpeakerHome() {
           />
         </div>
 
-        {/* RIGHT COLUMN: DETAILS PANEL & ACTION CONTROLS */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          paddingLeft: '20px',
-          height: '560px'
-        }}>
-    
-          <div style={{ marginTop: '20px' }}>
-            <h3 style={{
-              fontSize: '48px',
-              fontWeight: '600',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              margin: '0 0 8px 0',
-              fontFamily: 'system-ui, -apple-system, sans-serif'
-            }}>
-              {displayTitle}
-            </h3>
+        {/* DETAILS PANEL & ACTION CONTROLS */}
+        <div className="details-column">
+          <div className="content-block">
             
-            <div style={{ width: '80px', height: '5px', backgroundColor: '#b30000', marginBottom: '20px' }} />
+            {/* LINKED VIEWPORT CONTAINER: Underline acts directly on header width size parameters */}
+            <div className="title-underline-container">
+              <h3 className={`${bebasNeue.className} heading-title`}>
+                {displayTitle}
+              </h3>
+              <div className="red-line" />
+            </div>
 
-            <h4 style={{
-              fontSize: '24px',
-              fontWeight: '700',
-              margin: '0 0 15px 0',
-              color: '#ffffff',
-              textTransform: 'capitalize'
-            }}>
+            <h4 
+              className={bebasNeue.className}
+              style={{
+                fontSize: 'clamp(30px, 5vw, 35px)',
+                margin: '0 0 15px 0',
+                color: '#ffffff',
+                textTransform: 'capitalize',
+                letterSpacing: '1px'
+              }}
+            >
               {displayName}
             </h4>
 
-            <p style={{
-              fontSize: '15px',
-              lineHeight: '1.6',
-              color: '#cccccc',
-              textAlign: 'justify',
-              maxWidth: '460px',
-              marginBottom: '24px'
-            }}>
+            <p 
+              className={spaceGrotesk.className}
+              style={{
+                fontSize: '15px',
+                lineHeight: '1.6',
+                color: '#cccccc',
+                textAlign: 'justify',
+                maxWidth: '100%',
+                marginBottom: '24px',
+                fontWeight: '400'
+              }}
+            >
               {displayDescription}
             </p>
           </div>
@@ -254,12 +345,11 @@ export default function SpeakerHome() {
           {/* NEXT / PREV CAROUSEL CONTROLS */}
           <div style={{
             display: 'flex',
-            gap: '20px',
-            alignSelf: 'flex-end',
-            marginBottom: '20px',
-            marginRight: '40px'
+            gap: '12px',
+            alignSelf: 'center',
+            marginTop: 'auto',
+            marginBottom: '10px'
           }}>
-            
             {/* LEFT BUTTON */}
             <button onClick={handlePrev} className="scale-btn">
               <img 
@@ -277,7 +367,6 @@ export default function SpeakerHome() {
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
             </button>
-
           </div>
         </div>
 

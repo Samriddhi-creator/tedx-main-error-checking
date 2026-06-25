@@ -24,7 +24,7 @@ export const SPEAKER_PAGES: SpeakerPageData[] = [
     pageId: 1,
    
     mainSpeaker: {
-      name: "SPEAKER 1",
+      name: "SPEAKER",
       displayName: "Elon Musk",
       image: "https://i.pinimg.com/webp/1200x/88/94/52/8894528940b3d7eb88a241e3c34f4e25.webp",
       description: "Elon Musk is a billionaire entrepreneur and investor who has founded or led several influential technology companies, with work spanning electric vehicles, aerospace, renewable energy, and AI.",
@@ -39,7 +39,7 @@ export const SPEAKER_PAGES: SpeakerPageData[] = [
     pageId: 2,
 
     mainSpeaker: {
-      name: "SPEAKER 2",
+      name: "SPEAKER",
       displayName: "Sundar Pichai",
       image: "https://i.pinimg.com/736x/70/b7/78/70b778f20ded9570612b0b32cbb4c694.jpg",
       description: "Focuses on technology, AI, and digital transformation.",
@@ -54,7 +54,7 @@ export const SPEAKER_PAGES: SpeakerPageData[] = [
     pageId: 3,
  
     mainSpeaker: {
-      name: "SPEAKER 3",
+      name: "SPEAKER",
       displayName: "Tina dabi",
       image: "https://i.pinimg.com/1200x/b8/d4/e3/b8d4e3a8fb3c423e6f11c355cdba26a9.jpg",
       description: "An IAS officer known for securing the top rank in the 2015 Civil Services Examination and serving in various administrative roles.",
