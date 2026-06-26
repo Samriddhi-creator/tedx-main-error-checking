@@ -41,14 +41,16 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`${bebasNeue.className} flex items-center justify-between gap-2 bg-zinc-950/80 border border-zinc-700 hover:border-red-600 text-white rounded px-3 py-1 text-[13px] font-bold tracking-wider outline-none min-w-[65px] transition-colors`}
+        /* MODIFIED: Reduced padding, font-size, and min-width specifically on mobile (default state) and restored via sm: prefix */
+        className={`${bebasNeue.className} flex items-center justify-between gap-1 sm:gap-2 bg-zinc-950/80 border border-zinc-700 hover:border-red-600 text-white rounded px-2 py-0.5 sm:px-3 sm:py-1 text-[11px] sm:text-[13px] font-bold tracking-wider outline-none min-w-[50px] sm:min-w-[65px] transition-colors`}
       >
         <span>{currentSize}</span>
-        <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown size={10} className={`transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-1 w-[65px] rounded border border-zinc-700 bg-zinc-950 shadow-xl z-50 overflow-hidden">
+        /* MODIFIED: Adjusted dropdown element container width to track seamlessly with the button parent container sizes */
+        <div className="absolute left-0 mt-1 w-[50px] sm:w-[65px] rounded border border-zinc-700 bg-zinc-950 shadow-xl z-50 overflow-hidden">
           <div className="flex flex-col">
             {options.map((size) => (
               <button
@@ -58,7 +60,7 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
                   onSelect(id, size);
                   setIsOpen(false);
                 }}
-                className={`${bebasNeue.className} text-left px-3 py-1.5 text-[13px] text-zinc-300 tracking-wider hover:bg-red-600 hover:text-white transition-colors w-full`}
+                className={`${bebasNeue.className} text-left px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-[13px] text-zinc-300 tracking-wider hover:bg-red-600 hover:text-white transition-colors w-full`}
               >
                 {size}
               </button>
@@ -297,9 +299,19 @@ export default function CartMain() {
 
           {/* INTERNAL CONTENT */}
           <div className={`transition-all duration-300 overflow-y-auto ${isDrawerOpen ? "max-h-[380px] opacity-100 my-4" : "max-h-0 opacity-0 pointer-events-none"}`}>
+            
+            {/* UPDATED: Dynamic labels changing conditionally on opening drawer */}
             <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-3 mb-4">
-              <h2 className={`${bebasNeue.className} text-[26px] tracking-wide text-[#C30000] uppercase`}>Journey Summary</h2>
-              <Compass size={32} className="text-[#FE1212]" />
+              <h2 className={`${bebasNeue.className} text-[26px] tracking-wide text-[#C30000] uppercase`}>
+                {isDrawerOpen ? "Order Summary" : "Journey Summary"}
+              </h2>
+              {isDrawerOpen ? (
+                <span className={`${bebasNeue.className} text-[26px] tracking-wide text-[#FE1212] uppercase font-bold`}>
+                  Price
+                </span>
+              ) : (
+                <Compass size={32} className="text-[#FE1212]" />
+              )}
             </div>
             
             {/* Display Separated List Items */}
