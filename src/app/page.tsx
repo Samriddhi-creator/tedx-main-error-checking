@@ -42,7 +42,6 @@ export default function IndexPage() {
      <AboutTheTheme/>
      <SpeakerHome/>
      <BuyTickets/>
-     <LogoLoopSection/>
     </main>
   );
 }
