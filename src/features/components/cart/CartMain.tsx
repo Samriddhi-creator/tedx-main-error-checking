@@ -41,7 +41,6 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        /* MODIFIED: Reduced padding, font-size, and min-width specifically on mobile (default state) and restored via sm: prefix */
         className={`${bebasNeue.className} flex items-center justify-between gap-1 sm:gap-2 bg-zinc-950/80 border border-zinc-700 hover:border-red-600 text-white rounded px-2 py-0.5 sm:px-3 sm:py-1 text-[11px] sm:text-[13px] font-bold tracking-wider outline-none min-w-[50px] sm:min-w-[65px] transition-colors`}
       >
         <span>{currentSize}</span>
@@ -49,7 +48,6 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
       </button>
 
       {isOpen && (
-        /* MODIFIED: Adjusted dropdown element container width to track seamlessly with the button parent container sizes */
         <div className="absolute left-0 mt-1 w-[50px] sm:w-[65px] rounded border border-zinc-700 bg-zinc-950 shadow-xl z-50 overflow-hidden">
           <div className="flex flex-col">
             {options.map((size) => (
@@ -280,10 +278,10 @@ export default function CartMain() {
         {/* Semi-transparent tint overlay backdrop */}
         {isDrawerOpen && <div onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 transition-opacity duration-300" />}
 
-        {/* MODIFIED: Remapped styles to sync perfectly with Desktop Dialog box font and styling parameters */}
+        {/* Dynamic drawer container transition alignment */}
         <div 
-          className={`relative bg-black/95 border-t-[1.5px] border-[#FE1212] rounded-t-[24px] px-5 pb-5 pt-2 text-white z-50 shadow-[0_-12px_40px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-300 transform ${
-            isDrawerOpen ? "translate-y-0" : "translate-y-[calc(100%-80px)]"
+          className={`relative bg-black/95 border-t-[1.5px] border-[#FE1212] rounded-t-[24px] px-5 pb-5 pt-1 text-white z-50 shadow-[0_-12px_40px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-300 transform ${
+            isDrawerOpen ? "translate-y-0" : "translate-y-[calc(100%-76px)]"
           }`}
         >
           {/* Centered Trigger Handle Area */}
@@ -292,27 +290,23 @@ export default function CartMain() {
             className="w-full flex flex-col items-center justify-center py-2 cursor-pointer group"
           >
             <div className="w-12 h-1 bg-zinc-700 rounded-full group-hover:bg-zinc-500 transition-colors" />
-            <div className="text-zinc-500 mt-1 flex items-center gap-1">
-              {isDrawerOpen ? <ChevronDown size={16} /> : <ChevronUp size={16} className="animate-bounce" />}
+            <div className="text-zinc-500 mt-0.5 flex items-center gap-1">
+              {isDrawerOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} className="animate-bounce" />}
             </div>
+          </div>
+
+          {/* FIXED HEADER: Always keeps "Order Summary" on the left and "Total" on the right */}
+          <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-2 mb-1">
+            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold tracking-wide text-white scale-y-125 uppercase`}>
+              Order Summary
+            </h2>
+            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold text-white uppercase scale-y-125`}>
+              Total
+            </h2>
           </div>
 
           {/* INTERNAL CONTENT */}
           <div className={`transition-all duration-300 overflow-y-auto ${isDrawerOpen ? "max-h-[380px] opacity-100 my-4" : "max-h-0 opacity-0 pointer-events-none"}`}>
-            
-            {/* UPDATED: Dynamic labels changing conditionally on opening drawer */}
-            <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-3 mb-4">
-              <h2 className={`${bebasNeue.className} text-[26px] tracking-wide text-[#C30000] uppercase`}>
-                {isDrawerOpen ? "Order Summary" : "Journey Summary"}
-              </h2>
-              {isDrawerOpen ? (
-                <span className={`${bebasNeue.className} text-[26px] tracking-wide text-[#FE1212] uppercase font-bold`}>
-                  Price
-                </span>
-              ) : (
-                <Compass size={32} className="text-[#FE1212]" />
-              )}
-            </div>
             
             {/* Display Separated List Items */}
             <div className={`${spaceGrotesk.className} space-y-3 font-normal text-sm max-h-[120px] overflow-y-auto pr-1 mb-4 border-b border-red-950/40 pb-3`}>
@@ -344,7 +338,7 @@ export default function CartMain() {
               </div>
             </div>
 
-            {/* Expedition Code Block Added to Mobile Drawer for full responsiveness */}
+            {/* Expedition Code Block */}
             <div className="mt-2">
               <label className={`${spaceGrotesk.className} text-[15px] font-bold text-[#C30000] uppercase block mt-3`}>Expedition Code</label>
               <div className="relative flex items-center mt-1">
@@ -355,20 +349,20 @@ export default function CartMain() {
           </div>
 
           {/* FIXED BOTTOM ACTION PANEL BAR LAYER */}
-          <div className="grid grid-cols-12 items-center border-t border-zinc-900/60 pt-3 mt-1">
-            <div className="col-span-5 flex flex-col">
+          <div className="flex flex-row items-center justify-between border-t border-zinc-900/60 pt-3 mt-1 gap-4">
+            <div className="flex flex-col shrink-0">
               <span className={`${spaceGrotesk.className} text-[11px] uppercase tracking-wider text-zinc-500 font-bold`}>
-                Total
+                Total Due
               </span>
               <span className={`${spaceGrotesk.className} text-2xl font-bold tracking-tight text-white font-mono`}>
                 ${grandTotal.toFixed(2)}
               </span>
             </div>
 
-            <div className="col-span-7">
+            <div className="flex-grow max-w-[65%]">
               <Link 
                 href={subtotal > 0 ? "/checkout" : "#"} 
-                className={`w-full text-center text-white text-[15px] font-bold uppercase tracking-widest py-3.5 rounded-lg block transition-all ${
+                className={`w-full text-center text-white text-[15px] font-bold uppercase tracking-widest py-3 rounded-lg block transition-all ${
                   subtotal > 0 ? "bg-[#B90000] active:scale-[0.98] shadow-lg" : "bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"
                 }`}
               >
