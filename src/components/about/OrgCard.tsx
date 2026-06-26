@@ -14,8 +14,8 @@ export default function OrgCard({ name, img }:{name:string, img:string}) {
             <Image src={img} alt={name} fill className="object-contain object-bottom" />
           </div>
         </div>
-        <div className="absolute bottom-0 left-3 z-20 flex flex-col pointer-events-none max-w-[90%]">
-          <h3 className="text-white font-bebas text-[15px] sm:text-[20px] md:text-[25px] lg:text-[30px] tracking-wider uppercase break-words">
+        <div className="absolute bottom-0 left-2 sm:left-3 z-20 flex flex-col pointer-events-none max-w-[90%]">
+          <h3 className="text-white font-bebas text-[12px] sm:text-[20px] md:text-[25px] lg:text-[30px] tracking-wider uppercase break-words">
             {name}
           </h3>
         </div>

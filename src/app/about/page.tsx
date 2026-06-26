@@ -26,14 +26,14 @@ export default function About() {
             </p>
         </div>
         <div className="flex justify-center">
-            <h2 className="text-[60px] sm:text-[120px] md:text-[140px] lg:text-[200px] xl:text-[250px] font-bebas font-normal tracking-normal text-center text-[#F3E9DC]">
+            <h2 className="text-[50px] sm:text-[120px] md:text-[140px] lg:text-[200px] xl:text-[250px] font-bebas font-normal tracking-normal text-center text-[#F3E9DC]">
             MEET OUR{" "}
             <span className="text-[#EB0028]">
                 TEAM
             </span>
             </h2>
         </div>
-        <div className="flex flex-row justify-evenly px-2 sm:px-4">
+        <div className="flex flex-row justify-evenly sm:px-4">
             <motion.div
                 initial={{ opacity: 0, y: 80 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +62,7 @@ export default function About() {
                         Organizer
                         </span>
 
-                        <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
+                        <h2 className="text-white font-bebas text-[18px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
                         Kavya Mahajan
                         </h2>
                     </div>
@@ -98,14 +98,14 @@ export default function About() {
                         Organizer
                         </span>
 
-                        <h2 className="text-white font-bebas text-[20px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
+                        <h2 className="text-white font-bebas text-[18px] sm:text-[40px] md:text-[50px] lg:text-[70px] font-white tracking-wider uppercase leading-none drop-shadow-lg">
                         Ashmit Malik
                         </h2>
                     </div>
                 </div>
             </motion.div>
         </div>
-        <div className="text-[#F3E9DC] text-[40px] sm:text-[90px] md:text-[100px] lg:text-[120px] font-normal text-center font-bebas">
+        <div className="text-[#F3E9DC] -mb-12 sm:-mb-20 text-[40px] sm:text-[90px] md:text-[100px] lg:text-[120px] font-normal text-center font-bebas">
             CORE TEAM
         </div>
         <div className="flex flex-col gap-2 sm:gap-4 lg:gap-5">
@@ -118,7 +118,8 @@ export default function About() {
                                 <hr className="rounded-full border-[#AA0000] border-t-[6px] sm:border-t-[8px] w-[95%]"/>
                             </h2>
                         </div>
-                        <div className="w-full justify-center overflow-x-auto snap-x mandatory scroll-smooth flex gap-8 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        <div className="w-full justify-start overflow-x-auto snap-x mandatory scroll-smooth flex flex-row gap-6 sm:gap-12 md:gap-15 lg:gap-20 py-2 sm:py-4 mb-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                            <div className="ml-auto" />
                             {sec.members.map((member) => (
                                 <div key={member.id} className="snap-aria flex-shrink-0">
                                     <OrgCard 
@@ -127,6 +128,7 @@ export default function About() {
                                     />
                                 </div>
                             ))}
+                            <div className="mr-auto" />
                         </div>
                         <hr className="w-full border-t-[2px] border-solid mt-2 [border-image-slice:1] [border-image-source:linear-gradient(90deg,rgba(248,248,248,0.1)_0%,#F8F8F8_50%,rgba(248,248,248,0.1)_100%)]" />
                     </div>
