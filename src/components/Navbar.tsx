@@ -52,7 +52,8 @@ export default function Navbar() {
             document.body.style.left = "0";
             document.body.style.right = "0";
             document.body.style.overflow = "hidden";
-            document.body.style.paddingRight = `${scrollbarWidth}px`;
+            // Only compensate for the scrollbar on desktop. // In mobile/DevTools emulation this value can become huge // (e.g. 760px) and break the layout. 
+            if (window.innerWidth >= 768 && scrollbarWidth > 0 && scrollbarWidth < 100) { document.body.style.paddingRight = `${scrollbarWidth}px` };
         } else {
             const scrollY = parseInt(document.body.style.top || "0") * -1;
             document.body.style.position = "";
@@ -134,19 +135,12 @@ export default function Navbar() {
 
                         return (
                             <Link key={label} href={href}
-                                onMouseEnter={() => { setHovered(label); setLastHovered(label); }}
-                                onMouseLeave={() => setHovered(null)}
-                                style={{
-                                    transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms",
-                                    opacity,
+                                onClick={() => setOpen(false)} onMouseEnter={() => {
+                                    setHovered(label); setLastHovered(label);
                                 }}
-                                className={`text-4xl md:text-5xl font-normal font-['Bebas_Neue'] py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform
-                                    bg-clip-text text-transparent
-                                    ${hovered === label
-                                        ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%"
-                                        : "bg-gradient-to-b from-white to-white"}
-                                    ${open ? "translate-y-0" : "translate-y-8"}
-                                    ${hovered === label ? "translate-x-4" : "translate-x-0"}`}>
+                                onMouseLeave={() => setHovered(null)}
+                                style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity, }}
+                                className={`text-4xl md:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
                                 {label}
                             </Link>
                         );
