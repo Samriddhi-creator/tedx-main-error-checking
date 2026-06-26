@@ -295,13 +295,13 @@ export default function CartMain() {
             </div>
           </div>
 
-          {/* FIXED HEADER: Always keeps "Order Summary" on the left and "Total" on the right */}
+          {/* MODIFIED: Changed the literal "Total" label to dynamically show the formatted total price */}
           <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-2 mb-1">
             <h2 className={`${spaceGrotesk.className} text-[22px] font-bold tracking-wide text-white scale-y-125 uppercase`}>
               Order Summary
             </h2>
-            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold text-white uppercase scale-y-125`}>
-              Total
+            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold text-white font-mono scale-y-125`}>
+              ${grandTotal.toFixed(2)}
             </h2>
           </div>
 
