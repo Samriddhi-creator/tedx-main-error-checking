@@ -41,14 +41,14 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`${bebasNeue.className} flex items-center justify-between gap-2 bg-zinc-950/80 border border-zinc-700 hover:border-red-600 text-white rounded px-3 py-1 text-[13px] font-bold tracking-wider outline-none min-w-[65px] transition-colors`}
+        className={`${bebasNeue.className} flex items-center justify-between gap-1 sm:gap-2 bg-zinc-950/80 border border-zinc-700 hover:border-red-600 text-white rounded px-2 py-0.5 sm:px-3 sm:py-1 text-[11px] sm:text-[13px] font-bold tracking-wider outline-none min-w-[50px] sm:min-w-[65px] transition-colors`}
       >
         <span>{currentSize}</span>
-        <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown size={10} className={`transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-1 w-[65px] rounded border border-zinc-700 bg-zinc-950 shadow-xl z-50 overflow-hidden">
+        <div className="absolute left-0 mt-1 w-[50px] sm:w-[65px] rounded border border-zinc-700 bg-zinc-950 shadow-xl z-50 overflow-hidden">
           <div className="flex flex-col">
             {options.map((size) => (
               <button
@@ -58,7 +58,7 @@ const CustomSizeDropdown = ({ id, currentSize, options, onSelect }: CustomDropdo
                   onSelect(id, size);
                   setIsOpen(false);
                 }}
-                className={`${bebasNeue.className} text-left px-3 py-1.5 text-[13px] text-zinc-300 tracking-wider hover:bg-red-600 hover:text-white transition-colors w-full`}
+                className={`${bebasNeue.className} text-left px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-[13px] text-zinc-300 tracking-wider hover:bg-red-600 hover:text-white transition-colors w-full`}
               >
                 {size}
               </button>
@@ -228,7 +228,7 @@ export default function CartMain() {
           </div>
         </div>
 
-        {/* DESKTOP SIDEBAR PANEL: (Hidden on Mobile) */}
+        {/* DESKTOP SIDEBAR PANEL */}
         <div className="hidden md:block md:col-span-1 md:mt-29">
           <div className="bg-black/95 border-[1.5px] border-[#FE1212] rounded-[24px] p-3 pt-5 flex flex-col shadow-2xl relative overflow-hidden backdrop-blur-md">
             <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-4 mb-6">
@@ -236,7 +236,7 @@ export default function CartMain() {
               <Compass size={40} className="text-[#FE1212]" />
             </div>
 
-            <div className={`${spaceGrotesk.className} flex flex-col gap-4 text-xs font-lighter tracking-wide text-white`}>
+            <div className={`${spaceGrotesk.className} flex flex-col gap-4 font-lighter tracking-wide text-white`}>
               <div className="flex justify-between">
                 <span className="text-[19px]">Subtotal ({totalItemsCount} items)</span>
                 <span className="text-[19px] text-white">${subtotal.toFixed(2)}</span>
@@ -265,7 +265,7 @@ export default function CartMain() {
             </div>
 
             <Link href={subtotal > 0 ? "/checkout" : "#"} className={`w-full text-white text-[20px] font-bold uppercase tracking-widest mt-3 py-3.5 rounded-lg flex items-center justify-center gap-2 mb-6 shadow-lg transition-all ${subtotal > 0 ? "bg-[#B90000] hover:opacity-90 active:scale-[0.99]" : "bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"}`}>
-              Proceed to Pay <span className="text-sm">→</span>
+              Proceed to Pay <span className="text-xl font-black">→</span>
             </Link>
           </div>
         </div>
@@ -278,10 +278,10 @@ export default function CartMain() {
         {/* Semi-transparent tint overlay backdrop */}
         {isDrawerOpen && <div onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 transition-opacity duration-300" />}
 
-        {/* The Drawer Content Element */}
+        {/* Dynamic drawer container transition alignment */}
         <div 
-          className={`relative bg-zinc-950 border-t-[2px] border-[#FE1212] rounded-t-[24px] px-5 pb-5 pt-2 text-white z-50 shadow-[0_-12px_40px_rgba(0,0,0,0.9)] transition-all duration-300 transform ${
-            isDrawerOpen ? "translate-y-0" : "translate-y-[calc(100%-80px)]"
+          className={`relative bg-black/95 border-t-[1.5px] border-[#FE1212] rounded-t-[24px] px-5 pb-5 pt-1 text-white z-50 shadow-[0_-12px_40px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-300 transform ${
+            isDrawerOpen ? "translate-y-0" : "translate-y-[calc(100%-76px)]"
           }`}
         >
           {/* Centered Trigger Handle Area */}
@@ -290,55 +290,80 @@ export default function CartMain() {
             className="w-full flex flex-col items-center justify-center py-2 cursor-pointer group"
           >
             <div className="w-12 h-1 bg-zinc-700 rounded-full group-hover:bg-zinc-500 transition-colors" />
-            <div className="text-zinc-500 mt-1 flex items-center gap-1">
-              {isDrawerOpen ? <ChevronDown size={16} /> : <ChevronUp size={16} className="animate-bounce" />}
+            <div className="text-zinc-500 mt-0.5 flex items-center gap-1">
+              {isDrawerOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} className="animate-bounce" />}
             </div>
           </div>
 
-          {/* INTERNAL CONTENT (Shown completely when expanded) */}
-          <div className={`transition-all duration-300 overflow-y-auto ${isDrawerOpen ? "max-h-[340px] opacity-100 my-4" : "max-h-0 opacity-0 pointer-events-none"}`}>
-            <h3 className={`${bebasNeue.className} text-xl tracking-wider text-[#C30000] uppercase border-b border-zinc-900 pb-2 mb-3`}>
-              Itemized Manifest
-            </h3>
+          {/* MODIFIED: Changed the literal "Total" label to dynamically show the formatted total price */}
+          <div className="flex flex-row justify-between items-center border-b border-red-950/40 pb-2 mb-1">
+            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold tracking-wide text-white scale-y-125 uppercase`}>
+              Order Summary
+            </h2>
+            <h2 className={`${spaceGrotesk.className} text-[22px] font-bold text-white font-mono scale-y-125`}>
+              ${grandTotal.toFixed(2)}
+            </h2>
+          </div>
+
+          {/* INTERNAL CONTENT */}
+          <div className={`transition-all duration-300 overflow-y-auto ${isDrawerOpen ? "max-h-[380px] opacity-100 my-4" : "max-h-0 opacity-0 pointer-events-none"}`}>
             
             {/* Display Separated List Items */}
-            <div className="space-y-2.5 font-mono text-sm max-h-[140px] overflow-y-auto pr-1 mb-4">
+            <div className={`${spaceGrotesk.className} space-y-3 font-normal text-sm max-h-[120px] overflow-y-auto pr-1 mb-4 border-b border-red-950/40 pb-3`}>
               {activeItems.length === 0 ? (
-                <p className="text-zinc-600 italic text-xs">No active items inside kit.</p>
+                <p className="text-zinc-500 italic text-xs">No active items inside kit.</p>
               ) : (
                 activeItems.map(item => (
-                  <div key={item.id} className="flex justify-between text-zinc-300">
-                    <span className="truncate max-w-[200px]">{item.name} <span className="text-zinc-600 text-xs font-sans">x{item.quantity}</span></span>
-                    <span className="text-white">${(item.price * item.quantity).toFixed(2)}</span>
+                  <div key={item.id} className="flex justify-between items-center text-zinc-300 text-[14px]">
+                    <span className="truncate pr-4">{item.name} <span className="text-zinc-500 text-xs font-sans">x{item.quantity}</span></span>
+                    <span className="text-white font-mono shrink-0">${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))
               )}
             </div>
 
-            {/* Display Separated Calculations Breakdown */}
-            <div className={`${spaceGrotesk.className} space-y-2 text-xs text-zinc-400 border-t border-zinc-900 pt-3`}>
-              <div className="flex justify-between"><span>Items Subtotal</span><span className="text-white">${subtotal.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Convenience Fee</span><span className="text-white">${convenienceFee.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Tax Parameters</span><span className="text-white">${tax.toFixed(2)}</span></div>
+            {/* Display Calculations Breakdown */}
+            <div className={`${spaceGrotesk.className} space-y-3 text-[14px] font-lighter tracking-wide text-white`}>
+              <div className="flex justify-between">
+                <span>Subtotal ({totalItemsCount} items)</span>
+                <span className="font-mono">${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Convenience Fee</span>
+                <span className="font-mono">${convenienceFee.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center pb-2">
+                <span>Tax</span>
+                <span className="font-mono">${tax.toFixed(2)}</span>
+              </div>
+            </div>
+
+            {/* Expedition Code Block */}
+            <div className="mt-2">
+              <label className={`${spaceGrotesk.className} text-[15px] font-bold text-[#C30000] uppercase block mt-3`}>Expedition Code</label>
+              <div className="relative flex items-center mt-1">
+                <input type="text" placeholder="Enter code" className="w-full bg-transparent border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-red-600 text-[13px]" />
+                <button className="absolute right-3 text-zinc-500 hover:text-red-600"><ArrowRight size={14} /></button>
+              </div>
             </div>
           </div>
 
           {/* FIXED BOTTOM ACTION PANEL BAR LAYER */}
-          <div className="grid grid-cols-12 items-center border-t border-zinc-900/60 pt-3 mt-1">
-            <div className="col-span-6 flex flex-col">
+          <div className="flex flex-row items-center justify-between border-t border-zinc-900/60 pt-3 mt-1 gap-4">
+            <div className="flex flex-col shrink-0">
               <span className={`${spaceGrotesk.className} text-[11px] uppercase tracking-wider text-zinc-500 font-bold`}>
-                Order Summary
+                Total Due
               </span>
-              <span className={`${spaceGrotesk.className} text-2xl font-bold tracking-tight text-white`}>
+              <span className={`${spaceGrotesk.className} text-2xl font-bold tracking-tight text-white font-mono`}>
                 ${grandTotal.toFixed(2)}
               </span>
             </div>
 
-            <div className="col-span-6">
+            <div className="flex-grow max-w-[65%]">
               <Link 
                 href={subtotal > 0 ? "/checkout" : "#"} 
-                className={`w-full text-center text-white text-[14px] font-bold uppercase tracking-wider py-3 rounded-xl block transition-all ${
-                  subtotal > 0 ? "bg-[#B90000] active:scale-[0.98]" : "bg-zinc-900 text-zinc-600 cursor-not-allowed opacity-50"
+                className={`w-full text-center text-white text-[15px] font-bold uppercase tracking-widest py-3 rounded-lg block transition-all ${
+                  subtotal > 0 ? "bg-[#B90000] active:scale-[0.98] shadow-lg" : "bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"
                 }`}
               >
                 Proceed to Pay

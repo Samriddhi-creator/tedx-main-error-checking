@@ -1,20 +1,53 @@
-// src/features/components/home/speakerhome.tsx
 "use client";
 
 import React, { useState, useEffect } from 'react';
 import { SPEAKER_PAGES, SpeakerPageData } from '../../../data/page';
+import { Bebas_Neue, Space_Grotesk } from "next/font/google";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function SpeakerHome() {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [activeSidebarSpeakerId, setActiveSidebarSpeakerId] = useState<number | null>(null);
+  const currentPage: SpeakerPageData = SPEAKER_PAGES[0];
+  const currentSidebarList = currentPage?.sidebarSpeakers || [];
 
-  const currentPage: SpeakerPageData = SPEAKER_PAGES[activeIndex] || SPEAKER_PAGES[0];
+  const allSpeakers = [
+    {
+      id: "main",
+      image: currentPage?.mainSpeaker?.image,
+      name: currentPage?.mainSpeaker?.name,
+      displayName: currentPage?.mainSpeaker?.displayName,
+      description: currentPage?.mainSpeaker?.description,
+      isMain: true
+    },
+    ...currentSidebarList.map(s => ({
+      id: s.id.toString(),
+      image: s.image,
+      name: "SPEAKER",
+      displayName: s.displayName,
+      description: s.description,
+      isMain: false
+    }))
+  ];
+
+  const [activeSpeakerIndex, setActiveSpeakerIndex] = useState<number>(0);
 
   useEffect(() => {
-    setActiveSidebarSpeakerId(null);
-  }, [activeIndex]);
+    const timer = setInterval(() => {
+      setActiveSpeakerIndex((prevIndex) => (prevIndex + 1) % allSpeakers.length);
+    }, 3000);
 
-  if (!currentPage) {
+    return () => clearInterval(timer);
+  }, [allSpeakers.length]);
+
+  if (!currentPage || allSpeakers.length === 0) {
     return (
       <div style={{ minHeight: '100vh', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ letterSpacing: '2px' }}>LOADING SPEAKER CONFIGURATION...</p>
@@ -22,25 +55,16 @@ export default function SpeakerHome() {
     );
   }
 
-  const currentSidebarList = currentPage.sidebarSpeakers || [];
-
-  const selectedSidebarSpeaker = currentSidebarList.find(
-    (speaker) => speaker.id === activeSidebarSpeakerId
-  );
-
-  const displayImage = selectedSidebarSpeaker ? selectedSidebarSpeaker.image : currentPage.mainSpeaker?.image;
-  const displayTitle = selectedSidebarSpeaker ? "PANEL SPEAKER" : currentPage.mainSpeaker?.name;
-  const displayName = selectedSidebarSpeaker ? selectedSidebarSpeaker.displayName : currentPage.mainSpeaker?.displayName;
-  const displayDescription = selectedSidebarSpeaker ? selectedSidebarSpeaker.description : currentPage.mainSpeaker?.description;
+  const currentActiveSpeaker = allSpeakers[activeSpeakerIndex];
 
   const handlePrev = () => {
-    setActiveIndex((prevIndex) => 
-      prevIndex === 0 ? SPEAKER_PAGES.length - 1 : prevIndex - 1
+    setActiveSpeakerIndex((prevIndex) => 
+      prevIndex === 0 ? allSpeakers.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % SPEAKER_PAGES.length);
+    setActiveSpeakerIndex((prevIndex) => (prevIndex + 1) % allSpeakers.length);
   };
 
   return (
@@ -50,213 +74,267 @@ export default function SpeakerHome() {
       backgroundColor: '#0a0505',
       color: '#ffffff',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '60px 40px',
+      padding: '40px 20px',
       boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <div style={{
-        width: '100%',
-        maxWidth: '1200px',
-        display: 'grid',
-        gridTemplateColumns: '120px 480px 1fr',
-        gap: '40px',
-        position: 'relative'
-      }}>
-        
-        {/* SIDEBAR NAVIGATION COLUMN */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <h2 style={{
-            textTransform: 'uppercase',
-            fontSize: '22px',
-            fontWeight: 'bold',
-            letterSpacing: '2px',
-            margin: '0 0 10px 0',
-            color: '#ffffff'
-          }}>
-            {currentPage.pageTitle}
-          </h2>
+      
+      {/* INJECTED RESPONSIVE LAYOUT STYLES */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
 
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-            maxHeight: '520px',
-            overflowY: 'auto',
-            paddingRight: '5px'
-          }}>
-        
-            <div
-              onClick={() => setActiveSidebarSpeakerId(null)}
-              style={{
-                width: '65px',
-                height: '65px',
-                cursor: 'pointer',
-                borderRadius: '4px',
-                overflow: 'hidden',
-                boxSizing: 'border-box',
-                border: activeSidebarSpeakerId === null ? '2px solid #e61c1c' : '2px solid rgba(255,255,255,0.2)',
-                opacity: activeSidebarSpeakerId === null ? 1 : 0.5,
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <img
-                src={currentPage.mainSpeaker?.image}
-                alt="Main"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
+        .scale-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          width: 80px;
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.8;
+          transform: scale(1);
+          transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+          outline: none;
+        }
+        @media (min-width: 768px) {
+          .scale-btn {
+            width: 150px;
+            height: 150px;
+          }
+        }
+        .scale-btn:hover {
+          opacity: 1;
+         }
+        .scale-btn:active {
+          transform: scale(0.94);
+        }
 
-            {currentSidebarList.map((sidebarSpeaker) => {
-              const isSelected = sidebarSpeaker.id === activeSidebarSpeakerId;
-              return (
-                <div
-                  key={sidebarSpeaker.id}
-                  onClick={() => setActiveSidebarSpeakerId(sidebarSpeaker.id)}
-                  style={{
-                    width: '65px',
-                    height: '65px',
-                    cursor: 'pointer',
-                    borderRadius: '4px',
-                    overflow: 'hidden',
-                    boxSizing: 'border-box',
-                    border: isSelected ? '2px solid #e61c1c' : '2px solid transparent',
-                    opacity: isSelected ? 1 : 0.6,
-                    transition: 'all 0.2s ease',
-                    transform: isSelected ? 'scale(1.05)' : 'scale(1)'
-                  }}
-                >
-                  <img
-                    src={sidebarSpeaker.image}
-                    alt={sidebarSpeaker.displayName}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-              );
-            })}
-          </div>
+        .speaker-grid {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 24px;
+        }
+        .thumb-column {
+          display: flex;
+          flex-direction: row;
+          order: 2;
+          gap: 12px;
+          overflow-x: auto;
+          padding-bottom: 4px;
+          justify-content: center;
+        }
+        /* MODIFIED: Reduced mobile portrait block height */
+        .portrait-column {
+          width: 100%;
+          height: 280px;
+          order: 1;
+        }
+        .details-column {
+          width: 100%;
+          order: 3;
+          display: flex;
+          flex-direction: column;
+          padding-left: 0;
+        }
+
+        .title-underline-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: fit-content;
+          margin-bottom: 24px;
+        }
+        .heading-title {
+          font-size: clamp(40px, 7vw, 64px);
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          transform: scaleY(1.25);
+          margin: 0;
+          display: inline-block;
+        }
+        .red-line {
+          width: 100%;
+          height: 5px;
+          background-color: #b30000;
+          margin-top: 12px;
+        }
+
+        .content-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        @media (min-width: 1024px) {
+          /* MODIFIED: Adjusted column parameters to sync with new sizes */
+          .speaker-grid {
+            display: grid;
+            grid-template-columns: 100px 400px 1fr;
+            gap: 40px;
+            align-items: start;
+          }
+          .thumb-column {
+            flex-direction: column;
+            order: unset;
+            max-height: 480px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            justify-content: flex-start;
+            padding-bottom: 0;
+          }
+          /* MODIFIED: Scaled down portrait box execution specifications */
+          .portrait-column {
+            height: 480px;
+            order: unset;
+          }
+          .details-column {
+            height: 480px;
+            order: unset;
+            padding-left: 20px;
+            justify-content: space-between;
+          }
+          .content-block {
+            align-items: flex-start;
+            text-align: left;
+          }
+          .title-underline-container {
+            align-items: flex-start;
+            margin-left: 0px;
+          }
+        }
+      `}} />
+
+      <div className="speaker-grid" style={{ maxWidth: '1200px', position: 'relative' }}>
+        
+        {/* THUMBNAILS PANEL */}
+        <div className="thumb-column no-scrollbar">
+          {allSpeakers.map((speaker, index) => {
+            const isSelected = index === activeSpeakerIndex;
+            return (
+              <div
+                key={speaker.id}
+                onClick={() => setActiveSpeakerIndex(index)}
+                style={{
+                  /* MODIFIED: Scaled thumbnail sizing parameters up from 55px */
+                  width: '85px',
+                  height: '85px',
+                  flexShrink: 0,
+                  cursor: 'pointer',
+                  borderRadius: '6px',
+                  overflow: 'hidden',
+                  boxSizing: 'border-box',
+                  border: isSelected ? '3px solid #e61c1c' : '2px solid rgba(255,255,255,0.15)',
+                  opacity: isSelected ? 1 : 0.5,
+                  transition: 'all 0.2s ease',
+                  transform: isSelected ? 'scale(1.03)' : 'scale(1)'
+                }}
+              >
+                <img
+                  src={speaker.image}
+                  alt={speaker.displayName || "Speaker"}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+            );
+          })}
         </div>
 
-        {/* FEATURED SPEAKERS PORTRAIT BOX */}
-        <div style={{
-          width: '100%',
-          height: '560px',
-          borderRadius: '32px',
+        {/* FEATURED MAIN PHOTO PORTRAIT BOX */}
+        <div className="portrait-column" style={{
+          borderRadius: '24px',
           overflow: 'hidden',
           border: '2px solid rgba(230, 28, 28, 0.6)', 
           boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
         }}>
           <img
-            src={displayImage}
-            alt={displayName}
+            src={currentActiveSpeaker.image}
+            alt={currentActiveSpeaker.displayName}
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              transition: 'all 0.3s ease-in-out'
+              transition: 'all 0.4s ease-in-out'
             }}
           />
         </div>
 
         {/* DETAILS PANEL & ACTION CONTROLS */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          paddingLeft: '20px',
-          position: 'relative',
-          height: '560px'
-        }}>
-    
-          <div style={{ marginBottom: 'auto', marginTop: '40px' }}>
-            {/* MODIFIED: Reduced weight to 600 (semi-bold) and matched your layout fonts */}
-            <h3 style={{
-              fontSize: '48px',
-              fontWeight: '600',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              margin: '0 0 8px 0',
-              fontFamily: 'system-ui, -apple-system, sans-serif'
-            }}>
-              {displayTitle}
-            </h3>
-            
-            <div style={{ width: '80px', height: '5px', backgroundColor: '#b30000', marginBottom: '20px' }} />
+        <div className="details-column">
+          <div className="content-block">
+         
+            <div className="title-underline-container">
+              <h3 className={`${bebasNeue.className} heading-title`}>
+                {currentActiveSpeaker.name}
+              </h3>
+              <div className="red-line" />
+            </div>
 
-            <h4 style={{
-              fontSize: '24px',
-              fontWeight: '700',
-              margin: '0 0 15px 0',
-              color: '#ffffff',
-              textTransform: 'capitalize'
-            }}>
-              {displayName}
+            <h4 
+              className={bebasNeue.className}
+              style={{
+                fontSize: 'clamp(30px, 5vw, 35px)',
+                margin: '0 0 15px 0',
+                color: '#ffffff',
+                textTransform: 'capitalize',
+                letterSpacing: '1px'
+              }}
+            >
+              {currentActiveSpeaker.displayName}
             </h4>
 
-            <p style={{
-              fontSize: '15px',
-              lineHeight: '1.6',
-              color: '#cccccc',
-              textAlign: 'justify',
-              maxWidth: '460px',
-              marginBottom: '24px'
-            }}>
-              {displayDescription}
+            <p 
+              className={spaceGrotesk.className}
+              style={{
+                fontSize: '15px',
+                lineHeight: '1.6',
+                color: '#cccccc',
+                textAlign: 'justify',
+                maxWidth: '100%',
+                marginBottom: '24px',
+                fontWeight: '400'
+              }}
+            >
+              {currentActiveSpeaker.description}
             </p>
           </div>
 
           {/* NEXT / PREV CAROUSEL CONTROLS */}
           <div style={{
             display: 'flex',
-            gap: '20px',
-            alignSelf: 'flex-end',
-            marginBottom: '20px',
-            marginRight: '40px'
+            gap: '12px',
+            alignSelf: 'center',
+            marginTop: 'auto',
+            marginBottom: '10px'
           }}>
-            
-            <style>{`
-              .scale-btn {
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 0;
-                width: 150px;
-                height: 150px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0.8;
-                transform: scale(1);
-                transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
-                outline: none;
-              }
-              .scale-btn:hover {
-                opacity: 1;
-              }
-              .scale-btn:active {
-                transform: scale(0.94);
-              }
-            `}</style>
-
-            {/* LEFT BUTTON */}
             <button onClick={handlePrev} className="scale-btn">
               <img 
                 src="/image 13.svg" 
-                alt="Previous Page" 
+                alt="Previous Speaker" 
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
             </button>
 
-            {/* RIGHT BUTTON */}
             <button onClick={handleNext} className="scale-btn">
               <img 
                 src="/image 14.svg" 
-                alt="Next Page" 
+                alt="Next Speaker" 
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
             </button>
-
           </div>
         </div>
 

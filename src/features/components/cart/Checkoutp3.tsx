@@ -86,7 +86,6 @@ export default function Checkoutp3({ onBack, onStepChange, onComplete }: Checkou
       return;
     }
 
-    // Fallback if router routes are split across pages instead of a wizard wrapper setup
     if (step === 1) {
       router.push("/checkoutp1");
     } else if (step === 2) {
@@ -110,129 +109,132 @@ export default function Checkoutp3({ onBack, onStepChange, onComplete }: Checkou
         priority
       />
 
-      <main className="relative z-10 w-full">
-        <div className="max-w-4xl w-full mx-auto border border-red-950/80 bg-black/40 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 my-12">
+      {/* MODIFIED: Fixed container shell matching layout parameters (h-[580px]) */}
+      <main className="max-w-4xl w-full mx-auto border border-red-950/80 bg-black/40 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 mt-12 mb-20 flex flex-col h-[580px] relative z-10">
+        
+        {/* MODIFIED: Fixed layout parameter header height logic matching Checkoutp2 (h-[73px]) */}
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-b-red-950/50 h-[73px]">
+          <div>
+            <p className={`${spaceGrotesk.className} text-[12px] uppercase text-white tracking-widest font-lighter`}>Checkout Protocol</p>
+            <h2 className={`${spaceGrotesk.className} text-xl font-semibold scale-y-125 tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
+          </div>
+          <Link href="/cart">
+            <button className={`${spaceGrotesk.className} text-xs text-white hover:text-red-500 flex items-center gap-1.5 uppercase tracking-wide group transition-colors focus:outline-none focus:ring-0`}>
+              <span className="text-red-500 group-hover:scale-110 transition-transform">✕</span> Abort
+            </button>
+          </Link>
+        </div>
+
+        {/* MODIFIED: Core workspace matching internal boundaries */}
+        <div className="flex flex-col md:flex-row flex-1 h-[calc(100%-73px)]">
           
-          <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-b-red-950/50">
-            <div>
-              <p className="text-[10px] uppercase text-zinc-500 tracking-widest font-bold">Checkout Protocol</p>
-              <h2 className={`text-xl font-semibold scale-y-125 ${spaceGrotesk.className} tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
+          <div className="w-full md:w-1/4 p-6 border-b bg-[#1D1D1D] md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between relative">
+            <div className="space-y-6 relative">
+              <p className={`${spaceGrotesk.className} text-[10px] uppercase text-zinc-500 tracking-widest font-bold`}>Progress</p>
+              
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleEditStep(1)}>
+                <span className="text-red-600 text-[10px] font-bold">✓</span>
+                <span className="text-xs text-zinc-500 font-normal tracking-wide hover:text-zinc-300 transition-colors">Coordinates</span>
+              </div>
+              
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleEditStep(2)}>
+                <span className="text-red-600 text-[10px] font-bold">✓</span>
+                <span className="text-xs text-zinc-500 font-normal tracking-wide hover:text-zinc-300 transition-colors">Route</span>
+              </div>
+
+              <div className="flex items-center gap-3 pl-0.5">
+                <div className="w-2.5 h-2.5 bg-red-600 transform rotate-45 shadow-md shadow-red-500/50"></div>
+                <span className="text-xs font-semibold text-white tracking-wide">Manifest</span>
+              </div>
             </div>
-            <Link href="/cart">
-              <button className="text-xs text-zinc-400 hover:text-white flex items-center gap-1.5 uppercase tracking-wide group transition-colors focus:outline-none focus:ring-0">
-                <span className="text-red-600 font-bold group-hover:scale-110 transition-transform">✕</span> Abort
-              </button>
-            </Link>
+
+            <button onClick={onBack} className="mt-12 md:mt-0 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors cursor-pointer">
+              ← BACK
+            </button>
           </div>
 
-          <div className="flex flex-col md:flex-row min-h-[450px]">
-            
-            <div className="w-full md:w-1/4 p-6 border-b md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between bg-[#1D1D1D] relative">
-              <div className="space-y-6 relative">
-                <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Progress</p>
+          {/* MODIFIED: Standardized layout panel bounds padding structure (p-6 md:p-10) */}
+          <div className="w-full md:w-3/4 p-6 md:p-10 flex flex-col justify-between bg-black/50">
+            <div>
+              <h3 className={`${bebasNeue.className} text-[30px] font-black uppercase tracking-normal scale-y-[1.10] text-white leading-none`}>
+                Final Manifest Review
+              </h3>
+              <p className={`${spaceGrotesk.className} text-[15px] font-medium text-white/90 mt-2 mb-6 tracking-[0.02em]`}>
+                Verify your coordinates and expedition kit before initiating secure transmission
+              </p>
+
+              {/* Grid content space boundary */}
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-start">
                 
-                <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleEditStep(1)}>
-                  <span className="text-red-600 text-[10px] font-bold">✓</span>
-                  <span className="text-xs text-zinc-400 hover:text-white tracking-wide font-normal transition-colors">Coordinates</span>
-                </div>
-                
-                <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleEditStep(2)}>
-                  <span className="text-red-600 text-[10px] font-bold">✓</span>
-                  <span className="text-xs text-zinc-400 hover:text-white tracking-wide font-normal transition-colors">Route</span>
+                <div className="md:col-span-2 space-y-4">
+                  <div className="bg-[#141414] border border-zinc-800/60 p-4 rounded-xl">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase">Explorer Data 👤</span>
+                      <button type="button" onClick={() => handleEditStep(1)} className="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold focus:outline-none focus:ring-0 transition-colors">Edit</button>
+                    </div>
+                    <div className="space-y-1 text-xs text-zinc-400/80 font-mono">
+                      <p><span className="text-zinc-600 font-sans">Name:</span> {explorerData.name}</p>
+                      <p><span className="text-zinc-600 font-sans">Email:</span> {explorerData.email}</p>
+                      <p><span className="text-zinc-600 font-sans">Phone:</span> {explorerData.phone}</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#141414] border border-zinc-800/60 p-4 rounded-xl">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase">Drop Point 📍</span>
+                      <button type="button" onClick={() => handleEditStep(2)} className="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold focus:outline-none focus:ring-0 transition-colors">Edit</button>
+                    </div>
+                    <div className="space-y-1 text-xs text-zinc-400/80 font-mono break-words">
+                      <p>{dropPoint.line1}</p>
+                      {dropPoint.line2 && <p>{dropPoint.line2}</p>}
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3 pl-0.5">
-                  <div className="w-2.5 h-2.5 bg-red-600 transform rotate-45 shadow-md shadow-red-500/50"></div>
-                  <span className="text-xs font-semibold text-white tracking-wide">Manifest</span>
+                <div className="md:col-span-3 bg-[#141414] border border-zinc-800/60 p-4 rounded-xl h-full flex flex-col justify-between min-h-[220px]">
+                  <div>
+                    <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase block mb-3 pb-1 border-b border-zinc-900">
+                      Your Expedition Kit
+                    </span>
+                    
+                    <div className="space-y-2 text-xs font-mono text-zinc-400/80 max-h-[85px] overflow-y-auto pr-1 mb-2">
+                      {cartItems.length === 0 ? (
+                        <p className="text-zinc-600 italic">No items found in kit.</p>
+                      ) : (
+                        cartItems.map((item) => (
+                          <div key={item.id} className="flex justify-between items-center">
+                            <span className="truncate max-w-40">{item.name} <span className="text-[10px] text-zinc-600 font-sans">x{item.quantity}</span></span>
+                            <span>${(item.price * item.quantity).toFixed(2)}</span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+
+                    <div className="space-y-1 text-[11px] font-mono text-zinc-500 pt-1.5 border-t border-zinc-900/60">
+                      <div className="flex justify-between"><span>Items Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
+                      <div className="flex justify-between"><span>Platform Fee</span><span>${platformFee.toFixed(2)}</span></div>
+                      <div className="flex justify-between text-red-500"><span>Discount</span><span>-${discount.toFixed(2)}</span></div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-baseline pt-2 border-t border-zinc-800 mt-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-white">Total</span>
+                    <span className="text-xl font-black font-mono text-white">${grandTotal.toFixed(2)}</span>
+                  </div>
                 </div>
+
               </div>
+            </div>
 
-              <button onClick={onBack} className="mt-12 md:mt-0 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors">
-                ← BACK
+            <div className="flex justify-end">
+              <button 
+                onClick={handleTransmission}
+                className="bg-red-600 border border-red-600 px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-transparent transition duration-200 text-white cursor-pointer focus:outline-none focus:ring-0"
+              >
+                Initiate Transmission
               </button>
             </div>
 
-            <div className="w-full md:w-3/4 p-6 md:p-8 flex flex-col justify-between bg-black/50">
-              <div>
-                <h3 className={`text-[26px] ${spaceGrotesk.className} font-bold uppercase tracking-wider text-white`}>
-                  Final Manifest Review
-                </h3>
-                <p className="text-xs text-zinc-400 mt-1 mb-6 tracking-wide font-normal">
-                  Verify your coordinates and expedition kit before initiating secure transmission
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-start">
-                  
-                  <div className="md:col-span-2 space-y-4">
-                    <div className="bg-[#141414] border border-zinc-800/60 p-4 rounded-xl">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase">Explorer Data 👤</span>
-                        <button type="button" onClick={() => handleEditStep(1)} className="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold focus:outline-none focus:ring-0 transition-colors">Edit</button>
-                      </div>
-                      <div className="space-y-1 text-xs text-zinc-400/80 font-mono">
-                        <p><span className="text-zinc-600 font-sans">Name:</span> {explorerData.name}</p>
-                        <p><span className="text-zinc-600 font-sans">Email:</span> {explorerData.email}</p>
-                        <p><span className="text-zinc-600 font-sans">Phone:</span> {explorerData.phone}</p>
-                      </div>
-                    </div>
-
-                    <div className="bg-[#141414] border border-zinc-800/60 p-4 rounded-xl">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase">Drop Point 📍</span>
-                        <button type="button" onClick={() => handleEditStep(2)} className="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold focus:outline-none focus:ring-0 transition-colors">Edit</button>
-                      </div>
-                      <div className="space-y-1 text-xs text-zinc-400/80 font-mono break-words">
-                        <p>{dropPoint.line1}</p>
-                        {dropPoint.line2 && <p>{dropPoint.line2}</p>}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="md:col-span-3 bg-[#141414] border border-zinc-800/60 p-4 rounded-xl h-full flex flex-col justify-between min-h-[250px]">
-                    <div>
-                      <span className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase block mb-3 pb-1 border-b border-zinc-900">
-                        Your Expedition Kit
-                      </span>
-                      
-                      <div className="space-y-2 text-xs font-mono text-zinc-400/80 max-h-[110px] overflow-y-auto pr-1 mb-4">
-                        {cartItems.length === 0 ? (
-                          <p className="text-zinc-600 italic">No items found in kit.</p>
-                        ) : (
-                          cartItems.map((item) => (
-                            <div key={item.id} className="flex justify-between items-center">
-                              <span className="truncate max-w-40">{item.name} <span className="text-[10px] text-zinc-600 font-sans">x{item.quantity}</span></span>
-                              <span>${(item.price * item.quantity).toFixed(2)}</span>
-                            </div>
-                          ))
-                        )}
-                      </div>
-
-                      <div className="space-y-1.5 text-[11px] font-mono text-zinc-500 pt-2 border-t border-zinc-900/60">
-                        <div className="flex justify-between"><span>Items Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-                        <div className="flex justify-between"><span>Platform Fee</span><span>${platformFee.toFixed(2)}</span></div>
-                        <div className="flex justify-between text-red-500"><span>Discount</span><span>-${discount.toFixed(2)}</span></div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-between items-baseline pt-4 border-t border-zinc-800 mt-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-white">Total</span>
-                      <span className="text-xl font-black font-mono text-white">${grandTotal.toFixed(2)}</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="flex justify-end mt-8">
-                <button 
-                  onClick={handleTransmission}
-                  className="bg-red-600 border border-red-600 px-6 py-2.5 text-[11px] font-black uppercase tracking-widest rounded shadow-md shadow-red-900/40 hover:bg-transparent transition duration-200 text-white cursor-pointer focus:outline-none focus:ring-0"
-                >
-                  Initiate Transmission
-                </button>
-              </div>
-
-            </div>
           </div>
         </div>
       </main>

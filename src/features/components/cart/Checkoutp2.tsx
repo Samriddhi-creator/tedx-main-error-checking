@@ -22,7 +22,6 @@ interface Checkoutp2Props {
 }
 
 export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2Props) {
-  // PRE-FILL CONFIGURATION: Initializing states directly from localStorage values if available
   const [locationType, setLocationType] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("location_type") || "in-campus";
@@ -30,7 +29,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
     return "in-campus";
   });
 
-  // In-Campus State Trackers
   const [sector, setSector] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("hostel_sector") || "";
@@ -45,11 +43,9 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
     return "";
   });
   
-  // Custom Dropdown Open/Close UI State
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Out-of-Campus State Trackers
   const [address, setAddress] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("out_address") || "";
@@ -78,7 +74,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
     return "";
   });
 
-  // Validation Error Flag Trackers
   const [errors, setErrors] = useState({
     sector: false,
     room: false,
@@ -90,7 +85,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
 
   const SECTORS = ["CV Raman", "Aryabhatta", "Kalam", "Asima"];
 
-  // Sync state cleanly if navigation steps trigger re-renders
   useEffect(() => {
     const savedType = localStorage.getItem("location_type");
     if (savedType) {
@@ -107,7 +101,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
     }
   }, []);
 
-  // Close custom dropdown when clicking anywhere outside of it
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -172,7 +165,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
   return (
     <div className="min-h-full h-full bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
       
-      {/* BACKGROUND GRAPHIC */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none opacity-75"
         style={{
@@ -184,11 +176,9 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
    
-      {/* MAIN INTERFACE BOX */}
-      <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20">
+      <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20 flex flex-col h-[580px]">
         
-        {/* Title Block Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-red-950/50">
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-red-950/50 h-[73px]">
           <div>
             <p className={`${spaceGrotesk.className} text-[12px] uppercase text-white tracking-widest font-lighter`}>Checkout Protocol</p>
             <h2 className={`${spaceGrotesk.className} text-xl font-semibold scale-y-125 tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
@@ -200,11 +190,9 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
           </Link> 
         </div>
 
-        {/* Content Segment Wrapper */}
-        <div className="flex flex-col md:flex-row min-h-[460px]">
+        <div className="flex flex-col md:flex-row flex-1 h-[calc(100%-73px)]">
           
-          {/* LEFT SIDE: Progress Tracker */}
-          <div className="w-full md:w-1/4 p-6 border-b bg-black md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between relative">
+          <div className="w-full md:w-1/4 p-6 border-b bg-[#1D1D1D] md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between relative">
             <div className="space-y-6 relative">
               <p className={`${spaceGrotesk.className} text-[10px] uppercase text-zinc-500 tracking-widest font-bold`}>Progress</p>
               
@@ -235,7 +223,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
             </button>
           </div>
 
-          {/* RIGHT SIDE: Route Allocation Input Panel */}
           <div className="w-full md:w-3/4 p-6 md:p-10 bg-black/50 flex flex-col justify-between">
             <div>
               <h3 className={`${bebasNeue.className} text-[30px] font-black uppercase tracking-normal scale-y-[1.10] text-white leading-none`}>
@@ -245,7 +232,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                 Designate the drop point for your artifacts and passes
               </p>
 
-              {/* Location Selector Tabs */}
               <div className="inline-flex bg-[#303030] p-1 border border-zinc-800 rounded-lg mb-6">
                 <button 
                   type="button"
@@ -271,21 +257,17 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                 </button>
               </div>
 
-              {/* Height-stable container */}
-              <div className="max-w-md min-h-[290px]">
+              <div className="max-w-md">
                 
-                {/* IN CAMPUS VIEW */}
                 {locationType === "in-campus" && (
                   <div className="space-y-8 ml-5">
                     
-                    {/* CUSTOM DROPDOWN SELECT ROUTINE */}
                     <div className="relative" ref={dropdownRef}>
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1">
                         <label className={`${spaceGrotesk.className} text-xs scale-y-125 text-white w-24 font-lighter tracking-wide`}>
                           Hostel Sector :
                         </label>
                         
-                        {/* Selector Trigger Button */}
                         <button
                           type="button"
                           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -302,7 +284,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                         </button>
                       </div>
 
-                      {/* Floating Dropdown Options Panel */}
                       {isDropdownOpen && (
                         <div className="absolute left-25 top-full mt-1 w-44 bg-[#1a1a1a] border border-zinc-800 rounded shadow-2xl z-50 overflow-hidden">
                           {SECTORS.map((sec) => (
@@ -322,7 +303,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                         </div>
                       )}
 
-                      {/* Dropdown Error Warning */}
                       {errors.sector && (
                         <p className="text-[10px] text-red-500 mt-1 sm:ml-25 absolute left-0 top-full">
                           Please designate an active hostel deployment sector block.
@@ -330,7 +310,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                       )}
                     </div>
 
-                    {/* Room Input component */}
                     <div className="relative pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                         <label className={`${spaceGrotesk.className} text-xs text-white w-34 scale-y-125 font-lighter tracking-wide`}>Room / Coordinate :</label>
@@ -352,7 +331,6 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                   </div>
                 )}
 
-                {/* OUT OF CAMPUS VIEW */}
                 {locationType === "out-campus" && (
                   <div className="space-y-8 ml-5">
                     <div className="relative">
@@ -435,8 +413,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
               </div>
             </div>
 
-            {/* Form Finish Control Sequence */}
-            <div className="flex justify-end mt-12">
+            <div className="flex justify-end">
               <button 
                 onClick={handleContinue}
                 className="bg-red-600 border border-red-600 px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-transparent transition duration-200 text-white cursor-pointer"
