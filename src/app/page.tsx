@@ -36,13 +36,12 @@ export default function IndexPage() {
     <main
       className="h-auto bg-cover bg-center bg-no-repeat"
     >
-      <section className="relative h-auto overflow-hidden">
-        <HeroHome />
-      </section>
-      <AboutTheTheme />
-      <SpeakerHome />
-      <BuyTickets />
-      <LogoLoopSection />
+    <section className="relative h-auto overflow-hidden">
+    <HeroHome/>
+     </section>
+     <AboutTheTheme/>
+     <SpeakerHome/>
+     <BuyTickets/>
     </main>
   );
 }
