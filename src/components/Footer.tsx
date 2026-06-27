@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import Image from "next/image";
 import React, { useRef, useState } from "react"
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
@@ -7,8 +8,7 @@ import { useJourneyStore } from "@/src/store/useJourneyStore";
 const leftLinks = [
     { label: "TED Website", href: "https://www.ted.com/" },
     { label: "Terms and Conditions", href: "https://www.ted.com/participate/organize-a-local-tedx-event/before-you-start/tedx-rules" },
-    { label: "About TEDx", href: "https://www.ted.com/about/programs-initiatives/tedx-program" },
-    { label: "Refund Policy", href: "/refund-policy" }
+    { label: "About TEDx", href: "https://www.ted.com/about/programs-initiatives/tedx-program" }
 ];
 
 const socialLinks = [
@@ -135,12 +135,13 @@ export default function Footer() {
                 <div className="flex flex-col gap-2 md:gap-4 flex-[600] md:flex-[724]">
                     <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-32 md:w-[384px] h-auto" />
                     <div className="flex flex-col gap-1 md:gap-3 mt-2 md:mt-6">
-                        {leftLinks.map((link) => (
-                            <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
-                                className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-xl hover:text-red-500 transition-colors">
-                                <span className="text-red-600">›</span> {link.label}
-                            </a>
+                        {/* External links */}
+                        {leftLinks.map((link) => (<Link key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-xl hover:text-red-500 transition-colors" >
+                            <span className="text-red-600">›</span> {link.label} </Link>
                         ))}
+                        {/* Internal link */}
+                        <Link href="/refund" className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-xl hover:text-red-500 transition-colors" >
+                            <span className="text-red-600">›</span> Refund Policy </Link>
                     </div>
                 </div>
 
@@ -152,19 +153,32 @@ export default function Footer() {
                     <h3 className="font-sans text-base md:text-4xl font-bold text-red-600">Follow us</h3>
                     <div className="flex gap-2 md:gap-6">
                         {socialLinks.map(({ icon: Icon, href }) => (
-                            <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+                            <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
                                 className="size-6 md:size-10 bg-white rounded flex items-center justify-center text-black text-3xs md:text-4xl hover:bg-red-600 hover:text-white transition-colors">
                                 <Icon />
-                            </a>
+                            </Link>
                         ))}
                     </div>
                     <div className="w-full h-[1px] bg-red-800/30" />
                     <h3 className="font-sans text-base md:text-4xl font-bold text-white">Contact Us</h3>
-                    <a href="mailto:tedxiitpatna@gmail.com"
-                        className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
-                        <Image src="/mail.svg" alt="mail" width={16} height={16} className="md:w-5 md:h-5" />
-                        <span className="-ml-1 md:ml-0 md:text-xl">tedxiitpatna@gmail.com</span>
-                    </a>
+                    <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Speaker Queries</span>
+                            <Link href="mailto:tedxiitpatna@gmail.com"
+                                className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
+                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                                <span className="-ml-1 md:ml-0 md:text-xl">curation.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
+                        </div>
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Sponsor Queries</span>
+                            <Link href="mailto:tedxiitpatna@gmail.com"
+                                className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
+                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                                <span className="-ml-1 md:ml-0 md:text-xl">sponsorship.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Divider */}
@@ -174,12 +188,12 @@ export default function Footer() {
                 <div className="flex flex-col gap-0 md:gap-1 flex-[700] md:flex-[572] items-start -mt-2 md:mt-0">
                     <h3 className="font-sans text-base md:text-4xl font-bold text-red-600 md:ml-24">Quick Links</h3>
                     {quickLinks.map((link) => (
-                        <a key={link.label} href={link.href}
+                        <Link key={link.label} href={link.href}
                             className="flex items-center gap-1 text-white font-['Ancizar_Serif'] text-[10px] md:text-2xl hover:text-red-500 transition-colors md:ml-24 mt-3 md:mt-2">
                             <span className="text-red-600">
                                 <Image src="/compass.svg" alt="•" width={12} height={12} className="md:w-[14px] md:h-[14px]" />
                             </span> {link.label}
-                        </a>
+                        </Link>
                     ))}
                 </div>
             </div>

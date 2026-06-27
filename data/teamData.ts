@@ -1,4 +1,4 @@
-export const team=[
+ const Team=[
     {
         id:"prod",
         title:"Production",
@@ -69,3 +69,5 @@ export const team=[
         ]
     },
 ]
+
+export const team= Team.reverse();

@@ -423,14 +423,9 @@ export default function OurJourney() {
             >
                 <div className="absolute inset-0 bg-black/40 z-0" />
 
-                <Image
-                    src="/ourjourney.svg"
-                    alt="Our Journey"
-                    width={800}
-                    height={200}
-                    className="relative z-10 mx-auto mb-24 w-[90%] md:w-[800px]"
-                    priority
-                />
+                <h1 className="relative z-10 mx-auto mb-16 md:mb-24 text-[45px] sm:text-[70px] md:text-[90px] lg:text-[110px] xl:text-[120px] font-bebas font-normal tracking-wide text-center text-[#F3E9DC] uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    Past Editions
+                </h1>
 
                 <div ref={timelineRef} className="relative z-10 max-w-5xl mx-auto overflow-visible">
                     <svg
