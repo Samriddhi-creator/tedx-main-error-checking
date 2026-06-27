@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Bebas_Neue, Space_Grotesk } from "next/font/google"; 
 
-// Simplified interface since image and frame are combined in frameSrc
+
 interface PolaroidPhoto {
   id: number | string;
   frameSrc: string; 
