@@ -161,11 +161,24 @@ export default function Footer() {
                     </div>
                     <div className="w-full h-[1px] bg-red-800/30" />
                     <h3 className="font-sans text-base md:text-4xl font-bold text-white">Contact Us</h3>
-                    <Link href="mailto:tedxiitpatna@gmail.com"
-                        className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
-                        <Image src="/mail.svg" alt="mail" width={16} height={16} className="md:w-5 md:h-5" />
-                        <span className="-ml-1 md:ml-0 md:text-xl">tedxiitpatna@gmail.com</span>
-                    </Link>
+                    <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Speaker Queries</span>
+                            <Link href="mailto:tedxiitpatna@gmail.com"
+                                className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
+                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                                <span className="-ml-1 md:ml-0 md:text-xl">curation.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
+                        </div>
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Sponsor Queries</span>
+                            <Link href="mailto:tedxiitpatna@gmail.com"
+                                className="flex items-center gap-1 text-white font-['Instrument_Sans'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
+                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                                <span className="-ml-1 md:ml-0 md:text-xl">sponsorship.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Divider */}

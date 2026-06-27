@@ -16,7 +16,7 @@ return (
             flex flex-col md:flex-row
             border border-[#B3031C] rounded-[20px]
             w-full max-w-4xl mx-auto
-            min-h-[200px] md:h-[350px]
+            min-h-[580px] md:h-[350px]
             overflow-visible
             shadow-[0_0_20px_rgba(179,3,28,0.25)]
             "
