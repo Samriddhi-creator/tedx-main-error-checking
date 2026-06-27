@@ -8,7 +8,7 @@ interface PolaroidPhoto {
   id: number;
   src: string;
   alt: string;
-  frameSrc: string; // <-- Path to each unique polaroid background asset image
+  frameSrc: string; 
 }
 
 const bebasNeue = Bebas_Neue({
@@ -36,41 +36,18 @@ export default function FunFairSection() {
   const activePhoto = FUNFAIR_PHOTOS[selectedPhotoIndex] || FUNFAIR_PHOTOS[0];
 
   return (
-    <section style={{
-      backgroundColor: 'transparent', 
-      color: '#ffffff',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '100%',
-      boxSizing: 'border-box',
-      padding: '40px 20px'
-    }}>
+    <section className="flex flex-col items-center w-full px-5 py-10 text-white bg-transparent box-border">
       
       {/* Title Header Layout Area */}
-      <div style={{ textAlign: 'center', maxWidth: '850px', marginTop: '0px', marginBottom: '30px' }}>
+      <div className="text-center w-full max-w-[850px] mb-8">
         <h1 
-          className={`${bebasNeue.className} text-[40px] font-bold scale-y-120`}
-          style={{
-            fontSize: '72px',
-            marginTop: '0px', 
-            marginBottom: '20px',
-          }}
+          className={`${bebasNeue.className} font-bold scale-y-[1.2] text-5xl md:text-[72px] mb-5`}
         >
-          <span style={{ color: '#e61c1c' }}>FUN</span> FAIR
+          <span className="text-[#e61c1c]">FUN</span> FAIR
         </h1>
         
         <p 
-          className={`${spaceGrotesk.className} tracking-normal scale-y-125`}
-          style={{
-            fontSize: '17.5px',
-            color: 'white',
-            margin: '0 auto 40px auto',
-            textAlign: 'center',
-            fontWeight: '300',
-            whiteSpace: 'normal', 
-            lineHeight: '1.6'
-          }}
+          className={`${spaceGrotesk.className} tracking-normal scale-y-[1.25] text-base md:text-[17.5px] font-light leading-relaxed mx-auto mb-10`}
         >
           Before ideas take center stage, the journey begins with Funfair, a lively student
           -driven celebration that brings the IIT Patna campus to life. Featuring interactive 
@@ -81,54 +58,42 @@ export default function FunFairSection() {
       </div>
 
       {/* Main Interactive Stage Workspace */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1.5fr',
-        gap: '40px',
-        width: '100%',
-        maxWidth: '1100px',
-        alignItems: 'center', 
-      }}>
+      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr] gap-10 w-full max-w-[1100px] items-center">
         
-        {/* LEFT COLUMN*/}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        {/* LEFT COLUMN: Spotlight */}
+        <div className="flex flex-col gap-4 w-full items-center lg:items-start">
           <span 
-            className={bebasNeue.className}
-            style={{
-              color: '#e61c1c',
-              fontSize: '24px',
-              letterSpacing: '1px',
-              textTransform: 'uppercase'
-            }}
+            className={`${bebasNeue.className} text-[#e61c1c] text-xl md:text-2xl tracking-wide uppercase`}
           >
             A trip down the memory lane... ↴
           </span>
           
           {/* Big Spotlight Polaroid Canvas Box */}
-          <div style={{
-            position: 'relative',
-            width: '440px',
-            height: '440px',
-            marginLeft: '0px',
-            backgroundImage: "url('/image 56.png')", 
-            backgroundSize: '100% 100%',
-            backgroundRepeat: 'no-repeat',
-            display: 'flex',
-            justifyContent: 'center',
-          }}>
-            {/* Inner Active Photo Window placement layout */}
-            <div style={{
-              position: 'absolute',
-              top: '88px',      
-              width: '334px',    
-              height: '240px',
-              overflow: 'hidden',
-            }}>
+          {/* We use aspect-square so it remains a perfect square as it scales down */}
+          <div className="relative w-full max-w-[440px] aspect-square flex justify-center">
+            
+            {/* Background Frame Layer */}
+            <div 
+              className="absolute inset-0 bg-[length:100%_100%] bg-no-repeat"
+              style={{ backgroundImage: "url('/image 56.png')" }}
+            />
+            
+            {/* Inner Active Photo Window */}
+            {/* Switched fixed pixels to percentage-based positioning based on original math (334/440 = 76%, etc) */}
+            <div 
+              className="absolute overflow-hidden"
+              style={{
+                top: '20%',       // originally 88px / 440px
+                left: '12%',      // horizontally centered
+                width: '76%',     // originally 334px / 440px
+                height: '54.5%',  // originally 240px / 440px
+              }}
+            >
               {activePhoto?.src && (
                 <img 
                   src={activePhoto.src} 
                   alt={activePhoto.alt || "Active view"} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className="w-full h-full object-cover"
                 />
               )}
             </div>
@@ -136,46 +101,38 @@ export default function FunFairSection() {
         </div>
 
         {/* RIGHT COLUMN: Grid Thumbnails */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '15px',
-        }}>
+        {/* Uses a 2-column grid on mobile, switching to 3-column on medium screens and up */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {FUNFAIR_PHOTOS.map((photo, index) => {
             const isSelected = index === selectedPhotoIndex;
             return (
               <div
                 key={photo.id}
                 onClick={() => setSelectedPhotoIndex(index)}
-                style={{
-                  position: 'relative',
-                  width: '230px',
-                  height: '210px',
-                  backgroundImage: `url('${photo.frameSrc}')`, 
-                  backgroundSize: '100% 100%',
-                  backgroundRepeat: 'no-repeat',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  transition: 'transform 0.2s ease',
-                  transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                  // REMOVED: Blue outline, border-radius changes, and blue drop shadow styling to preserve raw asset edges.
-                }}
+                className={`relative w-full aspect-[23/21] cursor-pointer transition-transform duration-200 flex justify-center ${isSelected ? 'scale-105' : 'scale-100 hover:scale-[1.02]'}`}
               >
+                {/* Background Frame */}
+                <div 
+                  className="absolute inset-0 bg-[length:100%_100%] bg-no-repeat"
+                  style={{ backgroundImage: `url('${photo.frameSrc}')` }}
+                />
               
-                <div style={{
-                  position: 'absolute',
-                  top: '40px',     
-                  width: '151px',
-                  height: '110px',
-                  overflow: 'hidden',
-                  backgroundColor: '#111'
-                }}>
+                {/* Inner Thumbnail Photo Window */}
+                {/* Uses percentages derived from your original fixed pixels (151/230, etc.) */}
+                <div 
+                  className="absolute overflow-hidden bg-[#111]"
+                  style={{
+                    top: '19%',       // originally 40px / 210px
+                    left: '17%',      // horizontally centered
+                    width: '65.6%',   // originally 151px / 230px
+                    height: '52.3%',  // originally 110px / 210px
+                  }}
+                >
                   {photo.src && (
                     <img 
                       src={photo.src} 
                       alt={photo.alt} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      className="w-full h-full object-cover"
                     />
                   )}
                 </div>
