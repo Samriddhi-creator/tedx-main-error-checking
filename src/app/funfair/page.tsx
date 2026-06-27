@@ -64,11 +64,7 @@ export default function FunFairSection() {
         </h1>
         
         <p className={`${spaceGrotesk.className} tracking-normal scale-y-[1.25] text-base md:text-[17.5px] font-light leading-relaxed mx-auto mb-10`}>
-          Before ideas take center stage, the journey begins with Funfair, a lively student
-          -driven celebration that brings the IIT Patna campus to life. Featuring interactive 
-          games, creative activities, and vibrant photo opportunities, the event creates an 
-          atmosphere filled with energy, laughter, and connection. More than just a pre-event, 
-          Funfair serves as the opening chapter of the TEDxIITPatna experience.
+          Every TEDx journey begins long before the first speaker steps onto the stage. Funfair is where that journey comes to life, a vibrant celebration that transforms the campus into a hub of energy, creativity, and connection. Explore interactive games, engaging activities, curated photo spots, and delightful surprises around every corner. Whether you’re here to play, create, or simply soak in the atmosphere, Funfair sets the tone for an unforgettable TEDxIITPatna experience, where conversations begin long before ideas take the stage.
         </p>
       </div>
 
