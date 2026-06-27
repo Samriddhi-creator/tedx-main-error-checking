@@ -8,7 +8,7 @@ import Link from "next/link";
 import HeroHome from "@/src/features/components/home/heroHome";
 import BuyTickets from "../features/components/home/buyTickects";
 import LogoLoopSection from "../features/components/home/LogoLoopSection";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import AboutTheTheme from "../features/components/home/aboutTheTheme";
 import SpeakerHome from "../features/components/home/speakerhome";
@@ -18,7 +18,7 @@ export default function IndexPage() {
   const [subscribed, setSubscribed] = React.useState(false);
   const [acceptTerms, setAcceptTerms] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  
+
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !acceptTerms) return;
@@ -32,17 +32,17 @@ export default function IndexPage() {
   };
 
   return (
-    
+
     <main
       className="h-auto bg-cover bg-center bg-no-repeat"
     >
-    <section className="relative h-auto overflow-hidden">
-    <HeroHome/>
-     </section>
-     <AboutTheTheme/>
-     <SpeakerHome/>
-     <BuyTickets/>
-     <LogoLoopSection/>
+      <section className="relative h-auto overflow-hidden">
+        <HeroHome />
+      </section>
+      <AboutTheTheme />
+      <SpeakerHome />
+      <BuyTickets />
+      <LogoLoopSection />
     </main>
   );
 }
