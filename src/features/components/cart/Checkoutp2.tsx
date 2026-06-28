@@ -165,6 +165,17 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
   return (
     <div className="min-h-full h-full bg-black text-white relative overflow-x-hidden selection:bg-red-600 flex flex-col justify-between">
       
+      <style dangerouslySetInnerHTML={{__html: `
+        /* Hide scrollbar for cleaner UI on the scrollable container */
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+
       <div 
         className="absolute inset-0 z-0 pointer-events-none opacity-75"
         style={{
@@ -176,9 +187,10 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
       />
       <div className="absolute inset-0 bg-black/40 -z-10" />
    
-      <main className="max-w-4xl w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 mt-12 mb-20 flex flex-col h-[580px]">
+      {/* Changed: Reverted back to strictly h-[580px] */}
+      <main className="max-w-4xl w-[calc(100%-2rem)] md:w-full mx-auto border border-red-950/80 rounded-2xl overflow-hidden shadow-2xl shadow-red-950/10 relative z-10 my-4 sm:my-8 md:mt-12 md:mb-20 flex flex-col h-[580px]">
         
-        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-red-950/50 h-[73px]">
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-black border-red-950/50 h-[73px] shrink-0">
           <div>
             <p className={`${spaceGrotesk.className} text-[12px] uppercase text-white tracking-widest font-lighter`}>Checkout Protocol</p>
             <h2 className={`${spaceGrotesk.className} text-xl font-semibold scale-y-125 tracking-tighter text-white mt-0.5 uppercase`}>IDENTIFY EXPLORER</h2>
@@ -190,10 +202,10 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
           </Link> 
         </div>
 
-        <div className="flex flex-col md:flex-row flex-1 h-[calc(100%-73px)]">
+        <div className="flex flex-col md:flex-row flex-1 h-[calc(100%-73px)] overflow-hidden">
           
-          <div className="w-full md:w-1/4 p-6 border-b bg-[#1D1D1D] md:border-b-0 md:border-r border-red-950/50 flex flex-col justify-between relative">
-            <div className="space-y-6 relative">
+          <div className="w-full md:w-1/4 p-6 border-b bg-[#1D1D1D] md:border-b-0 md:border-r border-red-950/50 flex flex-row md:flex-col justify-between items-start md:items-stretch relative shrink-0">
+            <div className="space-y-4 md:space-y-6 relative">
               <p className={`${spaceGrotesk.className} text-[10px] uppercase text-zinc-500 tracking-widest font-bold`}>Progress</p>
               
               <div 
@@ -209,7 +221,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                 <span className="text-xs font-semibold text-white tracking-wide">Route</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 hidden sm:flex">
                 <div className="w-[18px] h-[18px] rounded-full border border-zinc-700 bg-zinc-950 flex items-center justify-center text-[9px] text-zinc-400">3</div>
                 <span className="text-xs text-zinc-500 tracking-wide">Manifest</span>
               </div>
@@ -217,13 +229,14 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
 
             <button 
               onClick={onBack} 
-              className="mt-12 md:mt-0 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors cursor-pointer"
+              className="mt-0 md:mt-12 w-24 py-1.5 bg-red-950/20 border border-red-600/70 text-[11px] font-bold text-white rounded uppercase tracking-wider hover:bg-red-600 transition-colors cursor-pointer shrink-0"
             >
               ← BACK
             </button>
           </div>
 
-          <div className="w-full md:w-3/4 p-6 md:p-10 bg-black/50 flex flex-col justify-between">
+          {/* Changed: Added overflow-y-auto and hide-scrollbar */}
+          <div className="w-full md:w-3/4 p-6 md:p-10 bg-black/50 flex flex-col justify-between overflow-y-auto hide-scrollbar">
             <div>
               <h3 className={`${bebasNeue.className} text-[30px] font-black uppercase tracking-normal scale-y-[1.10] text-white leading-none`}>
                 Collection Route
@@ -232,7 +245,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                 Designate the drop point for your artifacts and passes
               </p>
 
-              <div className="inline-flex bg-[#303030] p-1 border border-zinc-800 rounded-lg mb-6">
+              <div className="inline-flex bg-[#303030] p-1 border border-zinc-800 rounded-lg mb-6 shrink-0">
                 <button 
                   type="button"
                   onClick={() => setLocationType("in-campus")}
@@ -257,21 +270,21 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                 </button>
               </div>
 
-              <div className="max-w-md">
+              <div className="w-full max-w-md mb-8 md:mb-0">
                 
                 {locationType === "in-campus" && (
-                  <div className="space-y-8 ml-5">
+                  <div className="space-y-8 md:ml-5">
                     
                     <div className="relative" ref={dropdownRef}>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-                        <label className={`${spaceGrotesk.className} text-xs scale-y-125 text-white w-24 font-lighter tracking-wide`}>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <label className={`${spaceGrotesk.className} text-xs scale-y-125 text-white w-full sm:w-36 font-lighter tracking-wide`}>
                           Hostel Sector :
                         </label>
                         
                         <button
                           type="button"
                           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                          className={`${spaceGrotesk.className} bg-[#2a2a2a] border px-3 py-1.5 text-xs text-white text-left tracking-wide cursor-pointer w-44 font-normal rounded flex items-center justify-between transition-colors ${
+                          className={`${spaceGrotesk.className} bg-[#2a2a2a] border px-3 py-1.5 text-xs text-white text-left tracking-wide cursor-pointer w-full sm:w-44 font-normal rounded flex items-center justify-between transition-colors ${
                             errors.sector ? "border-red-600 focus:border-red-600" : "border-white"
                           }`}
                         >
@@ -285,7 +298,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                       </div>
 
                       {isDropdownOpen && (
-                        <div className="absolute left-25 top-full mt-1 w-44 bg-[#1a1a1a] border border-zinc-800 rounded shadow-2xl z-50 overflow-hidden">
+                        <div className="absolute left-0 sm:left-[152px] top-[100%] mt-1 w-full sm:w-44 bg-[#1a1a1a] border border-zinc-800 rounded shadow-2xl z-50 overflow-hidden">
                           {SECTORS.map((sec) => (
                             <button
                               key={sec}
@@ -304,7 +317,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                       )}
 
                       {errors.sector && (
-                        <p className="text-[10px] text-red-500 mt-1 sm:ml-25 absolute left-0 top-full">
+                        <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[152px] top-[100%]">
                           Please designate an active hostel deployment sector block.
                         </p>
                       )}
@@ -312,7 +325,7 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
 
                     <div className="relative pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label className={`${spaceGrotesk.className} text-xs text-white w-34 scale-y-125 font-lighter tracking-wide`}>Room / Coordinate :</label>
+                        <label className={`${spaceGrotesk.className} text-xs text-white w-full sm:w-36 scale-y-125 font-lighter tracking-wide`}>Room / Coordinate :</label>
                         <input 
                           type="text" 
                           value={room}
@@ -321,21 +334,21 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                             if (e.target.value.trim()) setErrors(p => ({ ...p, room: false }));
                           }}
                           placeholder="e.g. A-101" 
-                          className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-700 transition-colors ${
+                          className={`flex-1 w-full bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-700 transition-colors ${
                             errors.room ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
                           }`}
                         />
                       </div>
-                      {errors.room && <p className="text-[10px] text-red-500 mt-1 sm:ml-36 absolute left-0 top-full">Specify room parameters to establish drop-point routing maps.</p>}
+                      {errors.room && <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[152px] top-[100%]">Specify room parameters to establish drop-point routing maps.</p>}
                     </div>
                   </div>
                 )}
 
                 {locationType === "out-campus" && (
-                  <div className="space-y-8 ml-5">
+                  <div className="space-y-8 md:ml-5">
                     <div className="relative">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label className="text-xs text-zinc-400 w-44 font-normal tracking-wide">Address Line :</label>
+                        <label className={`${spaceGrotesk.className} text-xs text-zinc-400 w-full sm:w-32 font-normal tracking-wide`}>Address Line :</label>
                         <input 
                           type="text" 
                           value={address}
@@ -344,18 +357,18 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                             if (e.target.value.trim()) setErrors(p => ({ ...p, address: false }));
                           }}
                           placeholder="Street Address" 
-                          className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-700 transition-colors ${
+                          className={`flex-1 w-full bg-transparent border-b outline-none text-sm pb-1 text-white placeholder:text-zinc-700 transition-colors ${
                             errors.address ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
                           }`}
                         />
                       </div>
-                      {errors.address && <p className="text-[10px] text-red-500 mt-1 sm:ml-46 absolute left-0 top-full">Address route coordinates are required.</p>}
+                      {errors.address && <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[136px] top-[100%]">Address route coordinates are required.</p>}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-4 pt-2">
                       <div className="relative">
-                        <div className="flex flex-row items-center gap-2">
-                          <label className="text-xs text-zinc-400 w-16 font-normal tracking-wide">City :</label>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <label className={`${spaceGrotesk.className} text-xs text-zinc-400 w-full sm:w-16 font-normal tracking-wide`}>City :</label>
                           <input 
                             type="text" 
                             value={city}
@@ -363,17 +376,17 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                               setCity(e.target.value);
                               if (e.target.value.trim()) setErrors(p => ({ ...p, city: false }));
                             }}
-                            className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
+                            className={`flex-1 w-full bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
                               errors.city ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
                             }`}
                           />
                         </div>
-                        {errors.city && <p className="text-[10px] text-red-500 mt-1 ml-18 absolute left-0 top-full">Specify City location.</p>}
+                        {errors.city && <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[72px] top-[100%]">Specify City location.</p>}
                       </div>
                       
                       <div className="relative">
-                        <div className="flex flex-row items-center gap-2">
-                          <label className="text-xs text-zinc-400 w-16 font-normal tracking-wide sm:pl-2">State :</label>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <label className={`${spaceGrotesk.className} text-xs text-zinc-400 w-full sm:w-16 font-normal tracking-wide sm:pl-2`}>State :</label>
                           <input 
                             type="text" 
                             value={state}
@@ -381,18 +394,18 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                               setState(e.target.value);
                               if (e.target.value.trim()) setErrors(p => ({ ...p, state: false }));
                             }}
-                            className={`flex-1 bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
+                            className={`flex-1 w-full bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
                               errors.state ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
                             }`}
                           />
                         </div>
-                        {errors.state && <p className="text-[10px] text-red-500 mt-1 sm:ml-18 absolute left-0 top-full">Specify State sector.</p>}
+                        {errors.state && <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[72px] top-[100%]">Specify State sector.</p>}
                       </div>
                     </div>
 
                     <div className="relative pt-2">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label className="text-xs text-zinc-400 w-44 font-normal tracking-wide">Postal Code :</label>
+                        <label className={`${spaceGrotesk.className} text-xs text-zinc-400 w-full sm:w-32 font-normal tracking-wide`}>Postal Code :</label>
                         <input 
                           type="text" 
                           value={postalCode}
@@ -400,12 +413,12 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
                             setPostalCode(e.target.value);
                             if (e.target.value.trim()) setErrors(p => ({ ...p, postalCode: false }));
                           }}
-                          className={`w-40 bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
+                          className={`w-full sm:w-40 bg-transparent border-b outline-none text-sm pb-1 text-white transition-colors ${
                             errors.postalCode ? "border-red-600 focus:border-red-600" : "border-zinc-800 focus:border-red-600"
                           }`}
                         />
                       </div>
-                      {errors.postalCode && <p className="text-[10px] text-red-500 mt-1 sm:ml-46 absolute left-0 top-full">Valid postal sequence routing key required.</p>}
+                      {errors.postalCode && <p className="text-[10px] text-red-500 mt-0.5 absolute left-0 sm:left-[136px] top-[100%]">Valid postal sequence routing key required.</p>}
                     </div>
                   </div>
                 )}
@@ -413,10 +426,10 @@ export default function Checkoutp2({ onNext, onBack, onStepChange }: Checkoutp2P
               </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-6 md:mt-0 shrink-0">
               <button 
                 onClick={handleContinue}
-                className="bg-red-600 border border-red-600 px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-transparent transition duration-200 text-white cursor-pointer"
+                className="bg-red-600 border border-red-600 px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-transparent transition duration-200 text-white cursor-pointer w-full md:w-auto"
               >
                 CONTINUE →
               </button>
