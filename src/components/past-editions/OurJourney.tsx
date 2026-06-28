@@ -38,6 +38,7 @@ export default function OurJourney() {
 
     const router = useRouter();
     const rulerProgress = useJourneyStore((state) => state.rulerProgress);
+    const setRulerProgress = useJourneyStore((state) => state.setRulerProgress);
 
     // Manual rotation state for 3D gallery
     const [rotationY, setRotationY] = useState(0);
@@ -277,9 +278,10 @@ export default function OurJourney() {
             gsap.ticker.remove(update);
             ScrollTrigger.getAll().forEach(t => t.kill());
             gsap.globalTimeline.clear();
+            setRulerProgress(0);
         };
 
-    }, []);
+    }, [setRulerProgress]);
 
     // Effect to toggle body overflow scroll lock
     useEffect(() => {

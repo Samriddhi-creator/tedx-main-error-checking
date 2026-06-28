@@ -39,6 +39,12 @@ export default function TedxThemeSection() {
           <Link 
             className="text-lg sm:text-2xl font-medium tracking-wide flex items-center text-[#EB0028CC] hover:text-[#ff3355] transition-colors gap-2 font-[family-name:var(--font-space-grotesk)] hover:underline" 
             href="/past-editions"
+            onClick={(e) => {
+              if (window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+              }
+            }}
           >
             <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             <span>Go Back</span>

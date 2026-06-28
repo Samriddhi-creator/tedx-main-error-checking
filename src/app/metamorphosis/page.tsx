@@ -16,6 +16,12 @@ export default function TedxThemeSection() {
         <Link 
           className="text-[20px] sm:text-[28px] items-center text-[#EB0028CC] font-space hover:underline flex flex-row gap-2" 
           href="/past-editions"
+          onClick={(e) => {
+            if (window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
         >
           <ArrowLeft />
           Go Back

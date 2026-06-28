@@ -22,6 +22,12 @@ export default function Theme() {
         <Link 
           className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
+          onClick={(e) => {
+            if (window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
         >
           <ChevronLeft size={50} />
         </Link>
