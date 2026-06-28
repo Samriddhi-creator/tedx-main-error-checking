@@ -240,7 +240,7 @@ export default function OurJourney() {
         if (carouselRef.current && cardsRef.current.length > 0 && overlayRef.current) {
             flyInTl.current = gsap.timeline({ paused: true });
 
-            const finalZ = isMobile ? 300 : 500;
+            const finalZ = isMobile ? 250 : 400;
 
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
@@ -350,7 +350,7 @@ export default function OurJourney() {
                     {/* 3D Carousel Rotator */}
                     <div
                         ref={carouselRef}
-                        className="relative w-[280px] h-[400px] md:w-[350px] md:h-[500px]"
+                        className="relative w-[240px] h-[340px] md:w-[300px] md:h-[420px]"
                         style={{
                             transformStyle: "preserve-3d",
                             transform: `rotateY(${rotationY}deg)`,
@@ -360,7 +360,7 @@ export default function OurJourney() {
                         {editions.map((edition, i) => {
                             const angle = (360 / editions.length) * i;
                             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-                            const finalZ = isMobile ? 300 : 500;
+                            const finalZ = isMobile ? 250 : 400;
 
                             // Calculate transform parameters dynamically based on progress t
                             const cardZ = -1500 + (finalZ + 1500) * t;
@@ -385,7 +385,7 @@ export default function OurJourney() {
                                             src={edition.image}
                                             alt={edition.title}
                                             fill
-                                            sizes="(max-width: 768px) 280px, 350px"
+                                            sizes="(max-width: 768px) 240px, 300px"
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                             priority={i === 0}
                                         />

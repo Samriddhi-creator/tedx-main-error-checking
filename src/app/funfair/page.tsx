@@ -19,21 +19,21 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
-// Original thumbnails from your code
+// Original thumbnails from your code (excluding the first one which is spotlight by default)
 const FUNFAIR_PHOTOS: PolaroidPhoto[] = [
-  { id: 1, frameSrc: "/funfair/Group 48095539.png" },
   { id: 2, frameSrc: "/funfair/Group 48095539.png" },
-  { id: 3, frameSrc: "/funfair/Group 48095541 (1).png" },
-  { id: 4, frameSrc: "/funfair/Group 48095542.png" },
-  { id: 5, frameSrc: "/funfair/Group 48095543.png" },
+  { id: 3, frameSrc: "/funfair/Group 48095540.png" },
+  { id: 4, frameSrc: "/funfair/Group 48095541.png" },
+  { id: 5, frameSrc: "/funfair/Group 48095542.png" },
   { id: 6, frameSrc: "/funfair/Group 48095543.png" },
+  { id: 7, frameSrc: "/funfair/Group 48095544.png" },
 ];
 
 export default function FunFairSection() {
   // 1. Separate the Spotlight image from the Thumbnails
   const [spotlight, setSpotlight] = useState<PolaroidPhoto>({ 
-    id: "spotlight-initial", 
-    frameSrc: "/funfair/Group 48095538 (1).png" 
+    id: 1, 
+    frameSrc: "/funfair/Group 48095538.png" 
   });
   
   const [thumbnails, setThumbnails] = useState<PolaroidPhoto[]>(FUNFAIR_PHOTOS);
@@ -55,7 +55,7 @@ export default function FunFairSection() {
   };
 
   return (
-    <section className="flex flex-col items-center w-full px-5 py-10 text-white bg-transparent box-border">
+    <section className="flex flex-col items-center w-full px-5 pt-0 md:pt-4 pb-10 text-white bg-transparent box-border">
       
       {/* Title Header Layout Area */}
       <div className="text-center w-full max-w-[850px] mb-8">
@@ -63,7 +63,7 @@ export default function FunFairSection() {
           <span className="text-[#e61c1c]">FUN</span> FAIR
         </h1>
         
-        <p className={`${spaceGrotesk.className} tracking-normal scale-y-[1.25] text-base md:text-[17.5px] font-light leading-relaxed mx-auto mb-10`}>
+        <p className={`${spaceGrotesk.className} tracking-normal text-base md:text-[17.5px] font-light leading-relaxed mx-auto mb-10`}>
           Every TEDx journey begins long before the first speaker steps onto the stage. Funfair is where that journey comes to life, a vibrant celebration that transforms the campus into a hub of energy, creativity, and connection. Explore interactive games, engaging activities, curated photo spots, and delightful surprises around every corner. Whether you’re here to play, create, or simply soak in the atmosphere, Funfair sets the tone for an unforgettable TEDxIITPatna experience, where conversations begin long before ideas take the stage.
         </p>
       </div>

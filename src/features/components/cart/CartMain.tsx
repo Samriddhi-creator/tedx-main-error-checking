@@ -200,15 +200,15 @@ export default function CartMain() {
 
                 {/* Controls & Price Allocation Columns */}
                 <div className="flex flex-row items-center justify-between sm:justify-end gap-8 w-full sm:w-auto mt-2 sm:mt-0">
-                  <div className="flex flex-col items-center sm:items-center gap-1.5">
-                    <span className={`${spaceGrotesk.className} text-[20px] text-zinc-400 font-medium tracking-wide`}>Quantity</span>
-                    <div className="flex items-center border border-zinc-600 rounded-lg bg-zinc-950/60 text-[16px] font-mono p-1.5 gap-1 shadow-inner">
-                      <button onClick={() => decrementQuantity(item.id)} className="p-1.5 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
-                        <Minus size={14} />
+                  <div className="flex flex-col items-center sm:items-center gap-1">
+                    <span className={`${spaceGrotesk.className} text-xs text-zinc-500 font-semibold uppercase tracking-wider`}>Quantity</span>
+                    <div className="flex items-center border border-zinc-600 rounded-lg bg-zinc-950/60 text-sm font-mono p-1 gap-0.5 shadow-inner">
+                      <button onClick={() => decrementQuantity(item.id)} className="p-1 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
+                        <Minus size={12} />
                       </button>
-                      <span className="px-3 font-bold w-8 text-center text-white text-lg">{item.quantity}</span>
-                      <button onClick={() => incrementQuantity(item.id)} className="p-1.5 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
-                        <Plus size={14} />
+                      <span className="px-2 font-bold w-6 text-center text-white text-sm">{item.quantity}</span>
+                      <button onClick={() => incrementQuantity(item.id)} className="p-1 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
+                        <Plus size={12} />
                       </button>
                     </div>
                   </div>
