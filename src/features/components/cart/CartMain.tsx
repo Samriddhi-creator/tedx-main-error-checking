@@ -144,7 +144,7 @@ export default function CartMain() {
       style={{ backgroundImage: "url('/your-background-image.jpg')" }} 
     >
       {/* Main Container */}
-      <div className="w-full mx-auto px-4 sm:px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-white relative z-10 flex-grow pb-24 md:pb-12">
+      <div className="w-full mx-auto px-4 sm:px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-white relative z-10 flex-grow pb-10 md:pb-12">
         
         {/* LEFT COLUMN */}
         <div className="md:col-span-2 flex flex-col">
@@ -375,7 +375,7 @@ export default function CartMain() {
       </div>
 
       {/* Explore, Discover, Inspire Navigation Links */}
-      <div className="w-full flex justify-center pb-28 md:pb-8 pt-4 relative z-10">
+      <div className="w-full flex justify-center pb-10 md:pb-8 pt-4 relative z-10">
         <div className={`${spaceGrotesk.className} flex flex-row items-center gap-6 text-base sm:text-[20px] font-bold tracking-widest text-gray-400 uppercase`}>
           <span className="hover:text-red-500 cursor-pointer transition-colors">Explore</span>
           <span className="text-neutral-700">•</span> 
