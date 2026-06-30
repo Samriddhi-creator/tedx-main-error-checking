@@ -4,6 +4,7 @@ import React from 'react';
 import Link from "next/link";
 import { Bebas_Neue, Space_Grotesk, Fredoka } from 'next/font/google';
 import { ChevronLeft } from "lucide-react";
+
 export const bebasNeue = Bebas_Neue({
   weight: '400', 
   subsets: ['latin'],
@@ -32,20 +33,22 @@ export default function TedxThemeSection() {
     >
       {/* Central Wrapper for Large Screens */}
       <div className="w-full max-w-6xl mx-auto flex flex-col">
-         <div className="w-full flex justify-start mt-4 -ml-2 sm:-ml-4 md:-ml-8">
-        <Link 
-          className="inline-flex items-center text-[#EB0028] hover:text-[#EB0028CC] font-space gap-2 transition-colors" 
-          href="/past-editions"
-          onClick={(e) => {
-            if (typeof window !== "undefined" && window.history.length > 1) {
-              e.preventDefault();
-              window.history.back();
-            }
-          }}
-        >
-          <ChevronLeft size={50} />
-        </Link>
-      </div>
+        
+        {/* Go back button - Removed negative margins to align perfectly with the container */}
+        <div className="w-full mt-4">
+          <Link 
+            className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors" 
+            href="/past-editions"
+            onClick={(e) => {
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+              }
+            }}
+          >
+            <ChevronLeft size={50} />
+          </Link>
+        </div>
         
         {/* 1. Heading Container */}
         <div className="relative pt-8 sm:pt-16 md:pt-20 text-left w-full z-10 flex flex-col leading-[0.9] select-none">

@@ -33,8 +33,8 @@ export default function TedxThemeSection() {
       {/* Maximum Width Wrapper */}
       <div className="w-full max-w-6xl z-10 flex flex-col items-start mt-6 sm:mt-10 relative">
         
-        {/* Go back button - Shifted further left */}
-        <div className="mb-8 sm:mb-12 self-start -ml-2 sm:-ml-4 md:-ml-8">
+        {/* Go back button - ONLY this container was adjusted to fix the position */}
+        <div className="w-full mb-8 sm:mb-12">
           <Link 
             className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors" 
             href="/past-editions"
@@ -50,7 +50,7 @@ export default function TedxThemeSection() {
           </Link>
         </div>
 
-        {/* Heading Container - Shifted further left */}
+        {/* Heading Container - Original negative margins restored */}
         <div className="flex flex-col bg-transparent pt-8 sm:pt-12 w-full -ml-2 sm:-ml-4 md:-ml-8">
           {/* Main ROAR Heading with Responsive Text Sizes */}
           <h1 className="text-[60px] sm:text-[90px] md:text-[120px] font-black tracking-wide uppercase select-none flex items-center cursor-pointer scale-y-125 drop-shadow-[0_0_15px_rgba(229,83,116,0.3)] leading-none origin-left">
