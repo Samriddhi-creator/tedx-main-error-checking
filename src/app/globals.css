@@ -76,6 +76,18 @@
   animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @theme inline {
   /* 2. Map the utility configuration flag inline */
   --font-panton: var(--font-panton-caps);
