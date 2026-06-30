@@ -32,12 +32,12 @@ export default function TedxThemeSection() {
     > 
       
       {/* Maximum Width Wrapper to align content cleanly */}
-      <div className="w-full max-w-6xl z-10 flex flex-col items-start mt-4 sm:mt-8">
+      <div className="w-full max-w-6xl mx-auto z-10 flex flex-col items-start mt-4 sm:mt-8">
         
-        {/* Go back button - Removed negative margins to keep it safely on screen */}
-        <div className="mb-8 sm:mb-12 self-start">
+        {/* Go back button - Aligned perfectly with the container */}
+        <div className="w-full mb-8 sm:mb-12">
           <Link 
-            className="inline-flex items-center text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+            className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors" 
             href="/past-editions"
             onClick={(e) => {
               // Safely check if window exists before calling history
@@ -51,7 +51,7 @@ export default function TedxThemeSection() {
           </Link>
         </div>
 
-        {/* Heading Container - Removed negative margins to prevent clipping */}
+        {/* Heading Container */}
         <div className="flex flex-col bg-transparent pt-8 sm:pt-16 md:pt-24 w-full text-left select-none font-[family-name:var(--font-bebas-neue)] tracking-widest">
           {/* Main SHEDDING OFF FEATHERS Heading */}
           <h1 className="font-extrabold text-white text-5xl sm:text-7xl md:text-8xl uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] origin-left">

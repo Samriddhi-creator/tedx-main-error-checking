@@ -13,13 +13,13 @@ export default function TedxThemeSection() {
         backgroundPosition: "center 20%" 
       }}
     >
-      {/* Maximum Width Wrapper to keep content aligned on large screens */}
+      {/* Maximum Width Wrapper - Restored your original classes (no mx-auto) */}
       <div className="w-full max-w-7xl z-10 flex flex-col items-start mt-6 sm:mt-10 relative">
         
-        {/* Go back button - Icon only, shifted to the left */}
-        <div className="mb-8 sm:mb-12 self-start -ml-2 sm:-ml-4 md:-ml-6">
+        {/* Go back button - ONLY this container is adjusted to fix the position */}
+        <div className="w-full mb-8 sm:mb-12">
           <Link 
-            className="inline-flex items-center text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+            className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors sm:ml-5 md:ml-15" 
             href="/past-editions"
             onClick={(e) => {
               // Safely check if window exists to prevent SSR crashes
@@ -33,7 +33,7 @@ export default function TedxThemeSection() {
           </Link>
         </div>
 
-        {/* 1. Heading Container - Shifted left */}
+        {/* 1. Heading Container - Restored your original negative margins */}
         <div className="relative pt-10 sm:pt-20 text-left select-none w-full -ml-1 sm:-ml-2">
           <h1 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] font-bold tracking-widest text-white uppercase leading-none">
             <span
