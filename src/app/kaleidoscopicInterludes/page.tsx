@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
@@ -18,7 +19,7 @@ export default function Theme() {
         }
       `}</style>
 
-      <div>
+        <div>
         <Link 
           className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
@@ -38,7 +39,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex flex-col md:pt-50 md:pl-10 items-center md:items-start justify-center text-center select-none">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
             <Image
-              src="/title.png"
+              src="/Group 48095475 1 copy.png"
               alt="KI"
               width={600}
               height={600}
@@ -64,7 +65,7 @@ export default function Theme() {
       </div>
 
       <div className="w-full mt-10">
-        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white">
+        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white  bg-[#BC1918]/10">
           <h1 className="font-bebas text-[30px] sm:text-[50px] md:text-[60px] lg:text-[70px] text-center">
             ABOUT THE THEME
           </h1>

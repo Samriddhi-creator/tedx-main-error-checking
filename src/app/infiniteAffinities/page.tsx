@@ -24,52 +24,61 @@ export const fredoka = Fredoka({
 
 export default function TedxThemeSection() {
   return (
+    <>
+        {/* 1. FIXED BUTTON: Always stays in place, size scales with screen */}
+      <div className="absolute top-14 left-6 sm:top-16 sm:left-2 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+        <Link 
+          className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+          href="/past-editions"
+          onClick={(e) => {
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
+        >
+          {/* Responsive sizing: scales from 40px to 64px based on screen */}
+          <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:h-16 lg:w-16" />
+        </Link>
+      </div>
+  
     <div
-      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col pb-16 px-4 sm:px-6 lg:px-8`}
+      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col pb-16 px-4 sm:px-6 lg:px-8  
+    `}
       style={{ 
-        backgroundImage: "url('/image%2058.png')", 
-        backgroundPosition: "center 30%"
+        backgroundImage: "url('/WhatsApp Image 2026-07-01 at 03.01.36 copy.jpeg')",
+       
       }}
+    
+
+       
+      
     >
       {/* Central Wrapper for Large Screens */}
       <div className="w-full max-w-6xl mx-auto flex flex-col">
         
-        {/* Go back button - Removed negative margins to align perfectly with the container */}
-        <div className="w-full mt-4">
-          <Link 
-            className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors" 
-            href="/past-editions"
-            onClick={(e) => {
-              if (typeof window !== "undefined" && window.history.length > 1) {
-                e.preventDefault();
-                window.history.back();
-              }
-            }}
-          >
-            <ChevronLeft size={50} />
-          </Link>
-        </div>
+     
         
         {/* 1. Heading Container */}
-        <div className="relative pt-8 sm:pt-16 md:pt-20 text-left w-full z-10 flex flex-col leading-[0.9] select-none">
+        <div className="relative text-left w-full z-10 flex flex-col leading-[0.9] select-none">
           
           {/* Main INFINITE Heading */}
           <h1 
-            className="font-['var(--font-panton-caps)',sans-serif] text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#000000] to-[#ed5e76] [-webkit-text-stroke:1px_rgba(255,255,255,0.6)] uppercase"
+            className="font-['var(--font-panton-caps)',sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#000000] via-[#f57288] to-[#f35b74] [-webkit-text-stroke:1px_rgba(255,255,255,0.6)] uppercase  mt-20 sm:mt-20 md:mt-30 lg:mt-40"
           >
             INFINITE
           </h1>
           
           {/* Main AFFINITIES Heading */}
           <h1 
-            className="font-['var(--font-panton-caps)',sans-serif] text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black [-webkit-text-stroke:1px_#ffffff] sm:[-webkit-text-stroke:2px_#ffffff] text-transparent tracking-widest uppercase mt-2 sm:mt-0"
+            className="font-['var(--font-panton-caps)',sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black [-webkit-text-stroke:1px_#ffffff] sm:[-webkit-text-stroke:2px_#ffffff] text-transparent tracking-widest uppercase mt-2 sm:mt-0"
           >
             AFFINITIES
           </h1>
         </div>
 
         {/* 2. About the Theme Box */}
-        <div className="w-full mt-[250px] sm:mt-[280px] md:mt-[500px] mb-8 z-10">
+        <div className="w-full mt-[300px] sm:mt-[350px] md:mt-[700px] mb-8 z-10">
           <div className="flex flex-col p-6 sm:p-8 md:p-12 bg-[#BC1918]/10 border-2 sm:border-3 border-[#EB0028CC] rounded-2xl items-center text-white shadow-2xl ">
             
             <h2 className="[font-family:var(--font-bebas-neue)] text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-center mb-4 sm:mb-6 tracking-wider">
@@ -90,6 +99,6 @@ export default function TedxThemeSection() {
         </div>
 
       </div>
-    </div>
+    </div></>
   );
-}
+} 

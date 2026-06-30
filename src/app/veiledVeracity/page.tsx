@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
@@ -75,7 +76,7 @@ export default function Theme() {
       </div>
 
       <div className="w-full mt-4">
-        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white">
+        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center  bg-[#BC1918]/10 text-white">
           <h1 className="font-bebas text-[30px] sm:text-[50px] md:text-[60px] lg:text-[70px] text-center">
             ABOUT THE THEME
           </h1>
