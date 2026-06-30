@@ -1,6 +1,7 @@
+"use client"
 import Link from "next/link";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
-
+import Image from 'next/image';
 export default function Theme() {
   return (
     <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto px-4 text-white">
@@ -28,18 +29,21 @@ export default function Theme() {
             }
           }}
         >
-          <ChevronLeft size={50} />
+          <ChevronLeft className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:-ml-10 xl:-ml-13" />
         </Link>
       </div>
 
-      <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full lg:gap-8 py-4">
         
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
           <h1 className="relative font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
-            Prisms Of
+            Prisms 
             <span className=" text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-molend align-top -ml-1 -mt-2 sm:-mt-2.5 animate-swing-x">
               X
             </span> 
+            <span className="ml-4">
+              Of  
+            </span>
             <br />
             <span className="flex flex-row items-start justify-center">
                Perception
@@ -48,12 +52,15 @@ export default function Theme() {
         </div>
 
         <div className="w-full md:w-1/2 flex justify-center items-center">
-          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
-            <img
-              src="/prism2.png"
+          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw] -mr-20 -mt-30">
+            <Image
+              src="/prism2.png" 
               alt="Prisms of Perception Artwork"
-              loading="eager"
-              className="w-full h-auto object-contain block"
+              width={1000} 
+              height={1000}
+              priority={true} 
+              sizes="(max-width: 640px) 340px, (max-width: 768px) 420px, 50vw" 
+              className="w-full h-auto object-contain block "
             />
           </div>
         </div>
