@@ -1,8 +1,7 @@
-"use client";
-
+"use client"
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
-
+import { ArrowLeft, ChevronLeft } from "lucide-react";
+import Image from 'next/image';
 export default function Theme() {
   return (
     <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto   text-white overflow-hidden">
@@ -32,20 +31,21 @@ export default function Theme() {
             }
           }}
         >
-          <ChevronLeft size={50} />
+          <ChevronLeft className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:-ml-10 xl:-ml-13" />
         </Link>
       </div>
 
-      {/* Hero Section */}
-      <div className="flex flex-col-reverse md:flex-row items-center md:items-stretch justify-between w-full gap-8 py-4">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full lg:gap-8 py-4">
         
-        {/* Main Title - Shifted to the left and stretched out */}
-        <div className="w-full md:w-1/2 flex flex-col items-start justify-center text-left select-none">
-          <h1 className="relative font-molend text-4xl sm:text-6xl md:text-7xl tracking-[0.1em] sm:tracking-[0.15em] leading-tight uppercase">
-            Prisms Of{" "}
-            <span className="text-[#EB0028] text-2xl sm:text-4xl md:text-5xl font-molend align-top -ml-1 inline-block animate-swing-x">
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center text-center select-none">
+          <h1 className="relative font-molend text-4xl sm:text-6xl md:text-6xl tracking-wider leading-tight uppercase">
+            Prisms 
+            <span className=" text-[#EB0028] text-2xl sm:text-4xl md:text-4xl font-molend align-top -ml-1 -mt-2 sm:-mt-2.5 animate-swing-x">
               X
             </span> 
+            <span className="ml-4">
+              Of  
+            </span>
             <br />
             <span className="block mt-2">
                Perception
@@ -53,14 +53,16 @@ export default function Theme() {
           </h1>
         </div>
 
-        {/* Artwork */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center">
-          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[45vw]">
-            <img
-              src="/prism2.png"
+        <div className="w-full md:w-1/2 flex justify-center items-center">
+          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw] -mr-20 -mt-30">
+            <Image
+              src="/prism2.png" 
               alt="Prisms of Perception Artwork"
-              loading="eager"
-              className="w-full h-auto object-contain block"
+              width={1000} 
+              height={1000}
+              priority={true} 
+              sizes="(max-width: 640px) 340px, (max-width: 768px) 420px, 50vw" 
+              className="w-full h-auto object-contain block "
             />
           </div>
         </div>
