@@ -4,6 +4,22 @@ import { ArrowLeft, ChevronLeft } from "lucide-react";
 import Image from 'next/image';
 export default function Theme() {
   return (
+    <>
+     <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+        <Link 
+          className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+          href="/past-editions"
+          onClick={(e) => {
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
+        >
+          {/* Responsive sizing: scales from 40px to 64px based on screen */}
+          <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
+        </Link>
+      </div>
     <div className="flex flex-col gap-6 w-full max-w-7xl mx-auto px-4 text-white">
       
       <style>{`
@@ -18,20 +34,7 @@ export default function Theme() {
         }
       `}</style>
 
-      <div>
-        <Link 
-          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
-          href="/past-editions"
-          onClick={(e) => {
-            if (window.history.length > 1) {
-              e.preventDefault();
-              window.history.back();
-            }
-          }}
-        >
-          <ChevronLeft className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:-ml-10 xl:-ml-13" />
-        </Link>
-      </div>
+    
 
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full lg:gap-8 py-4">
         
@@ -78,6 +81,6 @@ export default function Theme() {
         </div>
       </div>
 
-    </div>  
+    </div>  </>
   );
 }

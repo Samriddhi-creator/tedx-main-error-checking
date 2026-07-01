@@ -7,7 +7,8 @@ import { ChevronLeft } from "lucide-react";
 export default function TedxThemeSection() {
   return (
     <>
-      <div className="absolute top-14 left-6 sm:top-16 sm:left-2 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+       {/* 1. FIXED BUTTON: Always stays in place, size scales with screen */}
+      <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
         <Link 
           className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
           href="/past-editions"
@@ -19,9 +20,10 @@ export default function TedxThemeSection() {
           }}
         >
           {/* Responsive sizing: scales from 40px to 64px based on screen */}
-          <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:h-16 lg:w-16" />
+          <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
         </Link>
       </div>
+  
   
       <div
         className="relative flex w-full flex-col items-center bg-black bg-cover bg-top min-h-screen overflow-hidden"
