@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Speaker } from "@/types/speaker";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/src/components/ui/dialog";
 import SpeakerModal from "./Modal";
@@ -15,6 +14,7 @@ interface SpeakerCardProps {
 
 export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCardProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -38,55 +38,42 @@ export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCar
 
   return (
     <Dialog>
-      <motion.div
-        layout
+      <div
         onClick={onClick}
-        animate={{
+        style={{
           width: cardWidth,
           height: cardHeight,
           zIndex: isSelected ? 10 : 0,
         }}
-        transition={{
-          type: "tween",
-          ease: "easeInOut",
-          duration: 0.4
-        }}
-        className="relative flex-shrink-0 origin-center"
+        className="relative flex-shrink-0 origin-center transition-all duration-300 ease-in-out"
       >
-        <motion.div 
-          layout
-          animate={{
+        <div 
+          style={{
             height: cardHeight,
-            borderRadius: isSelected ? "16px" : "0px"
           }}
-          transition={{
-            type: "tween",
-            ease: "easeInOut",
-            duration: 0.4
-          }}
-          className="relative w-full h-full overflow-hidden"
+          className={`relative w-full h-full overflow-hidden transition-all duration-300 ease-in-out ${
+            isSelected ? "rounded-[16px]" : "rounded-none"
+          }`}
         >
+          <div className="absolute inset-0 bg-neutral-900" />
+
           <Image
             src={speaker.image}
             alt={speaker.name}
             fill
-            className={`object-cover transition-all duration-700 
-              ${isSelected ? "grayscale-0 contrast-110" : "grayscale tracking-wide"}`}
-            // Optimized responsive image sizing rules matching our layout breakdown
+            onLoad={() => setIsLoaded(true)}
+            className={`object-cover transition-all duration-700 ease-out ${
+              isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            } ${
+              isSelected ? "grayscale-0 contrast-110" : "grayscale tracking-wide"
+            }`}
             sizes="(max-width: 640px) 80vw, (max-width: 768px) 250px, 400px"
             priority={isSelected}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
           
           {isSelected && (
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 15 }}
-              transition={{ delay: 0.15, duration: 0.2 }}
-              className="absolute bottom-4 left-0 right-0 flex flex-col items-center px-4 text-center text-white z-20"
-            >
-              {/* Added line-clamp and responsive text scaling for small screens */}
+            <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center px-4 text-center text-white z-20 transition-all duration-300">
               <h3 className="font-bold text-[20px] sm:text-[24px] tracking-[0.08rem] font-sourceSans max-w-full truncate px-2">
                 {speaker.name}
               </h3>
@@ -95,15 +82,15 @@ export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCar
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  className="mt-2 cursor-pointer bg-gradient-to-r from-[#EB0028] to-[#B3031C] hover:from-[#B3031C] hover:to-[#B3031C] text-[14px] sm:text-[16px] font-medium font-sourceSans px-4 py-1.5 rounded-full transition-all duration-200"
+                  className="mt-2 cursor-pointer bg-gradient-to-r from-[#EB0028] to-[#B3031C] hover:from-[#B3031C] hover:to-[#B3031C] text-[14px] sm:text-[16px] font-medium font-sourceSans px-4 py-1.5 rounded-full"
                 >
                   Know More
                 </button>
               </DialogTrigger>
-            </motion.div>
+            </div>
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
       <SpeakerModal speaker={speaker} />
     </Dialog>
   );
