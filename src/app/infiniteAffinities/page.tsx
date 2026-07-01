@@ -44,7 +44,7 @@ export default function TedxThemeSection() {
   
   
     <div
-      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col pb-16 px-4 sm:px-6 lg:px-8  
+      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col pb-16 px-4 sm:px-6 lg:px-8 ml-2 sm:ml-8 md:ml-9 lg:ml-10 -mt-17 
     `}
       style={{ 
         backgroundImage: "url('/WhatsApp Image 2026-07-01 at 03.01.36 copy.jpeg')",

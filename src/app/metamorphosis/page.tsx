@@ -26,7 +26,7 @@ export default function TedxThemeSection() {
   
   
       <div
-        className="relative flex w-full flex-col items-center bg-black bg-cover bg-top min-h-screen overflow-hidden"
+        className="relative flex w-full flex-col items-center bg-black bg-cover bg-top min-h-screen overflow-hidden ml-2 sm:ml-8 md:ml-9 lg:ml-10"
         style={{ 
           backgroundImage: "url('/image 59 (1).png')",
           backgroundPosition:"center 20%"
