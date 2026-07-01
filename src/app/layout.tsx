@@ -17,7 +17,7 @@ const lemonMilk = localFont({
 });
 
 const molend = localFont({
-  src: "./font/MolendRegular-MVD6p.ttf",
+  src: "./font/MolendRegular-rgnBx.otf",
   variable: "--font-molend",
 });
 
@@ -72,7 +72,21 @@ const albertSans = Albert_Sans({
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn(bebasNeue.variable, cormorant.variable, spaceGrotesk.variable, inter, molend.variable, sourceSans, albertSans, "font-sans", geist.variable, lemonMilk.variable)}>
+    <html 
+      lang="en" 
+      suppressHydrationWarning 
+      className={cn(
+        bebasNeue.variable, 
+        cormorant.variable, 
+        spaceGrotesk.variable, 
+        inter.variable,       // Fix: added .variable
+        molend.variable,      // This now registers properly
+        sourceSans.variable,  // Fix: added .variable
+        albertSans.variable,  // Fix: added .variable
+        geist.variable, 
+        lemonMilk.variable
+      )}
+    >
       <body suppressHydrationWarning className={`bg-[#0a0a0a] bg-[url('/bg1.png')] bg-repeat bg-top bg-left text-white min-h-screen flex flex-col`}>
         {/* Navigation Bar */}
         <Navbar />
