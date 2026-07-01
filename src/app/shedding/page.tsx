@@ -23,6 +23,25 @@ export const fredoka = Fredoka({
 
 export default function TedxThemeSection() {
   return (
+    <>
+         {/* 1. FIXED BUTTON: Always stays in place, size scales with screen */}
+      <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+        <Link 
+          className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+          href="/past-editions"
+          onClick={(e) => {
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
+        >
+          {/* Responsive sizing: scales from 40px to 64px based on screen */}
+          <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
+        </Link>
+      </div>
+  
+
     <div
       className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col items-center pt-6 pb-12 px-6 sm:px-8 md:px-12 overflow-hidden`}
       style={{ 
@@ -34,22 +53,7 @@ export default function TedxThemeSection() {
       {/* Maximum Width Wrapper to align content cleanly */}
       <div className="w-full max-w-6xl mx-auto z-10 flex flex-col items-start mt-4 sm:mt-8">
         
-        {/* Go back button - Aligned perfectly with the container */}
-        <div className="w-full mb-8 sm:mb-12">
-          <Link 
-            className="items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2 transition-colors" 
-            href="/past-editions"
-            onClick={(e) => {
-              // Safely check if window exists before calling history
-              if (typeof window !== "undefined" && window.history.length > 1) {
-                e.preventDefault();
-                window.history.back();
-              }
-            }}
-          >
-            <ChevronLeft size={50} />
-          </Link>
-        </div>
+      
 
         {/* Heading Container */}
         <div className="flex flex-col bg-transparent pt-8 sm:pt-16 md:pt-24 w-full text-left select-none font-[family-name:var(--font-bebas-neue)] tracking-widest">
@@ -63,7 +67,7 @@ export default function TedxThemeSection() {
         </div>
 
         {/* About the Theme Box */}
-        <div className="w-full mt-45 sm:mt-48 md:mt-120 mb-8 z-10"> 
+        <div className="w-full mt-70 sm:mt-90 md:mt-120 lg:mt-140 mb-8 z-10"> 
           {/* The main box panel - Left aligned contents */}
           <div className="flex flex-col p-6 sm:p-8 md:p-12 bg-[#BC1918]/10 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-2xl items-start text-white shadow-2xl ">
             
@@ -102,6 +106,6 @@ export default function TedxThemeSection() {
         </div>
 
       </div>
-    </div>
+    </div></>
   );
 }
