@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import StickyNote from "@/src/features/components/wall/StickyNote";
 import AddNoteModal from "@/src/features/components/wall/AddNoteModal";
 import { motion } from "framer-motion";
@@ -65,6 +65,19 @@ export default function CommunityWallPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(20);
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const savedUsername = typeof window !== "undefined" ? localStorage.getItem("communityWallUsername") : null;
+  const hasPosted = typeof window !== "undefined" ? localStorage.getItem("communityWallHasPosted") : null;
+  const [sort, setSort] = useState<"new" | "top">("new");
+  const sortedNotes = useMemo(() => [
+    ...notes.filter(note => note.username === savedUsername),
+    ...[...notes.filter(note => note.username !== savedUsername)]
+      .sort((a, b) => sort === "top" ? b.likes - a.likes : 0),
+  ], [notes, sort, savedUsername]);
+  const visibleNotes = sortedNotes.slice(0, visibleCount);
+
 
   useEffect(() => {
     // Load notes from local storage or fallback to initial
@@ -81,6 +94,7 @@ export default function CommunityWallPage() {
     setMounted(true);
   }, []);
 
+
   // Save notes whenever they change (if mounted)
   useEffect(() => {
     if (mounted) {
@@ -89,15 +103,20 @@ export default function CommunityWallPage() {
   }, [notes, mounted]);
 
   const handleLike = (id: string, isLiking: boolean) => {
-    setNotes((prev) => 
-      prev.map(note => 
+    setNotes((prev) =>
+      prev.map(note =>
         note.id === id ? { ...note, likes: isLiking ? note.likes + 1 : Math.max(0, note.likes - 1) } : note
       )
     );
   };
 
   const MAX_NOTES = 50;
-
+  const handleDeleteNote = () => {
+    setNotes(prev => prev.filter(note => note.username !== savedUsername));
+    localStorage.removeItem("communityWallHasPosted");
+    localStorage.removeItem("communityWallUsername");
+    setShowDeleteConfirm(false);
+  };
   const handleAddNote = (username: string, message: string) => {
     const newNote: Note = {
       id: Date.now().toString(),
@@ -107,7 +126,8 @@ export default function CommunityWallPage() {
       likes: 0,
       rotation: (Math.random() * 6) - 3, // random between -3 and +3
     };
-    
+
+
     // Add to top of the list and cap at MAX_NOTES
     setNotes((prev) => {
       const updatedNotes = [newNote, ...prev];
@@ -138,40 +158,106 @@ export default function CommunityWallPage() {
             <h1 className="text-4xl md:text-6xl font-bold font-['Bebas_Neue'] tracking-wide">
               Community <span className="text-red-600">Wall</span>
             </h1>
+            <div className="flex items-center gap-2 mt-3">
+              <button
+                onClick={() => setSort("new")}
+                className={`text-xs font-bold py-1 px-4 rounded-full transition-colors ${sort === "new" ? "bg-red-600 text-white" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
+              >
+                New
+              </button>
+              <button
+                onClick={() => setSort("top")}
+                className={`text-xs font-bold py-1 px-4 rounded-full transition-colors ${sort === "top" ? "bg-red-600 text-white" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
+              >
+                Top
+
+              </button>
+
+            </div>
             <p className="text-gray-400 mt-2 max-w-xl">
               Leave your mark. Share an idea, ask a question, or let us know what you're most excited about.
             </p>
           </div>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsModalOpen(true)}
-            className="bg-white text-black font-bold py-3 px-6 rounded-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-shadow"
-          >
-            <Plus size={20} /> Add Note
-          </motion.button>
+
+          <div className="flex items-center gap-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsModalOpen(true)}
+              className="bg-white text-black font-bold py-3 px-6 rounded-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-shadow"
+            >
+              <Plus size={20} /> Add Note
+            </motion.button>
+            {hasPosted && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowDeleteConfirm(true)}
+                className="bg-zinc-800 hover:bg-red-900/50 border border-zinc-700 hover:border-red-700 text-white font-bold py-3 px-6 rounded-full flex items-center gap-2 transition-all"
+              >
+                <Trash2 size={20} /> Delete My Note
+              </motion.button>
+            )}
+          </div>
         </div>
 
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-          {notes.map((note) => (
-            <StickyNote key={note.id} note={note} onLike={handleLike} />
+          {visibleNotes.map((note) => (
+            <StickyNote key={note.id} note={note} onLike={handleLike} isPinned={note.username === savedUsername} />
           ))}
         </div>
-        
+
         {notes.length === 0 && (
           <div className="text-center py-20 text-gray-500">
             <p className="text-xl">The wall is empty! Be the first to leave a note.</p>
           </div>
         )}
-      </div>
 
-      <AddNoteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddNote}
-      />
+        {notes.length > visibleCount && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setVisibleCount(v => v + 20)}
+              className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-8 rounded-full transition-colors"
+            >
+              Load More
+            </button>
+          </div>
+        )}
+
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 max-w-sm w-full text-center"
+            >
+              <h3 className="text-xl font-bold font-['Bebas_Neue'] tracking-wide mb-2">Delete your note?</h3>
+              <p className="text-gray-400 text-sm mb-6">You can post a new one after deleting.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteNote}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        <AddNoteModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleAddNote}
+        />
+      </div>
     </main>
   );
 }

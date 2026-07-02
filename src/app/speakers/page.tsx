@@ -7,17 +7,17 @@ import { speakerServices } from "@/services/speakerServices";
 import { Speaker } from "@/types/speaker";
 import SpeakersSkeleton from "@/src/components/pastSpeakers/Skeleton";
 
-const YEARS = ["2025","2024","2023","2022","2021","2019"];
+const YEARS = ["2025", "2024", "2023", "2022", "2021", "2019"];
 
 export default function PastSpeakers() {
   const [selectedYear, setSelectedYear] = useState("2025");
   const [scrollingYear, setScrollingYear] = useState("2025");
-  
+
   const [activeIdx, setActiveIdx] = useState(0);
   const [currentSpeakers, setSpeakers] = useState<Speaker[] | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const yearsRef = useRef<HTMLDivElement>(null);
-  
+
   const isInternalScrolling = useRef(false);
   const scrollDebounceTimeout = useRef<NodeJS.Timeout | null>(null);
   const dataFetchTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -35,7 +35,7 @@ export default function PastSpeakers() {
       }
       setActiveIdx(0);
       setSpeakers(null);
-      
+
       const res = await speakerServices.getSpeakersByYear(selectedYear);
       setSpeakers(res);
     };
@@ -55,7 +55,7 @@ export default function PastSpeakers() {
     const containerRect = container.getBoundingClientRect();
     const containerCenter = containerRect.left + containerRect.width / 2;
     const children = Array.from(container.children) as HTMLElement[];
-    
+
     let closestIndex = 0;
     let minDistance = Infinity;
 
@@ -74,7 +74,7 @@ export default function PastSpeakers() {
   };
 
   const centerElementByIndex = (
-    container: HTMLDivElement | null, 
+    container: HTMLDivElement | null,
     index: number,
     behavior: "smooth" | "auto" = "smooth"
   ) => {
@@ -82,7 +82,7 @@ export default function PastSpeakers() {
     const children = container.children;
     if (children[index]) {
       if (behavior === "smooth") isInternalScrolling.current = true;
-      
+
       const target = children[index] as HTMLElement;
       const targetOffset = target.offsetLeft;
       const targetWidth = target.offsetWidth;
@@ -102,8 +102,9 @@ export default function PastSpeakers() {
     }
   };
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
+    container.setPointerCapture(e.pointerId);
     dragTracker.current = {
       isDragging: true,
       startX: e.pageX - container.offsetLeft,
@@ -113,24 +114,24 @@ export default function PastSpeakers() {
     container.style.scrollBehavior = "auto";
   };
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragTracker.current.isDragging) return;
     e.preventDefault();
-    
+
     const container = e.currentTarget;
     const x = e.pageX - container.offsetLeft;
-    const walkMultiplier = 1.5; 
+    const walkMultiplier = 1.5;
     const distance = (x - dragTracker.current.startX) * walkMultiplier;
-    
+
     container.scrollLeft = dragTracker.current.startScrollLeft - distance;
-    
+
     const centerIndex = getCenteredElementIndex(container);
     if (YEARS[centerIndex] && YEARS[centerIndex] !== scrollingYear) {
       setScrollingYear(YEARS[centerIndex]);
     }
   };
 
-  const handleMouseUpOrLeave = (e: MouseEvent<HTMLDivElement>, type: "years" | "speakers") => {
+  const handleMouseUpOrLeave = (e: React.PointerEvent<HTMLDivElement>, type: "years" | "speakers") => {
     if (!dragTracker.current.isDragging) return;
     dragTracker.current.isDragging = false;
 
@@ -141,7 +142,7 @@ export default function PastSpeakers() {
     const centerIndex = getCenteredElementIndex(container);
     if (type === "years") {
       if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
-      
+
       const targetedYear = YEARS[centerIndex];
       if (targetedYear) {
         setScrollingYear(targetedYear);
@@ -160,7 +161,7 @@ export default function PastSpeakers() {
 
   const handleSpeakersScroll = (e: UIEvent<HTMLDivElement>) => {
     if (isInternalScrolling.current || dragTracker.current.isDragging) return;
-    
+
     const centerIndex = getCenteredElementIndex(e.currentTarget);
     if (centerIndex !== activeIdx) {
       setActiveIdx(centerIndex);
@@ -181,13 +182,13 @@ export default function PastSpeakers() {
       if (currentOverYear && currentOverYear !== selectedYear) {
         setSelectedYear(currentOverYear);
       }
-    }, 200); 
+    }, 200);
   };
 
   const handleYearClick = (year: string, idx: number) => {
     if (dragTracker.current.isDragging) return;
     if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
-    
+
     setScrollingYear(year);
     setSelectedYear(year);
     centerElementByIndex(yearsRef.current, idx, "smooth");
@@ -204,19 +205,19 @@ export default function PastSpeakers() {
       <h2 className="lg:text-[100px] md:text-[80px] sm:text-[70px] text-[50px] xl:text-[110px] uppercase tracking-[0.04rem] sm:tracking-[0.08rem] text-center font-bebas text-[#F3E9DC] leading-tight">
         Past Speakers
       </h2>
-      
+
       <div className="w-full overflow-hidden relative px-2">
-        <div 
+        <div
           ref={yearsRef}
           onScroll={handleYearsScroll}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={(e) => handleMouseUpOrLeave(e, "years")}
-          onMouseLeave={(e) => handleMouseUpOrLeave(e, "years")}
+          onPointerDown={handleMouseDown}
+          onPointerMove={handleMouseMove}
+          onPointerUp={(e) => handleMouseUpOrLeave(e, "years")}
+          onPointerLeave={(e) => handleMouseUpOrLeave(e, "years")}
           className="flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing"
-          style={{ 
-            paddingLeft: "calc(50% - 40px)", 
-            paddingRight: "calc(50% - 40px)", 
+          style={{
+            paddingLeft: "calc(50% - 40px)",
+            paddingRight: "calc(50% - 40px)",
             scrollSnapType: "x mandatory",
           }}
         >
@@ -249,11 +250,11 @@ export default function PastSpeakers() {
           onScroll={handleSpeakersScroll}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
-          onMouseUp={(e) => handleMouseUpOrLeave(e, "speakers")}
-          onMouseLeave={(e) => handleMouseUpOrLeave(e, "speakers")}
+          onPointerUp={(e) => handleMouseUpOrLeave(e, "years")}
+          onPointerLeave={(e) => handleMouseUpOrLeave(e, "years")}
           className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing"
           style={{
-            paddingLeft: "calc(50% - 200px)", 
+            paddingLeft: "calc(50% - 200px)",
             paddingRight: "calc(50% - 200px)",
             scrollSnapType: "x mandatory"
           }}

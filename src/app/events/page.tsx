@@ -25,7 +25,7 @@ export default function EventsPage() {
 
       {/* Community Wall CTA */}
       <section className="px-6 md:px-16 py-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -56,7 +56,7 @@ export default function EventsPage() {
           <Calendar className="text-red-500" size={32} />
           <h2 className="text-4xl font-bold font-['Bebas_Neue'] tracking-wide">Upcoming Events</h2>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Placeholder Event Card */}
           {[1, 2, 3].map((item) => (
