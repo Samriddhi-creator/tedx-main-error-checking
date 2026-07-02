@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import AboutTheTheme from "../features/components/home/aboutTheTheme";
 import SpeakerHome from "../features/components/home/speakerhome";
+import MerchBanner from "../components/merch";
+import EventBanner from "../components/eventBanner";
+import TicketBanner from "../components/tickectsBanner";
 
 export default function IndexPage() {
   const [btnLoading, setBtnLoading] = React.useState(false);
@@ -42,6 +45,9 @@ export default function IndexPage() {
      <AboutTheTheme/>
      <SpeakerHome/>
      <BuyTickets/>
+     <MerchBanner/>
+     <EventBanner/>
+     <TicketBanner/>
     </main>
   );
 }
