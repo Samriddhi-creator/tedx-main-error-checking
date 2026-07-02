@@ -250,8 +250,8 @@ export default function PastSpeakers() {
           onScroll={handleSpeakersScroll}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
-          onMouseUp={(e) => handleMouseUpOrLeave(e, "speakers")}
-          onMouseLeave={(e) => handleMouseUpOrLeave(e, "speakers")}
+          onPointerUp={(e) => handleMouseUpOrLeave(e, "years")}
+          onPointerLeave={(e) => handleMouseUpOrLeave(e, "years")}
           className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing"
           style={{
             paddingLeft: "calc(50% - 200px)",
