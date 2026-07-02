@@ -13,6 +13,9 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
   const [step, setStep] = useState<"username" | "note">("username");
+  const [hasPosted, setHasPosted] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -25,22 +28,71 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
       }
     }
   }, [isOpen]);
-
-  const handleUsernameSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username.trim().length > 0) {
-      localStorage.setItem("communityWallUsername", username.trim());
-      setStep("note");
+  const checkProfanity = async (text: string): Promise<boolean> => {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+      const res = await fetch("https://vector.profanity.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const data = await res.json();
+      return data.isProfanity === true;
+    } catch {
+      const banned = ["badword1", "badword2"]; // minimal fallback
+      return banned.some(w => text.toLowerCase().includes(w));
     }
   };
 
-  const handleNoteSubmit = (e: React.FormEvent) => {
+  const handleUsernameSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim().length > 0) {
-      onSubmit(username, message.trim());
-      setMessage("");
-      onClose();
+    if (!username.trim()) return;
+    if (await checkProfanity(username)) {
+      setError("Please choose an appropriate username!");
+      return;
     }
+    localStorage.setItem("communityWallUsername", username.trim());
+    setStep("note");
+  };
+  useEffect(() => {
+    if (isOpen) {
+      const alreadyPosted = localStorage.getItem("communityWallHasPosted");
+      if (alreadyPosted) {
+        setHasPosted(true);
+        return;
+      }
+      const savedName = localStorage.getItem("communityWallUsername");
+      if (savedName) {
+        setUsername(savedName);
+        setStep("note");
+      } else {
+        setStep("username");
+      }
+    }
+  }, [isOpen]);
+
+
+
+  const handleNoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim() || isSubmitting) return;
+    setIsSubmitting(true);
+    setError("");
+
+    if (await checkProfanity(message)) {
+      setError("Please keep it clean!");
+      setIsSubmitting(false);
+      return;
+    }
+
+    onSubmit(username, message.trim());
+    localStorage.setItem("communityWallHasPosted", "true");
+    setMessage("");
+    setIsSubmitting(false);
+    onClose();
   };
 
   return (
@@ -61,14 +113,30 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
               className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-md p-6 relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <button 
+              <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
               >
                 <X size={20} />
               </button>
 
-              {step === "username" ? (
+              {hasPosted ? (
+                <div className="flex flex-col items-center gap-4 py-6 text-center">
+                  <span className="text-4xl">📌</span>
+                  <h3 className="text-2xl font-bold font-['Bebas_Neue'] tracking-wide text-white">
+                    You've left your mark!
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    You've already posted on the wall. Only one note per person!
+                  </p>
+                  <button
+                    onClick={onClose}
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              ) : step === "username" ? (
                 <div>
                   <h3 className="text-2xl font-bold mb-2 font-['Bebas_Neue'] tracking-wide text-white">Join the Wall</h3>
                   <p className="text-gray-400 text-sm mb-6">Enter a username to start posting.</p>
@@ -82,6 +150,7 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
                       className="w-full bg-black border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                       required
                     />
+                    {error && <p className="text-red-500 text-xs">{error}</p>}
                     <button
                       type="submit"
                       disabled={!username.trim()}
@@ -107,12 +176,13 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
                     />
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">{message.length}/150</span>
+                      {error && <p className="text-red-500 text-xs">{error}</p>}
                       <button
                         type="submit"
-                        disabled={!message.trim()}
+                        disabled={!message.trim() || isSubmitting}
                         className="bg-red-600 hover:bg-red-700 disabled:bg-red-600/50 disabled:cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg transition-colors"
                       >
-                        Post Note
+                        {isSubmitting ? "Posting..." : "Post Note"}
                       </button>
                     </div>
                   </form>
