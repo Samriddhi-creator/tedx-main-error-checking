@@ -81,12 +81,12 @@ export default function Navbar() {
             <header className={`sticky top-0 z-[110] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
                     <Link href="/" className="flex items-center md:justify-center ml-6 w-full h-full">
-                        <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[56%] h-auto" />
+                        <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[66%] h-auto" />
                     </Link>
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-4">
-                    <Link href="/cart" className="h-[26px] md:h-[45px] px-3 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
+                    <Link href="/cart" className="h-[24px] md:h-[45px] px-3 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
                         Buy Now
                     </Link>
 

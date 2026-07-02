@@ -1,9 +1,26 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
+    <>
+     <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+        <Link 
+          className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+          href="/past-editions"
+          onClick={(e) => {
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
+        >
+          {/* Responsive sizing: scales from 40px to 64px based on screen */}
+          <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
+        </Link>
+      </div>
     <div className="flex flex-col gap-6 w-full  text-white">
       
       <style>{`
@@ -22,20 +39,24 @@ export default function Theme() {
         <Link 
           className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
           href="/past-editions"
+          onClick={(e) => {
+            if (window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
         >
-          <ChevronLeft size={50} />
+          <ChevronLeft className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:-ml-5 xl:-ml-5" />
         </Link>
       </div>
 
-      <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full gap-8 py-4">
+      <div className="flex flex-row justify-center w-full gap-2 sm:gap-4 md:gap-8 py-4">
         
-        <div className="w-full md:w-1/2 flex justify-center items-center">
-          <div className="relative w-full max-w-[50vw] sm:max-w-[40vw] md:max-w-[40vw] pb-[15%]">
-            
-            {/* 1. Main Text Backdrop Layer ("VEILED VER CITY") */}
+        <div className="w-full md:w-1/2 flex justify-center align-top">
+          <div className="relative w-full max-w-[50vw] sm:max-w-[40vw] md:max-w-[40vw] pb-[15%] sm:mt-15 mt-5">
             <Image
               src="/vv1.png"
-              alt="Veiled Veracity Text Backdrop"
+              alt="Veiled Veracity Text"
               width={1200}
               height={1200}
               priority
@@ -43,7 +64,7 @@ export default function Theme() {
             />
             <Image
               src="/a.png"
-              alt="Red Triangle Icon Accent"
+              alt="A"
               width={600}
               height={600}
               priority
@@ -69,7 +90,7 @@ export default function Theme() {
       </div>
 
       <div className="w-full mt-4">
-        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white">
+        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center  bg-[#BC1918]/10 text-white">
           <h1 className="font-bebas text-[30px] sm:text-[50px] md:text-[60px] lg:text-[70px] text-center">
             ABOUT THE THEME
           </h1>
@@ -79,6 +100,6 @@ export default function Theme() {
           </p>
         </div>
       </div>
-    </div>  
+    </div>  </>
   );
 }

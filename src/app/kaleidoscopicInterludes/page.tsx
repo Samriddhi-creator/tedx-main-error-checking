@@ -1,9 +1,26 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 export default function Theme() {
   return (
+    <>
+     <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
+        <Link 
+          className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
+          href="/past-editions"
+          onClick={(e) => {
+            if (typeof window !== "undefined" && window.history.length > 1) {
+              e.preventDefault();
+              window.history.back();
+            }
+          }}
+        >
+          {/* Responsive sizing: scales from 40px to 64px based on screen */}
+          <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
+        </Link>
+      </div>
     <div className="flex flex-col w-full max-w-7xl mx-auto px-4 text-white">
       
       <style>{`
@@ -18,21 +35,14 @@ export default function Theme() {
         }
       `}</style>
 
-      <div>
-        <Link 
-          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
-          href="/past-editions"
-        >
-          <ChevronLeft size={50} />
-        </Link>
-      </div>
+       
 
       <div className="flex flex-col-reverse md:flex-row items-start justify-center w-full  py-4">
         
         <div className="w-full md:w-1/2 flex flex-col md:pt-50 md:pl-10 items-center md:items-start justify-center text-center select-none">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
             <Image
-              src="/title.png"
+              src="/Group 48095475 1 copy.png"
               alt="KI"
               width={600}
               height={600}
@@ -58,7 +68,7 @@ export default function Theme() {
       </div>
 
       <div className="w-full mt-10">
-        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white">
+        <div className="flex flex-col p-4 border-[2px] sm:border-[3px] border-[#EB0028CC] rounded-lg items-center text-white  bg-[#BC1918]/10">
           <h1 className="font-bebas text-[30px] sm:text-[50px] md:text-[60px] lg:text-[70px] text-center">
             ABOUT THE THEME
           </h1>
@@ -70,6 +80,6 @@ export default function Theme() {
           </p>
         </div>
       </div>
-    </div>  
+    </div>  </>
   );
 }

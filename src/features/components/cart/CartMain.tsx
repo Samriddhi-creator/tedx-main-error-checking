@@ -144,7 +144,7 @@ export default function CartMain() {
       style={{ backgroundImage: "url('/your-background-image.jpg')" }} 
     >
       {/* Main Container */}
-      <div className="w-full mx-auto px-4 sm:px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-white relative z-10 flex-grow pb-24 md:pb-12">
+      <div className="w-full mx-auto px-4 sm:px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-white relative z-10 flex-grow pb-10 md:pb-12">
         
         {/* LEFT COLUMN */}
         <div className="md:col-span-2 flex flex-col">
@@ -200,15 +200,15 @@ export default function CartMain() {
 
                 {/* Controls & Price Allocation Columns */}
                 <div className="flex flex-row items-center justify-between sm:justify-end gap-8 w-full sm:w-auto mt-2 sm:mt-0">
-                  <div className="flex flex-col items-center sm:items-center gap-1.5">
-                    <span className={`${spaceGrotesk.className} text-[20px] text-zinc-400 font-medium tracking-wide`}>Quantity</span>
-                    <div className="flex items-center border border-zinc-600 rounded-lg bg-zinc-950/60 text-[16px] font-mono p-1.5 gap-1 shadow-inner">
-                      <button onClick={() => decrementQuantity(item.id)} className="p-1.5 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
-                        <Minus size={14} />
+                  <div className="flex flex-col items-center sm:items-center gap-1">
+                    <span className={`${spaceGrotesk.className} text-xs text-zinc-500 font-semibold uppercase tracking-wider`}>Quantity</span>
+                    <div className="flex items-center border border-zinc-600 rounded-lg bg-zinc-950/60 text-sm font-mono p-1 gap-0.5 shadow-inner">
+                      <button onClick={() => decrementQuantity(item.id)} className="p-1 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
+                        <Minus size={12} />
                       </button>
-                      <span className="px-3 font-bold w-8 text-center text-white text-lg">{item.quantity}</span>
-                      <button onClick={() => incrementQuantity(item.id)} className="p-1.5 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
-                        <Plus size={14} />
+                      <span className="px-2 font-bold w-6 text-center text-white text-sm">{item.quantity}</span>
+                      <button onClick={() => incrementQuantity(item.id)} className="p-1 text-zinc-400 hover:text-red-500 cursor-pointer transition-colors">
+                        <Plus size={12} />
                       </button>
                     </div>
                   </div>
@@ -375,7 +375,7 @@ export default function CartMain() {
       </div>
 
       {/* Explore, Discover, Inspire Navigation Links */}
-      <div className="w-full flex justify-center pb-28 md:pb-8 pt-4 relative z-10">
+      <div className="w-full flex justify-center pb-10 md:pb-8 pt-4 relative z-10">
         <div className={`${spaceGrotesk.className} flex flex-row items-center gap-6 text-base sm:text-[20px] font-bold tracking-widest text-gray-400 uppercase`}>
           <span className="hover:text-red-500 cursor-pointer transition-colors">Explore</span>
           <span className="text-neutral-700">•</span> 
