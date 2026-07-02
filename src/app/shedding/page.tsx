@@ -43,10 +43,10 @@ export default function TedxThemeSection() {
   
 
     <div
-      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col items-center pt-6 pb-12 px-6 sm:px-8 md:px-12 overflow-hidden`}
+      className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col items-center pt-6 pb-12 px-6 sm:px-8 md:px-12 overflow-hidden  ml-2 sm:ml-8 md:ml-9 lg:ml-10 -mt-17 `}
       style={{ 
         backgroundImage: "url('/image 62.png')",
-        backgroundPosition: "center 20%"
+        backgroundPosition: "top right"
       }}
     > 
       
