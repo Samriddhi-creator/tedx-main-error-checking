@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -38,14 +38,16 @@ export default function OurJourney() {
 
     const router = useRouter();
     const rulerProgress = useJourneyStore((state) => state.rulerProgress);
-    const setRulerProgress = useJourneyStore((state) => state.setRulerProgress);
+    const resetJourney = useJourneyStore((state) => state.resetJourney);
 
     // Manual rotation state for 3D gallery
     const [rotationY, setRotationY] = useState(0);
     const isDragging = useRef(false);
     const startX = useRef(0);
     const currentRot = useRef(0);
-
+    useLayoutEffect(() => {
+        resetJourney();
+    }, [resetJourney]);
     useEffect(() => {
         // Smooth scroll setup
         const lenis = new Lenis({ duration: 2 });
@@ -278,10 +280,8 @@ export default function OurJourney() {
             gsap.ticker.remove(update);
             ScrollTrigger.getAll().forEach(t => t.kill());
             gsap.globalTimeline.clear();
-            setRulerProgress(0);
         };
-
-    }, [setRulerProgress]);
+    }, []);
 
     // Effect to toggle body overflow scroll lock
     useEffect(() => {
