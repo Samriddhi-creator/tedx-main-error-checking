@@ -3,7 +3,7 @@ import React from 'react';
 import { Bebas_Neue, Space_Grotesk, Fredoka } from 'next/font/google';
 import Link from 'next/link';
 import { ChevronLeft } from "lucide-react";
-
+import Image from 'next/image';
 export const bebasNeue = Bebas_Neue({
   weight: '400', 
   subsets: ['latin'],
@@ -60,68 +60,71 @@ export default function TedxThemeSection() {
       
 
         {/* Heading Container - Original negative margins restored */}
-        <div className="flex flex-col bg-transparent pt-8 sm:pt-12 w-full -ml-2 sm:-ml-4 md:-ml-8">
+        <div className="flex flex-col gap:2 sm:gap-4 md:gap-6 lg:gap-10 bg-transparent pt-8 sm:pt-12 w-full ml-3 sm:-ml-4 md:ml-3 lg:-ml-8">
           {/* Main ROAR Heading with Responsive Text Sizes */}
-                   {/* Main ROAR Heading */}
-          <h1 className="font-space text-[60px] sm:text-[100px] lg:text-[130px] font-bold tracking-wide uppercase flex items-center leading-none mt-12 md:mt-25">
+        {/* ROAR Image Container - Updated with Hover Effects */}
+<div className="flex flex-row items-center gap-2 sm:gap-4 md:gap-7 mt-40 w-full">
+  
+  {/* LETTER R */}
+  <div className="w-[40px] sm:w-[50px] md:w-[50px] lg:w-[90px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom">
+    <Image 
+      src="/R.svg" 
+      alt="R" 
+      width={20} 
+      height={80} 
+      className="w-full h-auto object-contain"
+
+    />
+  </div>
+
+  {/* LETTER O */}
+  <div className="w-[60px] sm:w-[80px] lg:w-[150px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-75">
+    <Image 
+      src="/Vector copy.svg" // REPLACE WITH YOUR O IMAGE PATH
+      alt="O" 
+      width={80} 
+      height={80} 
+      className="w-full h-auto object-contain"
+    />
+  </div>
+
+  {/* LETTER A */}
+  <div className="w-[50px] sm:w-[60px] lg:w-[120px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-100">
+    <Image 
+      src="/A.svg" 
+      alt="A" 
+      width={50} 
+      height={50} 
+      className="w-full h-auto object-contain"
+    />
+  </div>
+
+  {/* LETTER R (Second R) */}
+  <div className="w-[40px] sm:w-[50px] lg:w-[90px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-150">
+    <Image 
+      src="/R.svg" 
+      alt="R" 
+      width={50} 
+      height={50} 
+      className="w-full h-auto object-contain"
+    />
+  </div>
+</div>
+
             
-            {/* R */}
-            <span className="bg-[linear-gradient(150deg,#F1A1B4_50%,#CE1B42_68%,#64061A_100%)] bg-clip-text text-transparent transition-transform duration-300 hover:scale-105 origin-left text-left  scale-y-125  ">
-              R
-            </span>
 
-            {/* Custom Stylized O Container */}
-            <span className="relative inline-flex items-center justify-center mx-2 sm:mx-4 lg:mx-5 h-[60px] sm:h-[100px] lg:h-[130px] w-[60px] sm:w-[100px] lg:w-[130px] transition-transform duration-300 hover:scale-105 origin-left text-left  scale-y-125 ">
-              
-              {/* Left Ear */}
-              <div 
-                className="absolute -top-[12%] left-[15%] w-[12px] sm:w-[20px] lg:w-[26px] h-[12px] sm:h-[20px] lg:h-[26px] bg-gradient-to-b from-[#FFFFFF] to-[#F1A1B4] rotate-[-22deg]  transition-transform duration-300 hover:scale-105 origin-left text-left  scale-y-125"
-                style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}
-              />
-              
-              {/* Right Ear */}
-              <div 
-                className="absolute -top-[12%] right-[15%] w-[12px] sm:w-[20px] lg:w-[26px] h-[12px] sm:h-[20px] lg:h-[26px] bg-gradient-to-b from-[#FFFFFF] to-[#F1A1B4] rotate-[22deg]  "
-                style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}
-              />
-              
-              {/* Left Claw Curve (SVG) */}
-              <svg className="absolute -left-[15%] h-[90%] w-[35%] z-0" viewBox="0 0 20 100 " preserveAspectRatio="none">
-                <path d="M20 0 Q 0 50 20 100 Q 5 50 20 0" fill="#9e1335" />
-              </svg>
-              
-              {/* Center Letter O */}
-              <span className="relative z-10  bg-[linear-gradient(150deg,#F1A1B4_50%,#CE1B42_57%,#64061A_100%)] bg-clip-text text-transparent ">
-                O
-              </span>
-              
-              {/* Right Claw Curve (SVG) */}
-              <svg className="absolute -right-[15%] h-[90%] w-[35%] z-0" viewBox="0 0 20 100" preserveAspectRatio="none">
-                <path d="M0 0 Q 20 50 0 100 Q 15 50 0 0" fill="#9e1335" />
-              </svg>
-            </span>
-
-            {/* A R */}
-            <span className="bg-[linear-gradient(180deg,#F1A1B4_50%,#CE1B42_68%,#64061A_100%)] bg-clip-text text-transparent  transition-transform duration-300 hover:scale-105 origin-left text-left  scale-y-125">
-              A
-            </span>
-            <span className="bg-[linear-gradient(150deg,#F1A1B4_50%,#CE1B42_68%,#64061A_100%)] bg-clip-text text-transparent transition-transform duration-300 hover:scale-105 origin-left text-left  scale-y-125">
-              R
-            </span>
-          </h1>
-
-            
-
-          {/* Tagline - Stretched tracking and mobile line-break applied */}
-          <p 
-            className="text-[40px] sm:text-lg md:text-[20px] font-medium tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] lowercase mt-4 sm:mt-2
-                       bg-gradient-to-r from-[#e55374] to-[#b61b40] 
-                       bg-clip-text text-transparent transition-transform duration-300 hover:scale-105 origin-left text-left w-full scale-y-125"
-          >
-            the acoustics{" "}
-            <span className="block sm:inline">of strength</span>
-          </p>
-        </div>
+        {/* Replace the <p> tag with this container */}
+<div className="mt-4 sm:mt-2 ml-2  w-full transition-transform duration-300 hover:scale-105 origin-left">
+  <div className="relative w-[210px] sm:w-[280px] lg:w-[500px] h-auto">
+    <Image 
+      src="/the acousitc of strength copy.svg" 
+      alt="the acoustic of strength" 
+      width={600} 
+      height={100} 
+      className="w-full h-auto object-contain"
+    />
+  </div>
+</div></div>
 
         {/* About the theme Box */}
         <div className="w-full mt-40 sm:mt-70 md:mt-100 lg:mt-190 mb-8 z-10"> 
