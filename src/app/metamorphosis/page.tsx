@@ -2,12 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronLeft } from "lucide-react";
 
 export default function TedxThemeSection() {
   return (
     <>
-       {/* 1. FIXED BUTTON: Always stays in place, size scales with screen */}
+      {/* 1. FIXED BUTTON */}
       <div className="absolute top-14 left-6 sm:top-14 sm:left-10 md:top-20 md:left-10 lg:left-11 lg:top-19 z-[100]">
         <Link 
           className="text-[#EB0028] hover:text-[#EB0028CC] transition-colors" 
@@ -19,40 +20,70 @@ export default function TedxThemeSection() {
             }
           }}
         >
-          {/* Responsive sizing: scales from 40px to 64px based on screen */}
           <ChevronLeft className="w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-17 lg:h-17" />
         </Link>
       </div>
-  
   
       <div
         className="relative flex w-full flex-col items-center bg-black bg-cover bg-top min-h-screen overflow-hidden ml-2 sm:ml-8 md:ml-9 lg:ml-10"
         style={{ 
           backgroundImage: "url('/image 59 (1).png')",
           backgroundPosition:"center 20%"
-         
         }}
       >
-        {/* Main Content Wrapper - Added pt-20 to ensure content doesn't hit the button */}
-        <div className="w-full max-w-7xl z-10 flex flex-col items-start px-4 sm:px-6 lg:px-8 pt-20 md:pt-32 relative">
+        <div className="w-full max-w-7xl z-10 flex flex-col items-start  pt-20 md:pt-32 relative">
           
-          {/* 1. Heading Container */}
-          <div className="relative text-left w-full z-10 flex flex-col leading-[0.9] select-none">
-            <h1 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] font-bold tracking-widest text-white uppercase leading-none">
-              <span
-                className="relative animate-glow-pulse animate-flicker block sm:inline"
-                style={{
-                  textShadow: `0 0 4px #fff, 0 0 10px #ff2a2a, 0 0 20px #ff2a2a, 0 0 40px #ff0000, 0 0 80px #cc0000`,
-                }}
-              >
-                META
-              </span>
-              <span className="block sm:inline">MORPHOSIS</span>
-            </h1>
-          </div> 
+          {/* 1. Heading Container with SVG */}
+        {/* 1. Heading Container with Stacked Layers */}
+<div className="relative text-left w-full z-10 flex flex-col select-none mt-20 md:mt-32">
+  
+  {/* Hover Container */}
+  <div className="relative w-[300px] sm:w-[600px] lg:w-[900px] h-auto transition-transform duration-500 hover:scale-105 origin-left cursor-pointer">
+    
+   {/* --- LAYER 1: The Red Shadows (Background) --- */}
+
+  {/* Each image has a relative position, and we add 'left' to create the gap */}
+{/* --- LAYER 1: The Red Shadows (Background) --- */}
+{/* Absolute container handles the stacking, classes handle the responsive positioning */}
+{/* --- LAYER 1: The Red Shadows (Background) --- */}
+<div className="absolute inset-0 z-0 pointer-events-none w-full h-[30px] sm:h-[50px] sm:h-[60px] md:h-[70px] lg:h-[100px] -translate-y-0.5 sm:-translate-y-1 md:-translate-y-2 lg:-translate-y-2">
+  
+  {/* Wrap each image in a div that handles the positioning */}
+  <div className="absolute w-full h-full left-[-140px] sm:left-[-280px] lg:left-[-420px]">
+    <Image src="/M copy.svg" alt="" fill className="object-contain" />
+  </div>
+
+  <div className="absolute w-full h-full left-[-98px] sm:left-[-198px] lg:left-[-290px]">
+    <Image src="/E (2).svg" alt="" fill className="object-contain" />
+  </div>
+
+  <div className="absolute w-full h-full left-[-118px] sm:left-[-235px] lg:left-[-350px]">
+    <Image src="/E copy.svg" alt="" fill className="object-contain" />
+  </div>
+
+  <div className="absolute w-full h-full left-[88px] sm:left-[180px] lg:left-[270px]">
+    <Image src="/E (1) copy.svg" alt="" fill className="object-contain" />
+  </div>
+  
+</div>
+
+    {/* --- LAYER 2: The Main White Text (Foreground) --- */}
+    <div className="relative sm:w-[570px] md:w-[580px] lg:w-[890px]  z-10 w-full h-full">
+      <Image 
+        src="/METAMORPHOSIS.svg" 
+        alt="METAMORPHOSIS" 
+        width={1200} 
+        height={300} 
+        className="w-full h-auto object-contain"
+        priority
+      />
+    </div>
+
+  </div>
+</div>
 
           {/* 2. About the Theme Box */}
-          <div className="w-full mt-70 sm:mt-100 md:mt-140 lg:mt-180 mb-16 z-10">
+          <div className="w-full mt-60 sm:mt-90 md:mt-100 lg:mt-180 mb-16 z-10">
             <div className="flex flex-col p-6 sm:p-8 md:p-12 bg-[#BC1918]/10 border-2 sm:border-[3px] border-[#EB0028CC] rounded-2xl items-start text-white shadow-2xl">
               <h2 className="font-bebas text-[32px] sm:text-[44px] md:text-[56px] lg:text-[64px] text-left mb-6 tracking-wide w-full">
                 ABOUT THE THEME
