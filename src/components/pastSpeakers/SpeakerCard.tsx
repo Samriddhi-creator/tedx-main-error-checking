@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Speaker } from "@/types/speaker";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/src/components/ui/dialog";
@@ -15,6 +15,8 @@ interface SpeakerCardProps {
 export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCardProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  const coords = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -36,10 +38,22 @@ export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCar
     ? (isSelected ? "350px" : "220px")
     : (isSelected ? 400 : 250);
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    coords.current = { x: e.screenX, y: e.screenY };
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (Math.abs(e.screenX - coords.current.x) > 6 || Math.abs(e.screenY - coords.current.y) > 6) {
+      return;
+    }
+    onClick();
+  };
+
   return (
     <Dialog>
       <div
-        onClick={onClick}
+        onPointerDown={handlePointerDown}
+        onClick={handleCardClick}
         style={{
           width: cardWidth,
           height: cardHeight,
@@ -79,10 +93,11 @@ export default function SpeakerCard({ speaker, isSelected, onClick }: SpeakerCar
               </h3>
               <DialogTrigger asChild>
                 <button 
+                  onPointerDown={(e) => e.stopPropagation()}
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); 
                   }}
-                  className="mt-2 cursor-pointer bg-gradient-to-r from-[#EB0028] to-[#B3031C] hover:from-[#B3031C] hover:to-[#B3031C] text-[14px] sm:text-[16px] font-medium font-sourceSans px-4 py-1.5 rounded-full"
+                  className="mt-2 cursor-pointer bg-gradient-to-r from-[#EB0028] to-[#B3031C] hover:from-[#B3031C] hover:to-[#B3031C] text-[14px] sm:text-[16px] font-medium font-sourceSans px-4 py-1.5 rounded-full relative z-30"
                 >
                   Know More
                 </button>
