@@ -7,13 +7,13 @@ export default function RefundPolicy() {
                 </h1>
                 <div className="font-['Space_Grotesk'] flex flex-col gap-6 text-base md:text-lg leading-relaxed text-gray-300">
                     <p>
-                        All ticket purchases made for <strong className="text-white">TEDxIITPatna</strong> are final. Once a ticket has been purchased, it cannot be cancelled, refunded, or exchanged under any circumstances.
+                        All purchases made from <strong className="text-white">TEDxIITPatna</strong>, including event tickets and merchandise, are final. Once a purchase has been made, it cannot be cancelled, refunded, exchanged, or returned under any circumstances.
                     </p>
                     <p>
-                        No requests for refunds or cancellations will be entertained, including but not limited to inability to attend the event due to personal reasons, travel disruptions, medical emergencies, or unforeseen circumstances.
+                        No requests for refunds or cancellations of tickets will be entertained, including but not limited to inability to attend the event due to personal reasons, travel disruptions, medical emergencies, or unforeseen circumstances. Similarly, no requests for the return, exchange, or refund of merchandise will be accepted due to change of mind, personal preference, or any other reason.
                     </p>
                     <p className="font-medium text-white pt-2">
-                        By purchasing a ticket, the purchaser acknowledges and agrees to abide by this Refund Policy.
+                        By purchasing a ticket or merchandise item, the buyer acknowledges and agrees to abide by this Refund Policy.
                     </p>
                 </div>
             </div>

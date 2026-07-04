@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { team } from "data/teamData"
+import { team } from "@/data/teamData"
 import OrgCard from "@/src/components/about/OrgCard";
 import AboutTed from "@/src/components/about/AboutTed";
 import { motion } from "framer-motion";

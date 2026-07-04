@@ -104,7 +104,6 @@ export default function PastSpeakers() {
 
   const handleMouseDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
-    container.setPointerCapture(e.pointerId);
     dragTracker.current = {
       isDragging: true,
       startX: e.pageX - container.offsetLeft,
@@ -136,6 +135,12 @@ export default function PastSpeakers() {
     dragTracker.current.isDragging = false;
 
     const container = e.currentTarget;
+    // Release pointer capture if it was set, so child buttons can receive events
+    try {
+      if (container.hasPointerCapture(e.pointerId)) {
+        container.releasePointerCapture(e.pointerId);
+      }
+    } catch { /* ignore */ }
     container.style.scrollSnapType = "x mandatory";
     container.style.scrollBehavior = "smooth";
 
@@ -248,10 +253,10 @@ export default function PastSpeakers() {
         <div
           ref={carouselRef}
           onScroll={handleSpeakersScroll}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onPointerUp={(e) => handleMouseUpOrLeave(e, "years")}
-          onPointerLeave={(e) => handleMouseUpOrLeave(e, "years")}
+          onPointerDown={handleMouseDown}
+          onPointerMove={handleMouseMove}
+          onPointerUp={(e) => handleMouseUpOrLeave(e, "speakers")}
+          onPointerLeave={(e) => handleMouseUpOrLeave(e, "speakers")}
           className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing"
           style={{
             paddingLeft: "calc(50% - 200px)",

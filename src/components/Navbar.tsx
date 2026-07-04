@@ -78,7 +78,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className={`sticky top-0 z-[110] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+            <header className={`sticky top-0 z-[120] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
                     <Link href="/" className="flex items-center md:justify-center ml-6 w-full h-full">
                         <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[66%] h-auto" />
@@ -92,7 +92,7 @@ export default function Navbar() {
 
                     <button
                         onClick={() => setOpen(!open)}
-                        className="size-[24px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[4px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[120] cursor-pointer">
+                        className="size-[24px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[4px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[130] cursor-pointer">
                         <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[5px] md:translate-y-[6px] rotate-45" : ""}`} />
                         <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
                         <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[5px] md:-translate-y-[6px] -rotate-45" : ""}`} />
@@ -101,7 +101,7 @@ export default function Navbar() {
             </header>
 
             <div
-                className={`fixed inset-0 w-screen h-screen bg-black/95 backdrop-blur-md z-[100] flex px-6 md:px-16 py-8 md:py-12 transition-all duration-500 ease-in-out ${open ? "opacity-100 translate-x-0 pointer-events-auto visible" : "opacity-0 translate-x-full pointer-events-none invisible"}`}
+                className={`fixed inset-0 w-screen h-screen bg-black/95 backdrop-blur-md z-[115] flex px-6 md:px-16 py-8 md:py-12 transition-all duration-500 ease-in-out ${open ? "opacity-100 translate-x-0 pointer-events-auto visible" : "opacity-0 translate-x-full pointer-events-none invisible"}`}
                 onClick={() => setOpen(false)}
             >
                 <div
