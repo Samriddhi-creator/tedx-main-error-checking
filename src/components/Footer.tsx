@@ -220,7 +220,7 @@ export default function Footer() {
 
                 {/* Left col */}
                 <div className="flex flex-col gap-2 md:gap-4 flex-[600] md:flex-[724]">
-                    <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-32 md:w-[384px] h-auto" />
+                    <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-32 md:w-[384px] h-auto" />
                     <div className="flex flex-col gap-1 md:gap-3 mt-2 md:mt-6">
                         {/* External links */}
                         {leftLinks.map((link) => (<Link key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-lg hover:text-red-500 transition-colors" >

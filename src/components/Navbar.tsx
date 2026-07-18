@@ -80,8 +80,8 @@ export default function Navbar() {
         <>
             <header className={`sticky top-0 z-[120] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
-                    <Link href="/" className="flex items-center md:justify-center ml-6 w-full h-full">
-                        <Image src="/logo.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[66%] h-auto" />
+                    <Link href="/" className="flex items-center md:justify-center ml-6  w-full h-full">
+                        <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[55%] h-auto sm:w-[80px] sm:h-[60px] md:w-[100px] md:h-[80px] lg:w-[140px] lg:h-[120px]" />
                     </Link>
                 </div>
 
@@ -108,7 +108,7 @@ export default function Navbar() {
                     className={`hidden md:flex flex-col justify-end gap-4 w-1/2 transition-all duration-700 ease-out transform ${open ? "translate-x-0 opacity-100 delay-150" : "-translate-x-8 opacity-0"}`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <Image src="/logo.svg" alt="TEDxIITPatna" width={200} height={45} />
+                    <Image src="/logo png.svg" alt="TEDxIITPatna" width={200} height={45} />
                     <div className="mt-8">
                         <p className="text-red-500 font-['Inter'] text-xl font-bold mb-1">Contact Us</p>
                         <Link href="mailto:tedxiitpatna@gmail.com" className="flex items-center gap-2 text-white font-['Inter'] text-sm hover:text-red-500 transition-colors">
