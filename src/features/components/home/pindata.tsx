@@ -20,7 +20,7 @@ export const Locations:location[]=[
     },
     {
         name:"Past Events",
-        href:"/pastEvents",
+        href:"/past-editions",
         topInPercentage:54,
         leftInPercentage:50,
     },
@@ -32,7 +32,7 @@ export const Locations:location[]=[
     },
     {
         name:"About Us",
-        href:"/aboutUs",
+        href:"/about",
         topInPercentage:14,
         leftInPercentage:52,
     },
