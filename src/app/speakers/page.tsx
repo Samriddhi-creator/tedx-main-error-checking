@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, UIEvent, MouseEvent } from "react";
+import { useState, useRef, useEffect, UIEvent } from "react";
 import { motion } from "framer-motion";
 import SpeakerCard from "@/src/components/pastSpeakers/SpeakerCard";
 import { speakerServices } from "@/services/speakerServices";
@@ -26,6 +26,7 @@ export default function PastSpeakers() {
     isDragging: false,
     startX: 0,
     startScrollLeft: 0,
+    startTime: 0,
   });
 
   useEffect(() => {
@@ -102,45 +103,49 @@ export default function PastSpeakers() {
     }
   };
 
-  const handleMouseDown = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest("button") && e.currentTarget !== e.target) {
+      return;
+    }
+
     const container = e.currentTarget;
+    container.setPointerCapture(e.pointerId);
     dragTracker.current = {
       isDragging: true,
       startX: e.pageX - container.offsetLeft,
       startScrollLeft: container.scrollLeft,
+      startTime: Date.now(),
     };
     container.style.scrollSnapType = "none";
     container.style.scrollBehavior = "auto";
   };
 
-  const handleMouseMove = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragTracker.current.isDragging) return;
-    e.preventDefault();
-
+    
     const container = e.currentTarget;
     const x = e.pageX - container.offsetLeft;
-    const walkMultiplier = 1.5;
-    const distance = (x - dragTracker.current.startX) * walkMultiplier;
+    const distance = x - dragTracker.current.startX;
 
-    container.scrollLeft = dragTracker.current.startScrollLeft - distance;
+    const walkMultiplier = 1.5;
+    container.scrollLeft = dragTracker.current.startScrollLeft - distance * walkMultiplier;
 
     const centerIndex = getCenteredElementIndex(container);
-    if (YEARS[centerIndex] && YEARS[centerIndex] !== scrollingYear) {
-      setScrollingYear(YEARS[centerIndex]);
+    if (container === yearsRef.current) {
+      if (YEARS[centerIndex] && YEARS[centerIndex] !== scrollingYear) {
+        setScrollingYear(YEARS[centerIndex]);
+      }
     }
   };
 
-  const handleMouseUpOrLeave = (e: React.PointerEvent<HTMLDivElement>, type: "years" | "speakers") => {
+  const handlePointerUpOrLeave = (e: React.PointerEvent<HTMLDivElement>, type: "years" | "speakers") => {
     if (!dragTracker.current.isDragging) return;
-    dragTracker.current.isDragging = false;
+    
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch (err) {}
 
     const container = e.currentTarget;
-    // Release pointer capture if it was set, so child buttons can receive events
-    try {
-      if (container.hasPointerCapture(e.pointerId)) {
-        container.releasePointerCapture(e.pointerId);
-      }
-    } catch { /* ignore */ }
     container.style.scrollSnapType = "x mandatory";
     container.style.scrollBehavior = "smooth";
 
@@ -162,6 +167,8 @@ export default function PastSpeakers() {
       }
       centerElementByIndex(carouselRef.current, centerIndex, "smooth");
     }
+
+    dragTracker.current.isDragging = false;
   };
 
   const handleSpeakersScroll = (e: UIEvent<HTMLDivElement>) => {
@@ -191,18 +198,10 @@ export default function PastSpeakers() {
   };
 
   const handleYearClick = (year: string, idx: number) => {
-    if (dragTracker.current.isDragging) return;
     if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
-
     setScrollingYear(year);
     setSelectedYear(year);
     centerElementByIndex(yearsRef.current, idx, "smooth");
-  };
-
-  const handleSpeakerClick = (idx: number) => {
-    if (dragTracker.current.isDragging) return;
-    setActiveIdx(idx);
-    centerElementByIndex(carouselRef.current, idx, "smooth");
   };
 
   return (
@@ -215,11 +214,11 @@ export default function PastSpeakers() {
         <div
           ref={yearsRef}
           onScroll={handleYearsScroll}
-          onPointerDown={handleMouseDown}
-          onPointerMove={handleMouseMove}
-          onPointerUp={(e) => handleMouseUpOrLeave(e, "years")}
-          onPointerLeave={(e) => handleMouseUpOrLeave(e, "years")}
-          className="flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={(e) => handlePointerUpOrLeave(e, "years")}
+          onPointerLeave={(e) => handlePointerUpOrLeave(e, "years")}
+          className="flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing touch-none"
           style={{
             paddingLeft: "calc(50% - 40px)",
             paddingRight: "calc(50% - 40px)",
@@ -253,11 +252,11 @@ export default function PastSpeakers() {
         <div
           ref={carouselRef}
           onScroll={handleSpeakersScroll}
-          onPointerDown={handleMouseDown}
-          onPointerMove={handleMouseMove}
-          onPointerUp={(e) => handleMouseUpOrLeave(e, "speakers")}
-          onPointerLeave={(e) => handleMouseUpOrLeave(e, "speakers")}
-          className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={(e) => handlePointerUpOrLeave(e, "speakers")}
+          onPointerLeave={(e) => handlePointerUpOrLeave(e, "speakers")}
+          className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing touch-none"
           style={{
             paddingLeft: "calc(50% - 200px)",
             paddingRight: "calc(50% - 200px)",
@@ -272,7 +271,13 @@ export default function PastSpeakers() {
                 <SpeakerCard
                   speaker={speaker}
                   isSelected={idx === activeIdx}
-                  onClick={() => handleSpeakerClick(idx)}
+                  onClick={() => {
+                    const clickDuration = Date.now() - dragTracker.current.startTime;
+                    if (clickDuration < 200) {
+                      setActiveIdx(idx);
+                      centerElementByIndex(carouselRef.current, idx, "smooth");
+                    }
+                  }}
                 />
               </div>
             ))
