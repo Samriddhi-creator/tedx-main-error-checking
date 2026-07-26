@@ -233,7 +233,7 @@ export default function Footer() {
                 </div>
 
                 {/* Divider */}
-                <div className="self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
+                <div className="-ml-1 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
                 {/* Middle col */}
                 <div className="flex flex-col items-center gap-2 md:gap-4 flex-[624] -mt-2 md:-mt-1">
@@ -259,20 +259,22 @@ export default function Footer() {
                         </div>
                         <div className="flex flex-col items-center text-center">
                             <span className="font-['Inter'] text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Sponsor Queries</span>
-                            <Link href="mailto:tedxiitpatna@gmail.com"
-                                className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
-                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
-                                <span className="-ml-1 md:ml-0 md:text-lg">sponsorship.tedxiitpatna@iitp.ac.in</span>
-                            </Link>
+                            <div className="-ml-1">
+                                <Link href="mailto:tedxiitpatna@gmail.com"
+                                    className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
+                                    <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
+                                    <span className="-ml-1 md:ml-0 md:text-lg">sponsorship.tedxiitpatna@iitp.ac.in</span>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Divider */}
-                <div className="self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
+                <div className="ml-2 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
                 {/* Right col */}
-                <div className="flex flex-col gap-0 md:gap-1 flex-[700] md:flex-[572] items-start -mt-2 md:mt-0">
+                <div className="flex flex-col gap-0 md:gap-1 flex-[620]] md:flex-[572] items-start -mt-2 md:mt-0">
                     <h3 className="font-['Inter'] text-base md:text-2xl font-bold text-red-600 md:ml-24">Quick Links</h3>
                     {quickLinks.map((link) => (
                         <Link key={link.label} href={link.href}
@@ -290,6 +292,6 @@ export default function Footer() {
                 <p className="font-['Inter'] text-[8px] md:text-sm font-medium">*This Independent TEDx Event Is Operated Under License From TED.</p>
                 <p className="font-['Inter'] text-[8px] md:text-sm font-normal">© 2026 TEDxIITPatna. All rights reserved.</p>
             </div>
-        </footer>
+        </footer >
     );
 }
