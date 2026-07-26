@@ -74,7 +74,7 @@ export default function SpeakerHome() {
       backgroundColor: '#0a0505',
       color: '#ffffff',
       fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '40px 20px',
+      padding: '20px 16px',
       boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
@@ -96,8 +96,8 @@ export default function SpeakerHome() {
           border: none;
           cursor: pointer;
           padding: 0;
-          width: 80px;
-          height: 80px;
+          width: 70px;
+          height: 70px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -123,29 +123,37 @@ export default function SpeakerHome() {
           display: flex;
           flex-direction: column;
           width: 100%;
-          gap: 24px;
+          gap: 20px;
         }
+        
         .thumb-column {
           display: flex;
           flex-direction: row;
           order: 2;
           gap: 12px;
           overflow-x: auto;
-          padding-bottom: 4px;
-          justify-content: center;
+          padding: 8px 0;
+          justify-content: flex-start;
+          width: 100%;
         }
-        /* MODIFIED: Reduced mobile portrait block height */
+
+        /* FIXED MOBILE PORTRAIT CONTAINER */
         .portrait-column {
           width: 100%;
-          height: 280px;
+          max-width: 280px;
+          height: 360px;
+          margin: 0 auto;
           order: 1;
+          flex-shrink: 0;
         }
+
         .details-column {
           width: 100%;
           order: 3;
           display: flex;
           flex-direction: column;
           padding-left: 0;
+          height: auto;
         }
 
         .title-underline-container {
@@ -153,10 +161,10 @@ export default function SpeakerHome() {
           flex-direction: column;
           align-items: center;
           width: fit-content;
-          margin-bottom: 24px;
+          margin-bottom: 16px;
         }
         .heading-title {
-          font-size: clamp(40px, 7vw, 64px);
+          font-size: clamp(36px, 7vw, 64px);
           text-transform: uppercase;
           letter-spacing: 2px;
           transform: scaleY(1.25);
@@ -167,7 +175,7 @@ export default function SpeakerHome() {
           width: 100%;
           height: 5px;
           background-color: #b30000;
-          margin-top: 12px;
+          margin-top: 8px;
         }
 
         .content-block {
@@ -180,7 +188,6 @@ export default function SpeakerHome() {
         }
 
         @media (min-width: 1024px) {
-          /* MODIFIED: Adjusted column parameters to sync with new sizes */
           .speaker-grid {
             display: grid;
             grid-template-columns: 100px 400px 1fr;
@@ -194,11 +201,12 @@ export default function SpeakerHome() {
             overflow-y: auto;
             overflow-x: hidden;
             justify-content: flex-start;
-            padding-bottom: 0;
+            padding: 0;
           }
-          /* MODIFIED: Scaled down portrait box execution specifications */
           .portrait-column {
+            max-width: none;
             height: 480px;
+            margin: 0;
             order: unset;
           }
           .details-column {
@@ -229,9 +237,8 @@ export default function SpeakerHome() {
                 key={speaker.id}
                 onClick={() => setActiveSpeakerIndex(index)}
                 style={{
-                  /* MODIFIED: Scaled thumbnail sizing parameters up from 55px */
-                  width: '85px',
-                  height: '85px',
+                  width: '75px',
+                  height: '75px',
                   flexShrink: 0,
                   cursor: 'pointer',
                   borderRadius: '6px',
@@ -286,7 +293,7 @@ export default function SpeakerHome() {
             <h4 
               className={bebasNeue.className}
               style={{
-                fontSize: 'clamp(30px, 5vw, 35px)',
+                fontSize: 'clamp(26px, 5vw, 35px)',
                 margin: '0 0 15px 0',
                 color: '#ffffff',
                 textTransform: 'capitalize',
@@ -299,10 +306,10 @@ export default function SpeakerHome() {
             <p 
               className={spaceGrotesk.className}
               style={{
-                fontSize: '15px',
+                fontSize: '14px',
                 lineHeight: '1.6',
                 color: '#cccccc',
-                textAlign: 'justify',
+                textAlign: 'center',
                 maxWidth: '100%',
                 marginBottom: '24px',
                 fontWeight: '400'
@@ -317,7 +324,7 @@ export default function SpeakerHome() {
             display: 'flex',
             gap: '12px',
             alignSelf: 'center',
-            marginTop: 'auto',
+            marginTop: '10px',
             marginBottom: '10px'
           }}>
             <button onClick={handlePrev} className="scale-btn">

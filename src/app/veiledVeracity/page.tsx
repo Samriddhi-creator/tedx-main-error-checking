@@ -35,20 +35,7 @@ export default function Theme() {
         }
       `}</style>
 
-      <div>
-        <Link 
-          className=" items-center text-[#EB0028] hover:text-[#EB0028CC] font-space flex flex-row gap-2" 
-          href="/past-editions"
-          onClick={(e) => {
-            if (window.history.length > 1) {
-              e.preventDefault();
-              window.history.back();
-            }
-          }}
-        >
-          <ChevronLeft className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 lg:-ml-5 xl:-ml-5" />
-        </Link>
-      </div>
+   
 
       <div className="flex flex-row justify-center w-full gap-2 sm:gap-4 md:gap-8 py-4">
         
