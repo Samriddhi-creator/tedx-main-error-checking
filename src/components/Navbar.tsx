@@ -78,15 +78,15 @@ export default function Navbar() {
 
     return (
         <>
-            <header className={`sticky top-0 z-[120] w-full h-[40px] md:h-[64px] flex items-center justify-between pr-4 md:pr-8 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
-                <div className="flex items-center justify-center h-full" style={{ width: "clamp(180px, 20vw, 384px)", minWidth: "180px" }}>
-                    <Link href="/" className="flex items-center md:justify-center ml-6  w-full h-full">
-                        <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-[55%] h-auto sm:w-[80px] sm:h-[60px] md:w-[100px] md:h-[80px] lg:w-[140px] lg:h-[120px]" />
+            <header className={`sticky top-0 z-120 w-full h-12 md:h-16 flex items-center justify-between px-4 md:px-8 py-2 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+                <div className="flex items-center h-full">
+                    <Link href="/" className="flex items-center h-full">
+                        <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="h-full w-auto object-contain" style={{ width: "auto" }} priority />
                     </Link>
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-4">
-                    <Link href="/cart" className="h-[24px] md:h-[45px] px-3 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
+                    <Link href="/cart" className="h-[24px] md:h-[45px] px-4 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
                         Buy Now
                     </Link>
 
@@ -108,11 +108,11 @@ export default function Navbar() {
                     className={`hidden md:flex flex-col justify-end gap-4 w-1/2 transition-all duration-700 ease-out transform ${open ? "translate-x-0 opacity-100 delay-150" : "-translate-x-8 opacity-0"}`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <Image src="/logo png.svg" alt="TEDxIITPatna" width={200} height={45} />
+                    <Image src="/logo png.svg" alt="TEDxIITPatna" width={200} height={45} className="-ml-5" />
                     <div className="mt-8">
                         <p className="text-red-500 font-['Inter'] text-xl font-bold mb-1">Contact Us</p>
-                        <Link href="mailto:tedxiitpatna@gmail.com" className="flex items-center gap-2 text-white font-['Inter'] text-sm hover:text-red-500 transition-colors">
-                            ✉ tedxiitpatna@gmail.com
+                        <Link href="mailto:ted@iitp.ac.in" className="flex items-center gap-2 text-white font-['Inter'] text-sm hover:text-red-500 transition-colors">
+                            ✉ ted@iitp.ac.in
                         </Link>
                     </div>
                     <div>

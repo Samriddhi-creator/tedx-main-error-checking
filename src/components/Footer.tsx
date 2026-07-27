@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react"
 import { FaInstagram, FaLinkedinIn, FaFacebookF, FaXTwitter } from "react-icons/fa6";
 import { useJourneyStore } from "@/src/store/useJourneyStore";
+import FooterGravityContent from "./FooterGravityContent";
 
 const leftLinks = [
     { label: "TED Website", href: "https://www.ted.com/" },
@@ -82,42 +83,48 @@ export default function Footer() {
         inertiaFrame.current = requestAnimationFrame(step);
     }, []);
 
-    const handleGlobalMouseMove = useCallback((e: MouseEvent) => {
+    const handleGlobalMove = useCallback((e: MouseEvent | TouchEvent) => {
         if (!isDraggingRuler.current || !rulerRef.current) return;
 
-        const walk = (e.clientX - startX.current) * 0.2; // scroll speed multiplier
+        const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? startX.current) : e.clientX;
+        const walk = (clientX - startX.current) * 1.5; // smooth 1.5x speed multiplier
         rulerRef.current.scrollLeft = startScrollLeft.current - walk;
 
         const now = performance.now();
         const dt = now - dragLastTime.current;
         if (dt > 0) {
-            const dx = e.clientX - dragLastX.current;
-            // matches the *2 multiplier above, negative because dragging right moves scrollLeft left
-            velocityRef.current = (-dx / dt) * 0.2;
+            const dx = clientX - dragLastX.current;
+            velocityRef.current = (-dx / dt) * 1.5;
         }
-        dragLastX.current = e.clientX;
+        dragLastX.current = clientX;
         dragLastTime.current = now;
     }, []);
 
-    const handleGlobalMouseUp = useCallback(() => {
+    const handleGlobalUp = useCallback(() => {
         isDraggingRuler.current = false;
-        window.removeEventListener("mousemove", handleGlobalMouseMove);
-        window.removeEventListener("mouseup", handleGlobalMouseUp);
+        window.removeEventListener("mousemove", handleGlobalMove);
+        window.removeEventListener("mouseup", handleGlobalUp);
+        window.removeEventListener("touchmove", handleGlobalMove);
+        window.removeEventListener("touchend", handleGlobalUp);
+        window.removeEventListener("touchcancel", handleGlobalUp);
         runInertia();
-    }, [handleGlobalMouseMove, runInertia]);
+    }, [handleGlobalMove, runInertia]);
 
-    const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const handleStart = useCallback((e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
         stopInertia();
         isDraggingRuler.current = true;
-        startX.current = e.clientX;
+        const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
+        startX.current = clientX;
         startScrollLeft.current = rulerRef.current?.scrollLeft || 0;
-        dragLastX.current = e.clientX;
+        dragLastX.current = clientX;
         dragLastTime.current = performance.now();
         velocityRef.current = 0;
-        e.preventDefault();
-        window.addEventListener("mousemove", handleGlobalMouseMove);
-        window.addEventListener("mouseup", handleGlobalMouseUp);
-    }, [handleGlobalMouseMove, handleGlobalMouseUp, stopInertia]);
+        window.addEventListener("mousemove", handleGlobalMove);
+        window.addEventListener("mouseup", handleGlobalUp);
+        window.addEventListener("touchmove", handleGlobalMove, { passive: true });
+        window.addEventListener("touchend", handleGlobalUp);
+        window.addEventListener("touchcancel", handleGlobalUp);
+    }, [handleGlobalMove, handleGlobalUp, stopInertia]);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const rect = rulerRef.current?.getBoundingClientRect();
@@ -169,11 +176,14 @@ export default function Footer() {
 
     useLayoutEffect(() => {
         return () => {
-            window.removeEventListener("mousemove", handleGlobalMouseMove);
-            window.removeEventListener("mouseup", handleGlobalMouseUp);
+            window.removeEventListener("mousemove", handleGlobalMove);
+            window.removeEventListener("mouseup", handleGlobalUp);
+            window.removeEventListener("touchmove", handleGlobalMove);
+            window.removeEventListener("touchend", handleGlobalUp);
+            window.removeEventListener("touchcancel", handleGlobalUp);
             stopInertia();
         };
-    }, [handleGlobalMouseMove, handleGlobalMouseUp, stopInertia]);
+    }, [handleGlobalMove, handleGlobalUp, stopInertia]);
 
     useLayoutEffect(() => {
         if (!rulerRef.current) return;
@@ -186,14 +196,16 @@ export default function Footer() {
     return (
         <footer className="bg-black text-white flex flex-col mt-0 overflow-x-hidden relative z-[60]">
             {/* Ruler */}
-            <div className="w-full relative h-[40px] bg-black border-t border-red-900/30">
+            <div className="w-full relative h-10 bg-black border-t border-red-900/30">
                 <div
                     ref={rulerRef}
-                    onPointerDown={handleMouseDown}
+                    onMouseDown={handleStart}
+                    onTouchStart={handleStart}
                     onPointerMove={handleMouseMove}
                     onPointerLeave={handleMouseLeave}
                     onScroll={handleScroll}
                     className="w-full h-full overflow-x-auto overflow-y-hidden flex items-end cursor-grab active:cursor-grabbing select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                    style={{ touchAction: "pan-y" }}
                 >
                     {/* CSS Ruler - guaranteed horizontal scroll width */}
                     <div className="flex shrink-0">
@@ -215,83 +227,8 @@ export default function Footer() {
                 )}
             </div>
 
-            {/* Main content */}
-            <div className="flex justify-between items-start px-4 md:px-16 py-4 md:py-8 gap-2 md:gap-8">
-
-                {/* Left col */}
-                <div className="flex flex-col gap-2 md:gap-4 flex-[600] md:flex-[724]">
-                    <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-32 md:w-[384px] h-auto" />
-                    <div className="flex flex-col gap-1 md:gap-3 mt-2 md:mt-6">
-                        {/* External links */}
-                        {leftLinks.map((link) => (<Link key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-lg hover:text-red-500 transition-colors" >
-                            <span className="text-red-600">›</span> {link.label} </Link>
-                        ))}
-                        {/* Internal link */}
-                        <Link href="/refund" className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-lg hover:text-red-500 transition-colors" >
-                            <span className="text-red-600">›</span> Refund Policy </Link>
-                    </div>
-                </div>
-
-                {/* Divider */}
-                <div className="-ml-1 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
-
-                {/* Middle col */}
-                <div className="flex flex-col items-center gap-2 md:gap-4 flex-[624] -mt-2 md:-mt-1">
-                    <h3 className="font-['Inter'] text-base md:text-2xl font-bold text-red-600">Follow us</h3>
-                    <div className="flex gap-2 md:gap-6">
-                        {socialLinks.map(({ icon: Icon, href }) => (
-                            <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
-                                className="size-6 md:size-10 bg-white rounded flex items-center justify-center text-black text-3xs md:text-4xl hover:bg-red-600 hover:text-white transition-colors">
-                                <Icon />
-                            </Link>
-                        ))}
-                    </div>
-                    <div className="w-full h-[1px] bg-red-800/30" />
-                    <h3 className="font-['Inter'] text-base md:text-2xl font-bold text-white">Contact Us</h3>
-                    <div className="flex flex-col gap-3 md:gap-4 items-center w-full">
-                        <div className="flex flex-col items-center text-center">
-                            <span className="font-['Inter'] text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Speaker Queries</span>
-                            <Link href="mailto:tedxiitpatna@gmail.com"
-                                className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
-                                <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
-                                <span className="-ml-1 md:ml-0 md:text-lg">curation.tedxiitpatna@iitp.ac.in</span>
-                            </Link>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                            <span className="font-['Inter'] text-[9px] md:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Sponsor Queries</span>
-                            <div className="-ml-1">
-                                <Link href="mailto:tedxiitpatna@gmail.com"
-                                    className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-sm font-normal hover:text-red-500 transition-colors">
-                                    <Image src="/mail.svg" alt="mail" width={16} height={16} className="w-3.5 h-3.5 md:w-5 md:h-5" />
-                                    <span className="-ml-1 md:ml-0 md:text-lg">sponsorship.tedxiitpatna@iitp.ac.in</span>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Divider */}
-                <div className="ml-2 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
-
-                {/* Right col */}
-                <div className="flex flex-col gap-0 md:gap-1 flex-[620]] md:flex-[572] items-start -mt-2 md:mt-0">
-                    <h3 className="font-['Inter'] text-base md:text-2xl font-bold text-red-600 md:ml-24">Quick Links</h3>
-                    {quickLinks.map((link) => (
-                        <Link key={link.label} href={link.href}
-                            className="flex items-center gap-1 text-white font-['Inter'] text-[10px] md:text-lg hover:text-red-500 transition-colors md:ml-24 mt-3 md:mt-2">
-                            <span className="text-red-600">
-                                <Image src="/compass.svg" alt="•" width={12} height={12} className="md:w-[14px] md:h-[14px]" />
-                            </span> {link.label}
-                        </Link>
-                    ))}
-                </div>
-            </div>
-
-            {/* Bottom bar */}
-            <div className="flex justify-between px-4 md:px-16 py-3 md:py-4 border-t border-white/10 text-white">
-                <p className="font-['Inter'] text-[8px] md:text-sm font-medium">*This Independent TEDx Event Is Operated Under License From TED.</p>
-                <p className="font-['Inter'] text-[8px] md:text-sm font-normal">© 2026 TEDxIITPatna. All rights reserved.</p>
-            </div>
+            {/* Google Gravity — footer content with Matter.js physics */}
+            <FooterGravityContent />
         </footer >
     );
 }

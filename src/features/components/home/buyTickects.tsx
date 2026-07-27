@@ -121,11 +121,12 @@ return (
                     style={{ width: "clamp(180px, 20vw, 384px)" }}
                 >
                     <Image
-                        src="/logo.svg"
+                        src="/logo png.svg"
                         alt="TEDxIITPatna"
                         width={527}
                         height={108}
                         className="w-full h-auto"
+                        style={{ height: "auto" }}
                     />
                 </div>
                 <h1 className="uppercase text-3xl md:text-4xl text-white font-bebas">

@@ -125,7 +125,8 @@ export default function AboutTheTheme() {
                     alt="terra incognita"
                     width={300}
                     height={300}
-                    className="object-contain z-30"
+                    className="w-48 sm:w-64 md:w-72 lg:w-[300px] h-auto object-contain z-30"
+                    style={{ height: "auto" }}
                   />
                 </div>
               </div>

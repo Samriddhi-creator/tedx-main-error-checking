@@ -27,6 +27,7 @@ const ancizarSerif = Ancizar_Serif({
 
 interface Checkoutp1Props {
   onNext: () => void;
+  onStepChange?: (stepNumber: number) => void;
 }
 
 export default function Checkoutp1({ onNext }: Checkoutp1Props) {
