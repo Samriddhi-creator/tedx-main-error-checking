@@ -127,37 +127,46 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-start md:justify-center gap-0 w-full md:w-1/2 pt-12 md:pt-0" onClick={(e) => e.stopPropagation()}>
-                    {navLinks.map(({ label, href }, index) => {
-                        const distance = lastHoveredIndex >= 0 ? Math.abs(index - lastHoveredIndex) : index;
-                        const undimDelay = !hovered ? distance * 40 : 0;
-                        const opacity = !open ? 0 : (hovered && hovered !== label) ? 0.2 : 1;
+                <div className="flex flex-col justify-between md:justify-center gap-4 w-full md:w-1/2 h-full overflow-y-auto no-scrollbar py-4 md:py-0" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex flex-col gap-0 shrink-0 my-auto md:my-0">
+                        {navLinks.map(({ label, href }, index) => {
+                            const distance = lastHoveredIndex >= 0 ? Math.abs(index - lastHoveredIndex) : index;
+                            const undimDelay = !hovered ? distance * 40 : 0;
+                            const opacity = !open ? 0 : (hovered && hovered !== label) ? 0.2 : 1;
 
-                        return (
-                            <Link key={label} href={href}
-                                onClick={() => setOpen(false)} onMouseEnter={() => {
-                                    setHovered(label); setLastHovered(label);
-                                }}
-                                onMouseLeave={() => setHovered(null)}
-                                style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity, }}
-                                className={`text-4xl md:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
-                                {label}
-                            </Link>
-                        );
-                    })}
-                </div>
+                            return (
+                                <Link key={label} href={href}
+                                    onClick={() => setOpen(false)} onMouseEnter={() => {
+                                        setHovered(label); setLastHovered(label);
+                                    }}
+                                    onMouseLeave={() => setHovered(null)}
+                                    style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity, }}
+                                    className={`text-3xl sm:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-1.5 sm:py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
+                                    {label}
+                                </Link>
+                            );
+                        })}
+                    </div>
 
-                <div
-                    className={`md:hidden absolute bottom-8 left-6 flex flex-col gap-3 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <p className="text-red-500 font-['Inter'] text-sm font-bold">Follow us</p>
-                    <div className="flex gap-4">
-                        {socialLinks.map(({ icon: Icon, href }) => (
-                            <Link key={href} href={href} target="_blank" rel="noopener noreferrer" className="text-white text-xl hover:text-red-500 transition-colors">
-                                <Icon />
+                    <div
+                        className={`md:hidden flex flex-col gap-2 shrink-0 pt-3 border-t border-white/10 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
+                    >
+                        <div className="flex items-center gap-2">
+                            <span className="text-red-500 font-['Inter'] text-xs sm:text-sm font-bold">Contact:</span>
+                            <Link href="mailto:ted@iitp.ac.in" className="flex items-center gap-1.5 text-white/90 font-['Inter'] text-xs sm:text-sm hover:text-red-500 transition-colors">
+                                ✉ ted@iitp.ac.in
                             </Link>
-                        ))}
+                        </div>
+                        <div className="flex items-center gap-3 flex-nowrap">
+                            <p className="text-red-500 font-['Inter'] text-xs sm:text-sm font-bold whitespace-nowrap">Follow us</p>
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                {socialLinks.map(({ icon: Icon, href }) => (
+                                    <Link key={href} href={href} target="_blank" rel="noopener noreferrer" className="text-white text-lg sm:text-xl hover:text-red-500 transition-colors">
+                                        <Icon />
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
