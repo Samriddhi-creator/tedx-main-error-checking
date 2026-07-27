@@ -117,10 +117,10 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
                     <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-full h-auto object-contain" />
                 </div>
                 <div className="flex flex-col gap-2 lg:gap-3 mt-2 lg:mt-6 items-center lg:items-start">
-                    <div ref={setRef("ted-website")}><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">TED Website</span></div>
-                    <div ref={setRef("terms")}><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Terms and Conditions</span></div>
-                    <div ref={setRef("about-tedx")}><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About TEDx</span></div>
-                    <div ref={setRef("refund")}><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Refund Policy</span></div>
+                    <div ref={setRef("ted-website")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">TED Website</span></div>
+                    <div ref={setRef("terms")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Terms and Conditions</span></div>
+                    <div ref={setRef("about-tedx")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About TEDx</span></div>
+                    <div ref={setRef("refund")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Refund Policy</span></div>
                 </div>
             </div>
 
@@ -164,11 +164,11 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
             <div className="hidden lg:block ml-2 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
             {/* Right Column */}
-            <div className="flex flex-col gap-2 lg:gap-1 w-full lg:w-auto lg:flex-[572] items-center lg:items-start text-center lg:text-left">
-                <div ref={setRef("quick-links")}><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600 lg:ml-24">Quick Links</span></div>
-                <div ref={setRef("link-home")} className="mt-1 lg:mt-2 lg:ml-24"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Home</span></div>
-                <div ref={setRef("link-about")} className="mt-1 lg:mt-2 lg:ml-24"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About Us</span></div>
-                <div ref={setRef("link-speakers")} className="mt-1 lg:mt-2 lg:ml-24"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Speakers</span></div>
+            <div className="flex flex-col gap-2 w-full lg:w-auto lg:flex-[572] items-center lg:items-start text-center lg:text-left lg:pl-4 xl:pl-8 2xl:pl-12">
+                <div ref={setRef("quick-links")} className="w-fit"><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Quick Links</span></div>
+                <div ref={setRef("link-home")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Home</span></div>
+                <div ref={setRef("link-about")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About Us</span></div>
+                <div ref={setRef("link-speakers")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Speakers</span></div>
             </div>
         </div>
     );
