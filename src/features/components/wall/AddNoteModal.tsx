@@ -19,15 +19,21 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
 
   useEffect(() => {
     if (isOpen) {
+      const alreadyPosted = localStorage.getItem("communityWallHasPosted");
+      setHasPosted(!!alreadyPosted);
+
       const savedName = localStorage.getItem("communityWallUsername");
       if (savedName) {
         setUsername(savedName);
         setStep("note");
       } else {
+        setUsername("");
         setStep("username");
       }
+      setError("");
     }
   }, [isOpen]);
+
   const checkProfanity = async (text: string): Promise<boolean> => {
     try {
       const controller = new AbortController();
@@ -57,24 +63,6 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
     localStorage.setItem("communityWallUsername", username.trim());
     setStep("note");
   };
-  useEffect(() => {
-    if (isOpen) {
-      const alreadyPosted = localStorage.getItem("communityWallHasPosted");
-      if (alreadyPosted) {
-        setHasPosted(true);
-        return;
-      }
-      const savedName = localStorage.getItem("communityWallUsername");
-      if (savedName) {
-        setUsername(savedName);
-        setStep("note");
-      } else {
-        setStep("username");
-      }
-    }
-  }, [isOpen]);
-
-
 
   const handleNoteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +78,7 @@ export default function AddNoteModal({ isOpen, onClose, onSubmit }: AddNoteModal
 
     onSubmit(username, message.trim());
     localStorage.setItem("communityWallHasPosted", "true");
+    setHasPosted(true);
     setMessage("");
     setIsSubmitting(false);
     onClose();

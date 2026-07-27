@@ -6,68 +6,75 @@ import {
   DialogContent,
   DialogClose,
   DialogTitle,
+  DialogDescription,
 } from "@/src/components/ui/dialog"; 
 import { ExternalLink, X } from "lucide-react";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
-import { useState } from "react";
 
 interface SpeakerModalProps {
   speaker: Speaker;
 }
 
 export default function SpeakerModal({ speaker }: SpeakerModalProps) {
-  const [imageLoading, setImageLoading] = useState(true);
   return (
     <DialogContent 
-      className="max-w-[95vw] sm:max-w-[95vw] md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-[70vw] bg-[#413d3d] border border-[#F8F8F8] rounded-2xl px-5 text-white gap-0 focus:outline-none [&>button]:hidden"
+      className="max-w-4xl sm:max-w-4xl md:max-w-4xl w-[92vw] max-h-[85vh] sm:max-h-[88vh] bg-zinc-950/95 border border-zinc-800 rounded-2xl p-5 sm:p-7 md:p-8 text-white gap-0 focus:outline-none [&>button]:hidden shadow-2xl backdrop-blur-md overflow-hidden relative"
     >
-      <DialogTitle asChild>
-        <VisuallyHidden>
-          <h2>{speaker.name}</h2>
-        </VisuallyHidden>
+      <DialogTitle className="sr-only">
+        {speaker.name}
       </DialogTitle>
-      <div className="relative flex flex-col md:flex-row gap-3 md:gap-6 lg:gap-8 items-center w-full  py-10">
-        <DialogClose className="absolute -right-4 md:-top-2 md:-right-2 p-1 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-all bg-stone-700/50 md:bg-transparent">
-          <X className="w-5 h-5 stroke-[1.5]" />
-        </DialogClose>
-        <div className="group relative w-[200px] sm:w-[350px] md:w-[250px] lg:w-[350px] aspect-square flex-shrink-0 bg-white">
-  <Image
-    src={speaker.image}
-    alt={speaker.name}
-    fill
-    className="object-cover transition-all duration-500 grayscale group-hover:grayscale-0"
-    sizes="(max-width: 640px) 350px,
-           (max-width: 768px) 250px,
-           (max-width: 1024px) 350px,
-           200px"
-  />
-</div>
-        <div className="flex flex-col flex-grow text-center md:text-left pt-2">
-          <h2 className="lg:text-[48px] md:text-[30px] sm:text-[30px] text-[20px]  font-medium uppercase tracking-wide text-[#e00d0d] font-bebas leading-none">
+      <DialogDescription className="sr-only">
+        Talk details and bio for {speaker.name}
+      </DialogDescription>
+
+      <DialogClose className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 rounded-full bg-zinc-900/90 hover:bg-red-600 text-zinc-400 hover:text-white border border-zinc-800 hover:border-red-600 transition-all cursor-pointer">
+        <X className="w-4 h-4 sm:w-5 sm:h-5" />
+      </DialogClose>
+
+      <div className="flex flex-col md:flex-row gap-5 md:gap-8 items-center md:items-start w-full overflow-y-auto max-h-full pr-1.5 pt-1 pb-2">
+        <div className="group relative w-40 sm:w-56 md:w-60 lg:w-72 aspect-square flex-shrink-0 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-xl">
+          <Image
+            src={speaker.image}
+            alt={speaker.name}
+            fill
+            className="object-cover transition-all duration-500 grayscale group-hover:grayscale-0"
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 224px, 288px"
+            priority
+          />
+        </div>
+
+        <div className="flex flex-col flex-grow text-center md:text-left min-w-0">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-wide text-red-600 font-bebas leading-none mb-1.5">
             {speaker.name}
           </h2>
-          <p className="mt-2 sm:mt-4  text-white text-[12px] md:text-sm lg:text-base font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
+
+          {speaker.title && (
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-zinc-400 mb-3 font-sourceSans">
+              {speaker.title}
+            </p>
+          )}
+
+          <div className="text-zinc-300 text-xs sm:text-sm lg:text-base font-sourceSans leading-relaxed overflow-y-auto max-h-[200px] md:max-h-[300px] pr-2 space-y-2">
             {speaker.body}
-          </p>
-          <div className=" flex flex-col mt-2 sm:mt-4 text-white text-[12px] md:text-sm lg:text-base font-semibold font-sourceSans leading-relaxed overflow-y-auto no-scrollbar">
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-zinc-800/80 flex flex-col items-center md:items-start gap-3">
             {speaker.talk && (
-              <span>
-                <em>Spoke On: {speaker.talk}</em>
-              </span>
+              <p className="text-xs sm:text-sm text-zinc-400 font-medium font-sourceSans">
+                Spoke On: <span className="text-white italic">"{speaker.talk}"</span>
+              </p>
             )}
-            <div className="flex justify-center mt-2">
-            <Link 
-              href={speaker?.ytLink || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-center justify-center gap-1.5 font-sourceSans  border border-red-500 rounded-4xl bg-red-500  w-42 md:w-48 lg:w-56 p-2 hover:bg-red-400 "
-            >
-              <button className="cursor-pointer">
-                Watch talk on YouTube
-              </button>
-            </Link>
-            </div>
+
+            {speaker.ytLink && speaker.ytLink !== "#" && (
+              <Link 
+                href={speaker.ytLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm py-2.5 px-6 rounded-full transition-all shadow-md hover:shadow-red-600/30 font-sourceSans cursor-pointer mt-1"
+              >
+                <ExternalLink className="w-4 h-4" /> Watch talk on YouTube
+              </Link>
+            )}
           </div>
         </div>
       </div>

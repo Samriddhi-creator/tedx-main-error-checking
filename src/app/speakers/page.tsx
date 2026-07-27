@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, UIEvent } from "react";
 import { motion } from "framer-motion";
 import SpeakerCard from "@/src/components/pastSpeakers/SpeakerCard";
+import SpeakerModal from "@/src/components/pastSpeakers/Modal";
+import { Dialog } from "@/src/components/ui/dialog";
 import { speakerServices } from "@/services/speakerServices";
 import { Speaker } from "@/types/speaker";
 import SpeakersSkeleton from "@/src/components/pastSpeakers/Skeleton";
@@ -15,6 +17,7 @@ export default function PastSpeakers() {
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [currentSpeakers, setSpeakers] = useState<Speaker[] | null>(null);
+  const [modalSpeaker, setModalSpeaker] = useState<Speaker | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const yearsRef = useRef<HTMLDivElement>(null);
 
@@ -278,12 +281,18 @@ export default function PastSpeakers() {
                       centerElementByIndex(carouselRef.current, idx, "smooth");
                     }
                   }}
+                  onOpenModal={() => setModalSpeaker(speaker)}
                 />
               </div>
             ))
           )}
         </div>
       </div>
+
+      {/* Speaker detail modal — rendered outside carousel to avoid pointer capture issues */}
+      <Dialog open={!!modalSpeaker} onOpenChange={(open) => { if (!open) setModalSpeaker(null); }}>
+        {modalSpeaker && <SpeakerModal speaker={modalSpeaker} />}
+      </Dialog>
     </div>
   );
 }

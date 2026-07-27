@@ -68,14 +68,16 @@ export default function CommunityWallPage() {
   const [visibleCount, setVisibleCount] = useState(20);
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const savedUsername = typeof window !== "undefined" ? localStorage.getItem("communityWallUsername") : null;
-  const hasPosted = typeof window !== "undefined" ? localStorage.getItem("communityWallHasPosted") : null;
+  const [savedUsername, setSavedUsername] = useState<string | null>(null);
+  const [savedNoteId, setSavedNoteId] = useState<string | null>(null);
+  const [hasPosted, setHasPosted] = useState<boolean>(false);
   const [sort, setSort] = useState<"new" | "top">("new");
+
   const sortedNotes = useMemo(() => [
-    ...notes.filter(note => note.username === savedUsername),
-    ...[...notes.filter(note => note.username !== savedUsername)]
+    ...notes.filter(note => savedNoteId ? note.id === savedNoteId : (savedUsername && note.username === savedUsername)),
+    ...[...notes.filter(note => savedNoteId ? note.id !== savedNoteId : (!savedUsername || note.username !== savedUsername))]
       .sort((a, b) => sort === "top" ? b.likes - a.likes : 0),
-  ], [notes, sort, savedUsername]);
+  ], [notes, sort, savedUsername, savedNoteId]);
   const visibleNotes = sortedNotes.slice(0, visibleCount);
 
 
@@ -91,6 +93,9 @@ export default function CommunityWallPage() {
     } else {
       setNotes(INITIAL_NOTES);
     }
+    setSavedUsername(localStorage.getItem("communityWallUsername"));
+    setSavedNoteId(localStorage.getItem("communityWallNoteId"));
+    setHasPosted(!!localStorage.getItem("communityWallHasPosted"));
     setMounted(true);
   }, []);
 
@@ -112,11 +117,18 @@ export default function CommunityWallPage() {
 
   const MAX_NOTES = 50;
   const handleDeleteNote = () => {
-    setNotes(prev => prev.filter(note => note.username !== savedUsername));
+    setNotes(prev =>
+      prev.filter(note => (savedNoteId ? note.id !== savedNoteId : note.username !== savedUsername))
+    );
     localStorage.removeItem("communityWallHasPosted");
     localStorage.removeItem("communityWallUsername");
+    localStorage.removeItem("communityWallNoteId");
+    setSavedUsername(null);
+    setSavedNoteId(null);
+    setHasPosted(false);
     setShowDeleteConfirm(false);
   };
+
   const handleAddNote = (username: string, message: string) => {
     const newNote: Note = {
       id: Date.now().toString(),
@@ -127,6 +139,12 @@ export default function CommunityWallPage() {
       rotation: (Math.random() * 6) - 3, // random between -3 and +3
     };
 
+    localStorage.setItem("communityWallUsername", username);
+    localStorage.setItem("communityWallHasPosted", "true");
+    localStorage.setItem("communityWallNoteId", newNote.id);
+    setSavedUsername(username);
+    setSavedNoteId(newNote.id);
+    setHasPosted(true);
 
     // Add to top of the list and cap at MAX_NOTES
     setNotes((prev) => {
@@ -204,7 +222,7 @@ export default function CommunityWallPage() {
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
           {visibleNotes.map((note) => (
-            <StickyNote key={note.id} note={note} onLike={handleLike} isPinned={note.username === savedUsername} />
+            <StickyNote key={note.id} note={note} onLike={handleLike} isPinned={savedNoteId ? note.id === savedNoteId : (savedUsername !== null && note.username === savedUsername)} />
           ))}
         </div>
 
