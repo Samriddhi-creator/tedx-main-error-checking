@@ -7,10 +7,10 @@ import Video from "./Video";
 
 export default function ComingSoon() {
     return (
-        <div className="pt-0">
+        <div className="pt-0 -mx-2 sm:-mx-6">
             <Video />
         
-        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712] ">
+        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712]">
             <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
                 <Image
                     src="/bg1.png"

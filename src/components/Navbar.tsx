@@ -127,8 +127,8 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between md:justify-center gap-4 w-full md:w-1/2 h-full overflow-y-auto no-scrollbar py-4 md:py-0" onClick={(e) => e.stopPropagation()}>
-                    <div className="flex flex-col gap-0 shrink-0 my-auto md:my-0">
+                <div className="flex flex-col md:justify-center gap-4 w-full md:w-1/2 h-full overflow-y-auto no-scrollbar py-4 md:py-0" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex flex-col justify-center gap-0 shrink-0 flex-1 md:flex-none md:my-0">
                         {navLinks.map(({ label, href }, index) => {
                             const distance = lastHoveredIndex >= 0 ? Math.abs(index - lastHoveredIndex) : index;
                             const undimDelay = !hovered ? distance * 40 : 0;

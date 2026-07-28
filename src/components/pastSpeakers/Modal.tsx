@@ -83,17 +83,16 @@ export default function SpeakerModal({ speaker }: SpeakerModalProps) {
                 Spoke On: <span className="text-white italic">"{speaker.talk}"</span>
               </p>
             )}
-
-            {speaker.ytLink && speaker.ytLink !== "#" && (
-              <Link 
-                href={speaker.ytLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm py-2 px-5 sm:py-2.5 sm:px-6 rounded-full transition-all shadow-md hover:shadow-red-600/30 font-sourceSans cursor-pointer shrink-0"
-              >
-                <ExternalLink className="w-4 h-4" /> Watch talk on YouTube
-              </Link>
-            )}
+{speaker.ytLink && speaker.ytLink.trim() !== "" && speaker.ytLink.trim() !== "#" && (
+  <Link 
+    href={speaker.ytLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold text-xs sm:text-sm py-2 px-5 sm:py-2.5 sm:px-6 rounded-full transition-all shadow-md hover:shadow-red-600/30 font-sourceSans cursor-pointer shrink-0"
+  >
+    <ExternalLink className="w-4 h-4" /> Watch talk on YouTube
+  </Link>
+)}
           </div>
         </div>
       </div>

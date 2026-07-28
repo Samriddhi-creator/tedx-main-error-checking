@@ -12,16 +12,17 @@ const expeditionPatrons = [
 ];
 
 const legacyPatrons1=[
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 1" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 2" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 3" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 4" },
+  { image: "/sponsImages/Group 48095564.svg", alt: "Sponsor 1" },
+  { image: "/sponsImages/Group 48095563.svg", alt: "Sponsor 2" },
+  { image: "/sponsImages/Group 48095562.svg", alt: "Sponsor 3" },
+  { image: "/sponsImages/Group 48095561.svg", alt: "Sponsor 4" },
+  { image: "/sponsImages/Group 48095560.svg", alt: "Sponsor 5" },
 ]
 const legacyPatrons2=[
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 1" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 2" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 3" },
-  { image: "/SponsorsLogo.svg", alt: "Sponsor 4" },
+  { image: "/sponsImages/Group 48095559.svg", alt: "Sponsor 1" },
+  { image: "/sponsImages/Group 48095558.svg", alt: "Sponsor 2" },
+  { image: "/sponsImages/Group 48095557.svg", alt: "Sponsor 3" },
+  { image: "/sponsImages/Group 48095548.svg", alt: "Sponsor 4" },
 ]
 
 export default function SponsorsSection() {

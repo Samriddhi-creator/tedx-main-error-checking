@@ -11,22 +11,22 @@ import ComingSoon from "../components/coming-soon/ComingSoon";
 
 export default function IndexPage() {
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="h-auto bg-cover bg-center bg-no-repeat overflow-x-hidden"
-    >
-      {/* <section className="relative h-auto overflow-hidden">
-        <HeroHome />
-      </section>
-      <AboutTheTheme />
-      <SpeakerHome />
-      <BuyTickets />
-      <MerchBanner />
-      <EventBanner />
-      <TicketBanner /> */}
-      <ComingSoon />
-    </motion.main>
+    // <motion.main
+    //   initial={{ opacity: 0 }}
+    //   animate={{ opacity: 1 }}
+    //   transition={{ duration: 0.6, ease: "easeOut" }}
+    //   className="h-auto bg-cover bg-center bg-no-repeat overflow-x-hidden"
+    // >
+    //   {/* <section className="relative h-auto overflow-hidden">
+    //     <HeroHome />
+    //   </section>
+    //   <AboutTheTheme />
+    //   <SpeakerHome />
+    //   <BuyTickets />
+    //   <MerchBanner />
+    //   <EventBanner />
+    //   <TicketBanner /> */}
+    // </motion.main>
+    <ComingSoon/>
   );
 }

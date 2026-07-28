@@ -105,8 +105,8 @@ function TileContent({ id }: { id: string }) {
 }
 
 // ─── Ghost layout (invisible, for measuring positions) ────────────────────────
-function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string, HTMLDivElement>> }) {
-    const setRef = (id: string) => (el: HTMLDivElement | null) => {
+function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string, HTMLElement>> }) {
+    const setRef = (id: string) => (el: HTMLElement | null) => {
         if (el) itemRefs.current.set(id, el);
     };
     return (
@@ -117,10 +117,10 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
                     <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-full h-auto object-contain" />
                 </div>
                 <div className="flex flex-col gap-2 lg:gap-3 mt-2 lg:mt-6 items-center lg:items-start">
-                    <div ref={setRef("ted-website")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">TED Website</span></div>
-                    <div ref={setRef("terms")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Terms and Conditions</span></div>
-                    <div ref={setRef("about-tedx")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About TEDx</span></div>
-                    <div ref={setRef("refund")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Refund Policy</span></div>
+                    <Link href={"https://www.ted.com/"} ref={setRef("ted-website")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">TED Website</span></Link>
+                    <Link href={"https://www.ted.com/participate/organize-a-local-tedx-event/before-you-start/tedx-rules"} ref={setRef("terms")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Terms and Conditions</span></Link>
+                    <Link href={"https://www.ted.com/about/programs-initiatives/tedx-program"} ref={setRef("about-tedx")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About TEDx</span></Link>
+                    <Link href={"/refund"} ref={setRef("refund")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Refund Policy</span></Link>
                 </div>
             </div>
 
@@ -132,19 +132,26 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
             <div className="flex flex-col items-center gap-3 lg:gap-4 w-full lg:w-auto lg:flex-[624] -mt-1">
                 <div ref={setRef("follow-us")}><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Follow us</span></div>
                 <div className="flex gap-4 lg:gap-6">
-                    <div ref={setRef("ig")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaInstagram className="text-black" /></div>
-                    <div ref={setRef("li")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaLinkedinIn className="text-black" /></div>
-                    <div ref={setRef("fb")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaFacebookF className="text-black" /></div>
-                    <div ref={setRef("tw")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaXTwitter className="text-black" /></div>
+                    <Link href={"https://www.instagram.com/tedxiitpatna/"} ref={setRef("ig")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaInstagram className="text-black" /></Link>
+                    <Link href={"https://www.linkedin.com/company/tedxiitpatna/posts/?feedView=all"} ref={setRef("li")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaLinkedinIn className="text-black" /></Link>
+                    <Link href={"https://www.facebook.com/tedxiitpatna/"} ref={setRef("fb")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaFacebookF className="text-black" /></Link>
+                    <Link href={"https://x.com/TEDxIITPatna"} ref={setRef("tw")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaXTwitter className="text-black" /></Link>
                 </div>
                 <div className="w-full max-w-xs h-[1px] bg-red-800/30 my-1" />
                 <div ref={setRef("contact-us")}><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-white">Contact Us</span></div>
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-6 sm:gap-8 lg:gap-4 items-center justify-center w-full">
                     <div className="flex flex-col items-center text-center">
+                        <div ref={setRef("speaker-label")} className="mb-1"><span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider">General Queries</span></div>
+                        <div ref={setRef("speaker-email")} className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
+                            <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
+                            <Link href={"mailto:tedxiitpatna@iitp.ac.in"}>tedxiitpatna@iitp.ac.in</Link>
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
                         <div ref={setRef("speaker-label")} className="mb-1"><span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider">Speaker Queries</span></div>
                         <div ref={setRef("speaker-email")} className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
                             <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                            <span>curation.tedxiitpatna@iitp.ac.in</span>
+                            <Link href={"mailto:curation.tedxiitpatna@iitp.ac.in"}>curation.tedxiitpatna@iitp.ac.in</Link>
                         </div>
                     </div>
                     <div className="flex flex-col items-center text-center">
@@ -152,7 +159,7 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
                         <div ref={setRef("sponsor-email")}>
                             <div className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
                                 <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                                <span>sponsorship.tedxiitpatna@iitp.ac.in</span>
+                                <Link href={"mailto:sponsorship.tedxiitpatna@iitp.ac.in"}>sponsorship.tedxiitpatna@iitp.ac.in</Link>
                             </div>
                         </div>
                     </div>
@@ -166,9 +173,9 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
             {/* Right Column */}
             <div className="flex flex-col gap-2 w-full lg:w-auto lg:flex-[572] items-center lg:items-start text-center lg:text-left lg:pl-4 xl:pl-8 2xl:pl-12">
                 <div ref={setRef("quick-links")} className="w-fit"><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Quick Links</span></div>
-                <div ref={setRef("link-home")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Home</span></div>
-                <div ref={setRef("link-about")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About Us</span></div>
-                <div ref={setRef("link-speakers")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Speakers</span></div>
+                <Link href={"/"} ref={setRef("link-home")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Home</span></Link>
+                <Link href={"/about"} ref={setRef("link-about")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About Us</span></Link>
+                <Link href={"/speakers"} ref={setRef("link-speakers")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Speakers</span></Link>
             </div>
         </div>
     );
@@ -413,7 +420,7 @@ export default function FooterGravityContent() {
                 <GhostLayout itemRefs={itemRefs} />
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left px-6 sm:px-12 lg:px-16 py-4 border-t border-white/10 text-white">
                     <div ref={licenseRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-medium">*This Independent TEDx Event Is Operated Under License From TED.</p></div>
-                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIITPatna. All rights reserved.</p></div>
+                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIIT Patna. All rights reserved.</p></div>
                 </div>
             </div>
 
