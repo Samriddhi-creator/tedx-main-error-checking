@@ -413,7 +413,7 @@ export default function FooterGravityContent() {
                 <GhostLayout itemRefs={itemRefs} />
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left px-6 sm:px-12 lg:px-16 py-4 border-t border-white/10 text-white">
                     <div ref={licenseRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-medium">*This Independent TEDx Event Is Operated Under License From TED.</p></div>
-                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIITPatna. All rights reserved.</p></div>
+                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIIT Patna. All rights reserved.</p></div>
                 </div>
             </div>
 
