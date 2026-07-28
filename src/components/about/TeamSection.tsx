@@ -66,7 +66,7 @@ export default function TeamSection() {
             {/* Volunteer Thank You Note */}
             <div className="mt-6">
                 <p className="text-white font-space text-[12px] sm:text-[18px] md:text-[22px] lg:text-[28px] font-normal tracking-normal text-center flex items-center justify-center">
-                    We are grateful to have the support of many dedicated volunteers who brought the TEDxIITPatna experience to life. Your energy and commitment made it all possible!
+                    We are grateful to have the support of many dedicated volunteers who brought the TEDxIIT Patna experience to life. Your energy and commitment made it all possible!
                 </p>
             </div>
         </section>
