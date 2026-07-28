@@ -56,17 +56,18 @@ export default function TeamCard({ name, img, role, linkedin, featured = false }
                 </a>
 
                 {/* Portrait Image */}
-                <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center h-[78%] w-full">
-                    <div className="relative w-full h-full">
-                        <Image
-                            src={img || "/pic.png"}
-                            alt={name}
-                            fill
-                            sizes="(max-width: 640px) 160px, (max-width: 768px) 240px, 300px"
-                            className="object-contain object-bottom group-hover:scale-105 transition-transform duration-500"
-                        />
-                    </div>
-                </div>
+               // Change h-[78%] to h-full (or top-0 bottom-0)
+<div className="absolute inset-0 z-20 flex justify-center w-full">
+    <div className="relative w-full h-full">
+        <Image
+            src={img || "/pic.png"}
+            alt={name}
+            fill
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 240px, 300px"
+            className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        />
+    </div>
+</div>
 
                 {/* Name & Role Typography matching exact site fonts */}
                 <div
