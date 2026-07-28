@@ -7,6 +7,7 @@ import SpeakerHome from "../features/components/home/speakerhome";
 import MerchBanner from "../components/merch";
 import EventBanner from "../components/eventBanner";
 import TicketBanner from "../components/tickectsBanner";
+import ComingSoon from "../components/coming-soon/ComingSoon";
 
 export default function IndexPage() {
   return (
@@ -16,7 +17,7 @@ export default function IndexPage() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="h-auto bg-cover bg-center bg-no-repeat overflow-x-hidden"
     >
-      <section className="relative h-auto overflow-hidden">
+      {/* <section className="relative h-auto overflow-hidden">
         <HeroHome />
       </section>
       <AboutTheTheme />
@@ -24,7 +25,8 @@ export default function IndexPage() {
       <BuyTickets />
       <MerchBanner />
       <EventBanner />
-      <TicketBanner />
+      <TicketBanner /> */}
+      <ComingSoon />
     </motion.main>
   );
-}
+}

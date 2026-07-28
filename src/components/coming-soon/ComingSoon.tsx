@@ -3,11 +3,14 @@
 import Mist from "./Mist";
 import Image from "next/image";
 import HiddenTexts from "./HiddenTexts";
-
+import Video from "./Video";
 
 export default function ComingSoon() {
     return (
-        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712]">
+        <div className="pt-0">
+            <Video />
+        
+        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712] ">
             <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
                 <Image
                     src="/bg1.png"
@@ -68,5 +71,6 @@ export default function ComingSoon() {
                 </div>
             </div>
         </main>
+        </div>
     );
 }
