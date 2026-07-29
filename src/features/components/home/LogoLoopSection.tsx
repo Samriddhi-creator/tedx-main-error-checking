@@ -49,8 +49,8 @@ export default function SponsorsSection() {
         logos={legacyPatrons1}
         speed={70}
         direction="left"
-        stripHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
-        logoHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        stripHeight={{ mobile: 120, tablet: 180, desktop: 200 }}
+        logoHeight={{ mobile: 120, tablet: 180, desktop: 200 }}
         gap={{ mobile: 32, tablet: 40, desktop: 36 }}
         fadeOut
         fadeOutColor="#000000"
