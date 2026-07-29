@@ -70,9 +70,9 @@ const Team: TeamDepartment[] = [
         id: "mpr",
         title: "Media and Public Relations",
         members: [
-            { id: 1, name: "Vishmith Shetty", img: "/pic.png", role: "Media Lead",linkedin:"" },
-            { id: 2, name: "Priyam Das", img: "/IMG-20251013-WA0173 - Priyam Das.jpg", role: "PR Team",linkedin:"" },
-            { id: 3, name: "Pratichi Maheshwari", img: "/20260405_185144.jpg - Pratichi (1).jpeg", role: "PR Team" ,linkedin:"https://www.linkedin.com/in/pratichi-maheshwari"},
+            { id: 1, name: "Vishmith Shetty", img: "/vishmith.png", role: "Media and Public Relations Coordinator",linkedin:"https://www.linkedin.com/in/vishmith-shetty-a16873313" },
+            { id: 2, name: "Priyam Das", img: "/IMG-20251013-WA0173 - Priyam Das.jpg", role: "Media and Public Relations Coordinator",linkedin:"" },
+            { id: 3, name: "Pratichi Maheshwari", img: "/20260405_185144.jpg - Pratichi (1).jpeg", role: "Media and Public Relations Coordinator" ,linkedin:"https://www.linkedin.com/in/pratichi-maheshwari"},
         ]
     },
     {
