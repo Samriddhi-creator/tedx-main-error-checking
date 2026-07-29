@@ -59,9 +59,9 @@ const Team: TeamDepartment[] = [
         id: "pnc",
         title: "Planning and Curation",
         members: [
-            { id: 1, name: "Surili Pathak", img: "/IMG-20260723-WA0062 - Surili Pathak.jpg", role: "Curation Lead",linkedin:"https://www.linkedin.com/in/surili-pathak-4867bb31a?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-            { id: 2, name: "Parth Sehgal", img: "/parthSehgal.png", role: "Curation Team" ,linkedin:"https://www.linkedin.com/in/parth-sehgal-60b928372/"},
-            { id: 3, name: "Shreyas Das", img: "/pic.png", role: "Curation Team",linkedin:"" },
+            { id: 1, name: "Surili Pathak", img: "/IMG-20260723-WA0062 - Surili Pathak.jpg", role: "Planning and Curation Coordinator",linkedin:"https://www.linkedin.com/in/surili-pathak-4867bb31a?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 2, name: "Parth Sehgal", img: "/parthSehgal.png", role: "Planning and Curation Coordinator" ,linkedin:"https://www.linkedin.com/in/parth-sehgal-60b928372/"},
+            { id: 3, name: "Shreyas Das", img: "/pic.png", role: "Planning and Curation Coordinator",linkedin:"" },
         ]
     },
     {
@@ -77,9 +77,9 @@ const Team: TeamDepartment[] = [
         id: "spons",
         title: "Sponsorship",
         members: [
-            { id: 1, name: "Vidhi Patel", img: "/Screenshot 2026-07-28 at 6.04.31 PM.png", role: "Sponsorship Lead" ,linkedin:"https://www.linkedin.com/in/vidhi-patel-5a1893310"},
-            { id: 2, name: "Devyansh Pandey", img: "/devyanshPandey.png", role: "Sponsorship Team",linkedin:"https://www.linkedin.com/in/devyansh-pandey-a66426360?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-            { id: 3, name: "Tushar Bharti", img: "/tusharBharti.png", role: "Sponsorship Team",linkedin:"" },
+            { id: 1, name: "Vidhi Patel", img: "/Screenshot 2026-07-28 at 6.04.31 PM.png", role: "Sponsorship Coordinator" ,linkedin:"https://www.linkedin.com/in/vidhi-patel-5a1893310"},
+            { id: 2, name: "Devyansh Pandey", img: "/devyanshPandey.png", role: "Sponsorship Coordinator",linkedin:"https://www.linkedin.com/in/devyansh-pandey-a66426360?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 3, name: "Tushar Bharti", img: "/tusharBharti.png", role: "Sponsorship Coordinator",linkedin:"https://www.linkedin.com/in/tushar-bharti-5a0446309" },
         ]
     },
     {

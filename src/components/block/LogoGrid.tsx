@@ -89,7 +89,7 @@ export const LogoGrid = memo(function LogoGrid({
       <div style={containerStyle}>
         {logos.map((item, index) => {
           const itemStyle: CSSProperties = {
-            width: `${resolvedLogoHeight}px`,
+            width: `${resolvedLogoHeight * 1.8}px`,
             height: `${resolvedLogoHeight}px`,
           };
 
@@ -114,7 +114,7 @@ export const LogoGrid = memo(function LogoGrid({
               >
                 <div
                   className="relative w-full h-full"
-                  style={{ aspectRatio: "1/1" }}
+                  style={{ width: "100%", height: "100%" }}
                 >
                   <Image
                     src={item.image}

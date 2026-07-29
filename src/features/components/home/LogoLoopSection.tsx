@@ -34,8 +34,8 @@ export default function SponsorsSection() {
         </div>
         <LogoGrid
         logos={expeditionPatrons}
-        logoHeight={{ mobile: 80, tablet: 156, desktop: 180 }}
-        gap={ { mobile: 10, tablet: 24, desktop: 32 }}
+        logoHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        gap={ { mobile: 20, tablet: 32, desktop: 40 }}
         scaleOnHover
         ariaLabel="Our sponsors"
         /> */}
@@ -47,11 +47,11 @@ export default function SponsorsSection() {
         <br />
         <LogoLoop
         logos={legacyPatrons1}
-        speed={80}
+        speed={70}
         direction="left"
-        stripHeight={{ mobile: 80, tablet: 120, desktop: 160 }}
-        logoHeight={{ mobile: 80, tablet: 156, desktop: 180 }}
-        gap={{ mobile: 24, tablet: 32, desktop: 20 }}
+        stripHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        logoHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        gap={{ mobile: 32, tablet: 40, desktop: 36 }}
         fadeOut
         fadeOutColor="#000000"
         scaleOnHover
@@ -59,11 +59,11 @@ export default function SponsorsSection() {
         />
         <LogoLoop
         logos={legacyPatrons2}
-        speed={80}
+        speed={70}
         direction="left"
-        stripHeight={{ mobile: 80, tablet: 120, desktop: 160 }}
-        logoHeight={{ mobile: 80, tablet: 156, desktop: 180 }}
-        gap={{ mobile: 24, tablet: 32, desktop: 20 }}
+        stripHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        logoHeight={{ mobile: 120, tablet: 180, desktop: 230 }}
+        gap={{ mobile: 32, tablet: 40, desktop: 36 }}
         fadeOut
         fadeOutColor="#000000"
         scaleOnHover
