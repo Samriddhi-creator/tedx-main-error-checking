@@ -26,21 +26,21 @@ const events: EventItem[] = [
 export default function EventsPage() {
   return (
     <main
-      className="min-h-screen text-white pt-24 pb-16 bg-black bg-cover bg-center bg-fixed"
+      className="min-h-screen text-white pb-16 bg-black bg-cover bg-center bg-fixed"
       style={{ backgroundImage: "url('/bg1.png')" }}
     >
       {/* Hero Section */}
-      <section className="relative px-6 md:px-16 py-20 flex flex-col items-center justify-center text-center">
+      <section className="relative px-6 md:px-16 py-10 flex flex-col items-center justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-5xl md:text-7xl font-bold font-['Bebas_Neue'] tracking-wider mb-6">
-            <span className="text-red-600">TEDx</span><span>IIT Patna</span> Events
+            <span className="text-red-600">TED<sup className="text-3xl md:text-5xl -top-3 md:-top-4 relative">x</sup></span><span>IIT Patna</span> Events
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl">
-            Discover our upcoming gatherings, past editions, and engage with the community. Ideas worth spreading happen here.
+            Explore the journey of TEDx from thought-provoking pre-events to the main stage, and revisit the conversations that continue to inspire long after the applause fades.
           </p>
         </motion.div>
       </section>
@@ -110,7 +110,7 @@ export default function EventsPage() {
       <section className="px-6 md:px-16 py-16 border-t border-zinc-900">
         <div className="flex items-center gap-3 mb-10">
           <h2 className="text-4xl font-bold font-['Bebas_Neue'] tracking-wide">
-            <span className="text-5xl text-red-600">TEDx</span><span className="text-5xl">IIT Patna</span>
+            <span className="text-5xl text-red-600">TED<sup className="text-3xl -top-3 relative">x</sup></span><span className="text-5xl">IIT Patna</span>
             <span className="block text-6xl md:text-8xl">Coming Soon...</span>
           </h2>
         </div>

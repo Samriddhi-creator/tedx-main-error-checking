@@ -82,6 +82,7 @@ export default function CommunityWallPage() {
 
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     // Load notes from local storage or fallback to initial
     const savedNotes = localStorage.getItem("tedxCommunityNotes");
     if (savedNotes) {
@@ -159,7 +160,7 @@ export default function CommunityWallPage() {
   if (!mounted) return null; // Prevent hydration mismatch
 
   return (
-    <main className="min-h-screen bg-[#111] text-white pt-24 pb-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
+    <main className="min-h-screen bg-[#111] text-white pt-15 pb-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0 opacity-20">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-600/30 blur-[120px] rounded-full mix-blend-screen" />
@@ -176,21 +177,19 @@ export default function CommunityWallPage() {
             <h1 className="text-4xl md:text-6xl font-bold font-['Bebas_Neue'] tracking-wide">
               Community <span className="text-red-600">Wall</span>
             </h1>
-            <div className="flex items-center gap-2 mt-3">
+            <div className="flex items-center gap-3 mt-4">
               <button
                 onClick={() => setSort("new")}
-                className={`text-xs font-bold py-1 px-4 rounded-full transition-colors ${sort === "new" ? "bg-red-600 text-white" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
+                className={`text-sm sm:text-base font-semibold py-2 px-6 rounded-full transition-all duration-300 cursor-pointer ${sort === "new" ? "bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)] scale-105" : "bg-zinc-800/80 border border-zinc-700/60 text-gray-300 hover:bg-zinc-700 hover:text-white"}`}
               >
                 New
               </button>
               <button
                 onClick={() => setSort("top")}
-                className={`text-xs font-bold py-1 px-4 rounded-full transition-colors ${sort === "top" ? "bg-red-600 text-white" : "bg-zinc-800 text-gray-400 hover:text-white"}`}
+                className={`text-sm sm:text-base font-semibold py-2 px-6 rounded-full transition-all duration-300 cursor-pointer ${sort === "top" ? "bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)] scale-105" : "bg-zinc-800/80 border border-zinc-700/60 text-gray-300 hover:bg-zinc-700 hover:text-white"}`}
               >
                 Top
-
               </button>
-
             </div>
             <p className="text-gray-400 mt-2 max-w-xl">
               Leave your mark. Share an idea, ask a question, or let us know what you're most excited about.

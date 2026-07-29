@@ -26,22 +26,22 @@ type HiddenText = { text: string; desktop: Pos; mobile: Pos };
 
 const ITEMS: HiddenText[] = [
     {
-        text: "PLACEHOLDER ONE",
+        text: "Beyond Known Horizons",
         desktop: { top: "18%", left: "12%", rotate: "-4deg" },
         mobile: { top: "10%", left: "8%", rotate: "-4deg" },
     },
     {
-        text: "PLACEHOLDER TWO",
+        text: "Charting New Frontiers",
         desktop: { top: "30%", left: "72%", rotate: "3deg" },
         mobile: { top: "22%", left: "50%", rotate: "3deg" },
     },
     {
-        text: "PLACEHOLDER THREE",
+        text: "Here Be Ideas",
         desktop: { top: "68%", left: "20%", rotate: "2deg" },
         mobile: { top: "75%", left: "10%", rotate: "2deg" },
     },
     {
-        text: "PLACEHOLDER FOUR",
+        text: "The Unknown Awaits",
         desktop: { top: "74%", left: "68%", rotate: "-3deg" },
         mobile: { top: "87%", left: "45%", rotate: "-3deg" },
     },

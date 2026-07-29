@@ -16,14 +16,14 @@ export const organizers: TeamMember[] = [
     {
         id: 1,
         name: "Kavya Mahajan",
-        role: "Lead Organizer",
+        role: "Organizer",
         img: "/aaaasd - Kavya.jpeg",
         linkedin: "https://in.linkedin.com/in/kavya-mahajan-ab19752b3"
     },
     {
         id: 2,
         name: "Ashmit Malik",
-        role: "Co-Organizer",
+        role: "Organizer",
         img: "/IMG-20260219-WA0014 - Ashmit Malik.jpg",
         linkedin: "https://www.linkedin.com/in/ashmit-malik-3b891924a"
     },
@@ -42,7 +42,7 @@ const Team: TeamDepartment[] = [
         id: "design",
         title: "Design",
         members: [
-            { id: 1, name: "Anura Saoji", img: "/IMG-20251229-WA0022 - Anura Saoji.jpg", role: "Design Lead",linkedin:"https://www.linkedin.com/in/anurasaoji?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 1, name: "Anura Saoji", img: "/IMG-20251229-WA0022 - Anura Saoji.jpeg", role: "Design Lead",linkedin:"https://www.linkedin.com/in/anurasaoji?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
            
             { id: 2, name: "Darshini Shah", img: "/IMG-20260719-WA0023 - Darshini shah.jpg", role: "Design Team" , linkedin:"https://www.linkedin.com/in/shah-darshini/" },
         ]
@@ -51,7 +51,7 @@ const Team: TeamDepartment[] = [
         id: "web",
         title: "Web Development",
         members: [
-            { id: 1, name: "Hardik Batwal", img: "/pic.png", role: "Web Lead", linkedin: "https://www.linkedin.com/in/hardik-batwal-a534a231a/" },
+            { id: 1, name: "Hardik Batwal", img: "/hardikbatwal.png", role: "Web Lead", linkedin: "https://www.linkedin.com/in/hardik-batwal-a534a231a/" },
             { id: 2, name: "Mrinal Satyarthi", img: "/IMG-20260714-WA0006 - Mrinal Satyarthi.jpg", role: "Web Team", linkedin: "https://linkedin.com/in/mrinal-satyarthi" },
         ]
     },
@@ -60,7 +60,7 @@ const Team: TeamDepartment[] = [
         title: "Planning and Curation",
         members: [
             { id: 1, name: "Surili Pathak", img: "/IMG-20260723-WA0062 - Surili Pathak.jpg", role: "Curation Lead",linkedin:"https://www.linkedin.com/in/surili-pathak-4867bb31a?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-            { id: 2, name: "Parth Sehgal", img: "/pic.png", role: "Curation Team" ,linkedin:""},
+            { id: 2, name: "Parth Sehgal", img: "/parthSehgal.png", role: "Curation Team" ,linkedin:"https://www.linkedin.com/in/parth-sehgal-60b928372/"},
             { id: 3, name: "Shreyas Das", img: "/pic.png", role: "Curation Team",linkedin:"" },
         ]
     },
@@ -78,8 +78,8 @@ const Team: TeamDepartment[] = [
         title: "Sponsorship",
         members: [
             { id: 1, name: "Vidhi Patel", img: "/Screenshot 2026-07-28 at 6.04.31 PM.png", role: "Sponsorship Lead" ,linkedin:"https://www.linkedin.com/in/vidhi-patel-5a1893310"},
-            { id: 2, name: "Devyansh Pandey", img: "/pic.png", role: "Sponsorship Team",linkedin:"https://www.linkedin.com/in/devyansh-pandey-a66426360?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-            { id: 3, name: "Tushar BHarti", img: "/pic.png", role: "Sponsorship Team",linkedin:"" },
+            { id: 2, name: "Devyansh Pandey", img: "/devyanshPandey.png", role: "Sponsorship Team",linkedin:"https://www.linkedin.com/in/devyansh-pandey-a66426360?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 3, name: "Tushar Bharti", img: "/tusharBharti.png", role: "Sponsorship Team",linkedin:"" },
         ]
     },
     {
@@ -96,7 +96,7 @@ const Team: TeamDepartment[] = [
         title: "Hospitality",
         members: [
             { id: 1, name: "Yahya Dawoodi", img: "/IMG-20250824-WA0115 - Yahya Dawoodi.jpg", role: "Hospitality Lead",linkedin:"https://www.linkedin.com/in/yahyadawoodi" },
-            { id: 2, name: "Shikhar Verma", img: "/IMG_7978 - Shikhar Verma.jpeg", role: "Hospitality Team" ,linkedin:"https://www.linkedin.com/in/shikhar-verma-702a82308?utm_source=share_via&utm_content=profile&utm_medium=member_ios"},
+            { id: 2, name: "Shikhar Verma", img: "/IMG_7978 - Shikhar Verma.png", role: "Hospitality Team" ,linkedin:"https://www.linkedin.com/in/shikhar-verma-702a82308?utm_source=share_via&utm_content=profile&utm_medium=member_ios"},
             { id: 3, name: "Charu Garg", img: "/Screenshot_2026-07-23-15-36-44-753_com.miui.gallery - Charu Garg.jpg", role: "Hospitality Team",linkedin:"https://www.linkedin.com/in/charu-garg-16767a30a/" },
         ]
     },
