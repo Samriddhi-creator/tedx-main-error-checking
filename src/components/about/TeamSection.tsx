@@ -23,7 +23,8 @@ export default function TeamSection() {
                         <TeamCard
                             name={member.name}
                             img={member.img}
-                            role="Organizer"
+                            role={member.role || "Organizer"}
+                            subRole={member.subRole}
                             linkedin={member.linkedin}
                             featured={true}
                         />

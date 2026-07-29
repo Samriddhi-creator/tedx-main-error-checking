@@ -3,6 +3,7 @@ export interface TeamMember {
     name: string;
     img: string;
     role?: string;
+    subRole?: string;
     linkedin?: string;
 }
 
@@ -17,6 +18,7 @@ export const organizers: TeamMember[] = [
         id: 1,
         name: "Kavya Mahajan",
         role: "Organizer",
+        subRole: "Licencee",
         img: "/aaaasd - Kavya.jpeg",
         linkedin: "https://in.linkedin.com/in/kavya-mahajan-ab19752b3"
     },

@@ -8,11 +8,12 @@ interface TeamCardProps {
     name: string;
     img: string;
     role?: string;
+    subRole?: string;
     linkedin?: string;
     featured?: boolean;
 }
 
-export default function TeamCard({ name, img, role, linkedin, featured = false }: TeamCardProps) {
+export default function TeamCard({ name, img, role, subRole, linkedin, featured = false }: TeamCardProps) {
     const isLinkValid = linkedin && linkedin !== "#";
 
     return (
@@ -69,13 +70,25 @@ export default function TeamCard({ name, img, role, linkedin, featured = false }
                 <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 z-30 flex flex-col select-none pointer-events-none">
                     {role && (
                         <span
-                            className={`text-white/90 font-space font-light tracking-wide truncate ${
+                            className={`text-white/90 font-space font-light tracking-wide leading-tight truncate ${
                                 featured
                                     ? "text-xs sm:text-lg md:text-xl lg:text-2xl"
                                     : "text-[10px] sm:text-xs md:text-sm"
                             }`}
                         >
                             {role}
+                        </span>
+                    )}
+
+                    {subRole && (
+                        <span
+                            className={`text-white/75 font-space font-light tracking-wide leading-tight truncate mb-0.5 ${
+                                featured
+                                    ? "text-[11px] sm:text-base md:text-lg lg:text-xl"
+                                    : "text-[9px] sm:text-[11px] md:text-xs"
+                            }`}
+                        >
+                            {subRole}
                         </span>
                     )}
 
