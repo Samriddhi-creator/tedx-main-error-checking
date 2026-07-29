@@ -28,6 +28,7 @@ export default function PastSpeakers() {
   const dragTracker = useRef({
     isDragging: false,
     startX: 0,
+    currentX: 0,
     startScrollLeft: 0,
     startTime: 0,
   });
@@ -107,15 +108,12 @@ export default function PastSpeakers() {
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).closest("button") && e.currentTarget !== e.target) {
-      return;
-    }
-
     const container = e.currentTarget;
     container.setPointerCapture(e.pointerId);
     dragTracker.current = {
       isDragging: true,
       startX: e.pageX - container.offsetLeft,
+      currentX: e.pageX - container.offsetLeft,
       startScrollLeft: container.scrollLeft,
       startTime: Date.now(),
     };
@@ -128,6 +126,7 @@ export default function PastSpeakers() {
     
     const container = e.currentTarget;
     const x = e.pageX - container.offsetLeft;
+    dragTracker.current.currentX = x;
     const distance = x - dragTracker.current.startX;
 
     const walkMultiplier = 1.5;
@@ -172,6 +171,10 @@ export default function PastSpeakers() {
     }
 
     dragTracker.current.isDragging = false;
+    setTimeout(() => {
+      dragTracker.current.startX = 0;
+      dragTracker.current.currentX = 0;
+    }, 50);
   };
 
   const handleSpeakersScroll = (e: UIEvent<HTMLDivElement>) => {
@@ -201,10 +204,13 @@ export default function PastSpeakers() {
   };
 
   const handleYearClick = (year: string, idx: number) => {
-    if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
-    setScrollingYear(year);
-    setSelectedYear(year);
-    centerElementByIndex(yearsRef.current, idx, "smooth");
+    const distanceMoved = Math.abs(dragTracker.current.currentX - dragTracker.current.startX);
+    if (distanceMoved < 10) {
+      if (dataFetchTimeout.current) clearTimeout(dataFetchTimeout.current);
+      setScrollingYear(year);
+      setSelectedYear(year);
+      centerElementByIndex(yearsRef.current, idx, "smooth");
+    }
   };
 
   return (
@@ -221,7 +227,7 @@ export default function PastSpeakers() {
           onPointerMove={handlePointerMove}
           onPointerUp={(e) => handlePointerUpOrLeave(e, "years")}
           onPointerLeave={(e) => handlePointerUpOrLeave(e, "years")}
-          className="flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing touch-none"
+          className="flex gap-3 sm:gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing touch-pan-y"
           style={{
             paddingLeft: "calc(50% - 40px)",
             paddingRight: "calc(50% - 40px)",
@@ -259,7 +265,7 @@ export default function PastSpeakers() {
           onPointerMove={handlePointerMove}
           onPointerUp={(e) => handlePointerUpOrLeave(e, "speakers")}
           onPointerLeave={(e) => handlePointerUpOrLeave(e, "speakers")}
-          className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing touch-none"
+          className="flex items-center overflow-x-auto snap-x snap-mandatory scroll-smooth w-full no-scrollbar h-full cursor-grab active:cursor-grabbing touch-pan-y"
           style={{
             paddingLeft: "calc(50% - 200px)",
             paddingRight: "calc(50% - 200px)",
@@ -276,7 +282,8 @@ export default function PastSpeakers() {
                   isSelected={idx === activeIdx}
                   onClick={() => {
                     const clickDuration = Date.now() - dragTracker.current.startTime;
-                    if (clickDuration < 200) {
+                    const distanceMoved = Math.abs(dragTracker.current.currentX - dragTracker.current.startX);
+                    if (clickDuration < 250 && distanceMoved < 10) {
                       setActiveIdx(idx);
                       centerElementByIndex(carouselRef.current, idx, "smooth");
                     }
