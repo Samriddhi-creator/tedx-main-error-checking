@@ -36,25 +36,25 @@ const Team: TeamDepartment[] = [
         id: "prod",
         title: "Production",
         members: [
-            { id: 1, name: "Kartik Sen", img: "/f5ebed45-3fb0-4eb3-bc66-7d314d68e3f6 - KARTIK SEN.jpeg", role: "Production Lead" ,linkedin:"https://www.linkedin.com/in/kars13105"},
-            { id: 2, name: "Riddhesh Dalal", img: "/IMG_20260612_140019 - Riddhesh Dalal copy.jpg", role: "Production Team",linkedin:"https://www.linkedin.com/in/riddhesh-dalal" },
+            { id: 1, name: "Kartik Sen", img: "/f5ebed45-3fb0-4eb3-bc66-7d314d68e3f6 - KARTIK SEN.jpeg", role: "Production Coordinator" ,linkedin:"https://www.linkedin.com/in/kars13105"},
+            { id: 2, name: "Riddhesh Dalal", img: "/IMG_20260612_140019 - Riddhesh Dalal copy.jpg", role: "Production Coordinator",linkedin:"https://www.linkedin.com/in/riddhesh-dalal" },
         ]
     },
     {
         id: "design",
         title: "Design",
         members: [
-            { id: 1, name: "Anura Saoji", img: "/IMG-20251229-WA0022 - Anura Saoji.jpeg", role: "Design Lead",linkedin:"https://www.linkedin.com/in/anurasaoji?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 1, name: "Anura Saoji", img: "/IMG-20251229-WA0022 - Anura Saoji.jpeg", role: "Design Coordinator",linkedin:"https://www.linkedin.com/in/anurasaoji?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
            
-            { id: 2, name: "Darshini Shah", img: "/IMG-20260719-WA0023 - Darshini shah.jpg", role: "Design Team" , linkedin:"https://www.linkedin.com/in/shah-darshini/" },
+            { id: 2, name: "Darshini Shah", img: "/IMG-20260719-WA0023 - Darshini shah.jpg", role: "Design Coordinator" , linkedin:"https://www.linkedin.com/in/shah-darshini/" },
         ]
     },
     {
         id: "web",
         title: "Web Development",
         members: [
-            { id: 1, name: "Hardik Batwal", img: "/hardikbatwal.png", role: "Web Lead", linkedin: "https://www.linkedin.com/in/hardik-batwal-a534a231a/" },
-            { id: 2, name: "Mrinal Satyarthi", img: "/IMG-20260714-WA0006 - Mrinal Satyarthi.jpg", role: "Web Team", linkedin: "https://linkedin.com/in/mrinal-satyarthi" },
+            { id: 1, name: "Hardik Batwal", img: "/hardikbatwal.png", role: "WebDev Coordinator", linkedin: "https://www.linkedin.com/in/hardik-batwal-a534a231a/" },
+            { id: 2, name: "Mrinal Satyarthi", img: "/IMG-20260714-WA0006 - Mrinal Satyarthi.jpg", role: "WebDev Coordinator", linkedin: "https://linkedin.com/in/mrinal-satyarthi" },
         ]
     },
     {
@@ -63,7 +63,7 @@ const Team: TeamDepartment[] = [
         members: [
             { id: 1, name: "Surili Pathak", img: "/IMG-20260723-WA0062 - Surili Pathak.jpg", role: "Planning and Curation Coordinator",linkedin:"https://www.linkedin.com/in/surili-pathak-4867bb31a?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
             { id: 2, name: "Parth Sehgal", img: "/parthSehgal.png", role: "Planning and Curation Coordinator" ,linkedin:"https://www.linkedin.com/in/parth-sehgal-60b928372/"},
-            { id: 3, name: "Shreyas Das", img: "/pic.png", role: "Planning and Curation Coordinator",linkedin:"" },
+            { id: 3, name: "Shreyas Das", img: "/shreyas.png", role: "Planning and Curation Coordinator",linkedin:"https://www.linkedin.com/in/shreyas-das-3a979b316" },
         ]
     },
     {
@@ -88,18 +88,18 @@ const Team: TeamDepartment[] = [
         id: "rsp",
         title: "Registration, Security and Planning",
         members: [
-            { id: 1, name: "Parnava Maitra", img: "/Pranva-maitra.png", role: "RSP Lead" ,   linkedin: "https://www.linkedin.com/in/parnava-maitra-84778b357?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-            { id: 2, name: "Abhijeet S. Jadaun", img: "/TedX_Pic - Abhijeet Singh (1).jpg", role: "RSP Team" ,linkedin:"https://www.linkedin.com/in/abhijeet-singh-jadaun-1a796525b"},
-            { id: 3, name: "Ayush Gupta", img: "/IMG_20260721_195558 - Ayush Gupta.jpg", role: "RSP Team",linkedin:"https://www.linkedin.com/in/ayush-gupta-675549320" },
+            { id: 1, name: "Parnava Maitra", img: "/Pranva-maitra.png", role: "RSP Coordinator" ,   linkedin: "https://www.linkedin.com/in/parnava-maitra-84778b357?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
+            { id: 2, name: "Abhijeet S. Jadaun", img: "/TedX_Pic - Abhijeet Singh (1).jpg", role: "RSP Coordinator" ,linkedin:"https://www.linkedin.com/in/abhijeet-singh-jadaun-1a796525b"},
+            { id: 3, name: "Ayush Gupta", img: "/IMG_20260721_195558 - Ayush Gupta.jpg", role: "RSP Coordinator",linkedin:"https://www.linkedin.com/in/ayush-gupta-675549320" },
         ]
     },
     {
         id: "hospi",
         title: "Hospitality",
         members: [
-            { id: 1, name: "Yahya Dawoodi", img: "/IMG-20250824-WA0115 - Yahya Dawoodi.jpg", role: "Hospitality Lead",linkedin:"https://www.linkedin.com/in/yahyadawoodi" },
-            { id: 2, name: "Shikhar Verma", img: "/IMG_7978 - Shikhar Verma.png", role: "Hospitality Team" ,linkedin:"https://www.linkedin.com/in/shikhar-verma-702a82308?utm_source=share_via&utm_content=profile&utm_medium=member_ios"},
-            { id: 3, name: "Charu Garg", img: "/Screenshot_2026-07-23-15-36-44-753_com.miui.gallery - Charu Garg.jpg", role: "Hospitality Team",linkedin:"https://www.linkedin.com/in/charu-garg-16767a30a/" },
+            { id: 1, name: "Yahya Dawoodi", img: "/IMG-20250824-WA0115 - Yahya Dawoodi.jpg", role: "Hospitality Coordinator",linkedin:"https://www.linkedin.com/in/yahyadawoodi" },
+            { id: 2, name: "Shikhar Verma", img: "/IMG_7978 - Shikhar Verma.png", role: "Hospitality Coordinator" ,linkedin:"https://www.linkedin.com/in/shikhar-verma-702a82308?utm_source=share_via&utm_content=profile&utm_medium=member_ios"},
+            { id: 3, name: "Charu Garg", img: "/Screenshot_2026-07-23-15-36-44-753_com.miui.gallery - Charu Garg.jpg", role: "Hospitality Coordinator",linkedin:"https://www.linkedin.com/in/charu-garg-16767a30a/" },
         ]
     },
 ];
