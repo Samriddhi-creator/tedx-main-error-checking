@@ -40,38 +40,43 @@ function TileContent({ id }: { id: string }) {
             return <span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Speaker Queries</span>;
         case "speaker-email":
             return (
-                <div className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
-                    <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                    <span>curation.tedxiitpatna@iitp.ac.in</span>
+                <div className="flex items-center gap-2 text-white/90 font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                    <span className="group-hover:text-red-500 transition-colors duration-300">curation.tedxiitpatna@iitp.ac.in</span>
                 </div>
             );
         case "sponsor-label":
             return <span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider mb-0.5">Sponsor Queries</span>;
         case "sponsor-email":
             return (
-                <div className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
-                    <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                    <span>sponsorship.tedxiitpatna@iitp.ac.in</span>
+                <div className="flex items-center gap-2 text-white/90 font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                    <span className="group-hover:text-red-500 transition-colors duration-300">sponsorship.tedxiitpatna@iitp.ac.in</span>
                 </div>
             );
         case "quick-links":
             return <span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Quick Links</span>;
         case "link-home":
             return (
-                <div className="flex items-center gap-1.5 text-white font-['Inter'] text-sm sm:text-base lg:text-lg">
-                    <span>Home</span>
+                <div className="flex items-center gap-2 text-white font-['Inter'] text-sm sm:text-base lg:text-lg group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="text-white/90 group-hover:text-red-500 transition-colors duration-300">Home</span>
                 </div>
             );
         case "link-about":
             return (
-                <div className="flex items-center gap-1.5 text-white font-['Inter'] text-sm sm:text-base lg:text-lg">
-                    <span>About Us</span>
+                <div className="flex items-center gap-2 text-white font-['Inter'] text-sm sm:text-base lg:text-lg group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="text-white/90 group-hover:text-red-500 transition-colors duration-300">About Us</span>
                 </div>
             );
         case "link-speakers":
             return (
-                <div className="flex items-center gap-1.5 text-white font-['Inter'] text-sm sm:text-base lg:text-lg">
-                    <span>Speakers</span>
+                <div className="flex items-center gap-2 text-white font-['Inter'] text-sm sm:text-base lg:text-lg group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="text-white/90 group-hover:text-red-500 transition-colors duration-300">Speakers</span>
                 </div>
             );
         case "ted-website":
@@ -112,24 +117,24 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
     return (
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start px-6 sm:px-12 lg:px-16 py-8 lg:py-8 gap-8 lg:gap-8 w-full" aria-hidden>
             {/* Left Column */}
-            <div className="flex flex-col gap-3 lg:gap-4 w-full lg:w-auto lg:flex-[724] items-center lg:items-start text-center lg:text-left">
+            <div className="flex flex-col gap-3 lg:gap-4 w-full lg:w-auto items-center lg:items-start text-center lg:text-left shrink-0">
                 <div ref={setRef("logo")} className="w-56 sm:w-72 lg:w-[384px]">
                     <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="w-full h-auto object-contain" />
                 </div>
                 <div className="flex flex-col gap-2 lg:gap-3 mt-2 lg:mt-6 items-center lg:items-start">
-                    <Link href={"https://www.ted.com/"} ref={setRef("ted-website")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">TED Website</span></Link>
-                    <Link href={"https://www.ted.com/participate/organize-a-local-tedx-event/before-you-start/tedx-rules"} ref={setRef("terms")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Terms and Conditions</span></Link>
-                    <Link href={"https://www.ted.com/about/programs-initiatives/tedx-program"} ref={setRef("about-tedx")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About TEDx</span></Link>
-                    <Link href={"/refund"} ref={setRef("refund")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Refund Policy</span></Link>
+                    <Link href={"https://www.ted.com/"} ref={setRef("ted-website")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white hover:text-red-500 transition-colors duration-300">TED Website</span></Link>
+                    <Link href={"https://www.ted.com/participate/organize-a-local-tedx-event/before-you-start/tedx-rules"} ref={setRef("terms")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white hover:text-red-500 transition-colors duration-300">Terms and Conditions</span></Link>
+                    <Link href={"https://www.ted.com/about/programs-initiatives/tedx-program"} ref={setRef("about-tedx")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white hover:text-red-500 transition-colors duration-300">About TEDx</span></Link>
+                    <Link href={"/refund"} ref={setRef("refund")} className="w-fit"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white hover:text-red-500 transition-colors duration-300">Refund Policy</span></Link>
                 </div>
             </div>
 
             {/* Divider 1 - Horizontal on Mobile/Tablet, Vertical on Desktop */}
             <div className="lg:hidden w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-red-800/40 to-transparent my-1" />
-            <div className="hidden lg:block -ml-1 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
+            <div className="hidden lg:block self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
             {/* Middle Column */}
-            <div className="flex flex-col items-center gap-3 lg:gap-4 w-full lg:w-auto lg:flex-[624] -mt-1">
+            <div className="flex flex-col items-center gap-3 lg:gap-4 w-full lg:w-auto -mt-1 shrink-0">
                 <div ref={setRef("follow-us")}><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Follow us</span></div>
                 <div className="flex gap-4 lg:gap-6">
                     <Link href={"https://www.instagram.com/tedxiitpatna/"} ref={setRef("ig")} className="size-9 sm:size-10 bg-white rounded flex items-center justify-center text-black text-xl lg:text-3xl"><FaInstagram className="text-black" /></Link>
@@ -142,25 +147,32 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-6 sm:gap-8 lg:gap-4 items-center justify-center w-full">
                     <div className="flex flex-col items-center text-center">
                         <div ref={setRef("speaker-label")} className="mb-1"><span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider">General Queries</span></div>
-                        <div ref={setRef("speaker-email")} className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
-                            <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                            <Link href={"mailto:tedxiitpatna@iitp.ac.in"}>tedxiitpatna@iitp.ac.in</Link>
+                        <div ref={setRef("speaker-email")}>
+                            <Link href={"mailto:tedxiitpatna@iitp.ac.in"} className="group flex items-center gap-2 text-white/90 font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal transition-all duration-300 ease-out hover:translate-x-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                                <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                                <span className="group-hover:text-red-500 transition-colors duration-300">tedxiitpatna@iitp.ac.in</span>
+                            </Link>
                         </div>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <div ref={setRef("speaker-label")} className="mb-1"><span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider">Speaker Queries</span></div>
-                        <div ref={setRef("speaker-email")} className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
-                            <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                            <Link href={"mailto:curation.tedxiitpatna@iitp.ac.in"}>curation.tedxiitpatna@iitp.ac.in</Link>
+                        <div ref={setRef("speaker-email")}>
+                            <Link href={"mailto:curation.tedxiitpatna@iitp.ac.in"} className="group flex items-center gap-2 text-white/90 font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal transition-all duration-300 ease-out hover:translate-x-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                                <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                                <span className="group-hover:text-red-500 transition-colors duration-300">curation.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
                         </div>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <div ref={setRef("sponsor-label")} className="mb-1"><span className="font-['Inter'] text-[10px] sm:text-xs text-red-500 font-semibold uppercase tracking-wider">Sponsor Queries</span></div>
                         <div ref={setRef("sponsor-email")}>
-                            <div className="flex items-center gap-1.5 text-white font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal">
-                                <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0" />
-                                <Link href={"mailto:sponsorship.tedxiitpatna@iitp.ac.in"}>sponsorship.tedxiitpatna@iitp.ac.in</Link>
-                            </div>
+                            <Link href={"mailto:sponsorship.tedxiitpatna@iitp.ac.in"} className="group flex items-center gap-2 text-white/90 font-['Inter'] text-xs sm:text-sm lg:text-lg font-normal transition-all duration-300 ease-out hover:translate-x-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                                <Image src="/mail.svg" alt="mail" width={18} height={18} className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                                <span className="group-hover:text-red-500 transition-colors duration-300">sponsorship.tedxiitpatna@iitp.ac.in</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -168,14 +180,23 @@ function GhostLayout({ itemRefs }: { itemRefs: React.MutableRefObject<Map<string
 
             {/* Divider 2 - Horizontal on Mobile/Tablet, Vertical on Desktop */}
             <div className="lg:hidden w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-red-800/40 to-transparent my-1" />
-            <div className="hidden lg:block ml-2 self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
+            <div className="hidden lg:block self-stretch w-[3px]" style={{ background: "repeating-linear-gradient(to bottom, rgba(153,27,27,0.5) 0px, rgba(153,27,27,0.5) 4px, transparent 8px, transparent 18px)" }} />
 
             {/* Right Column */}
-            <div className="flex flex-col gap-2 w-full lg:w-auto lg:flex-[572] items-center lg:items-start text-center lg:text-left lg:pl-4 xl:pl-8 2xl:pl-12">
+            <div className="flex flex-col gap-2 w-full lg:w-auto items-center lg:items-start text-center lg:text-left shrink-0">
                 <div ref={setRef("quick-links")} className="w-fit"><span className="font-['Inter'] text-lg sm:text-xl lg:text-2xl font-bold text-red-600">Quick Links</span></div>
-                <Link href={"/"} ref={setRef("link-home")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Home</span></Link>
-                <Link href={"/about"} ref={setRef("link-about")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">About Us</span></Link>
-                <Link href={"/speakers"} ref={setRef("link-speakers")} className="w-fit mt-1 lg:mt-2"><span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white">Speakers</span></Link>
+                <Link href={"/"} ref={setRef("link-home")} className="w-fit mt-1 lg:mt-2 group flex items-center gap-2 transition-all duration-300 ease-out hover:translate-x-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white/90 group-hover:text-red-500 transition-colors duration-300">Home</span>
+                </Link>
+                <Link href={"/about"} ref={setRef("link-about")} className="w-fit mt-1 lg:mt-2 group flex items-center gap-2 transition-all duration-300 ease-out hover:translate-x-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white/90 group-hover:text-red-500 transition-colors duration-300">About Us</span>
+                </Link>
+                <Link href={"/speakers"} ref={setRef("link-speakers")} className="w-fit mt-1 lg:mt-2 group flex items-center gap-2 transition-all duration-300 ease-out hover:translate-x-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 transition-all duration-300 group-hover:scale-150 group-hover:bg-red-500 group-hover:shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    <span className="font-['Inter'] text-sm sm:text-base lg:text-lg text-white/90 group-hover:text-red-500 transition-colors duration-300">Speakers</span>
+                </Link>
             </div>
         </div>
     );
@@ -420,7 +441,7 @@ export default function FooterGravityContent() {
                 <GhostLayout itemRefs={itemRefs} />
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left px-6 sm:px-12 lg:px-16 py-4 border-t border-white/10 text-white">
                     <div ref={licenseRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-medium">*This Independent TEDx Event Is Operated Under License From TED.</p></div>
-                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIITPatna. All rights reserved.</p></div>
+                    <div ref={copyrightRef}><p className="font-['Inter'] text-[10px] sm:text-xs lg:text-sm font-normal">© 2026 TEDxIIT Patna. All rights reserved.</p></div>
                 </div>
             </div>
 

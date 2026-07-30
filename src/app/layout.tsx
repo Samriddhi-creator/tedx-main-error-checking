@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import NextTopLoader from "nextjs-toploader";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import "./globals.css";
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: Props) {
       )}
     >
       <body suppressHydrationWarning className={`bg-[#0a0a0a] bg-[url('/bg1.png')] bg-repeat bg-top bg-left text-white min-h-screen flex flex-col`}>
+        <NextTopLoader color="#DC2626" height={3} showSpinner={false} shadow="0 0 10px #DC2626,0 0 5px #DC2626" />
         {/* Navigation Bar */}
         <Navbar />
         {/* Page Content */}

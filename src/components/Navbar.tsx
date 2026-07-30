@@ -78,7 +78,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className={`sticky top-0 z-120 w-full h-12 md:h-16 flex items-center justify-between px-4 md:px-8 py-2 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+            <header className={`sticky top-0 z-120 w-full h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 md:px-8 py-2 md:py-3 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center h-full">
                     <Link href="/" className="flex items-center h-full">
                         <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="h-full w-auto object-contain" style={{ width: "auto" }} priority />
@@ -86,16 +86,16 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-4">
-                    <Link href="/cart" className="h-[24px] md:h-[45px] px-4 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
+                    {/* <Link href="/cart" className="h-[24px] md:h-[45px] px-4 md:px-6 rounded-full border-[2px] md:border-[2px] border-red-700 text-white font-['Inter'] text-xs md:text-xl font-semibold hover:bg-red-700/20 transition-colors flex items-center">
                         Buy Now
-                    </Link>
+                    </Link> */}
 
                     <button
                         onClick={() => setOpen(!open)}
-                        className="size-[24px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[3px] md:gap-[4px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[130] cursor-pointer">
-                        <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[5px] md:translate-y-[6px] rotate-45" : ""}`} />
-                        <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
-                        <span className={`w-[12px] md:w-4 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[5px] md:-translate-y-[6px] -rotate-45" : ""}`} />
+                        className="size-[36px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[4px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[130] cursor-pointer">
+                        <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[6px] md:translate-y-[7px] rotate-45" : ""}`} />
+                        <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+                        <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[6px] md:-translate-y-[7px] -rotate-45" : ""}`} />
                     </button>
                 </div>
             </header>
@@ -149,19 +149,19 @@ export default function Navbar() {
                     </div>
 
                     <div
-                        className={`md:hidden flex flex-col gap-2 shrink-0 pt-3 border-t border-white/10 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
+                        className={`md:hidden flex flex-col gap-3 shrink-0 pt-4 border-t border-white/10 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
                     >
                         <div className="flex items-center gap-2">
-                            <span className="text-red-500 font-['Inter'] text-xs sm:text-sm font-bold">Contact:</span>
-                            <Link href="mailto:ted@iitp.ac.in" className="flex items-center gap-1.5 text-white/90 font-['Inter'] text-xs sm:text-sm hover:text-red-500 transition-colors">
+                            <span className="text-red-500 font-['Inter'] text-sm sm:text-base font-bold">Contact:</span>
+                            <Link href="mailto:ted@iitp.ac.in" className="flex items-center gap-1.5 text-white/90 font-['Inter'] text-sm sm:text-base hover:text-red-500 transition-colors">
                                 ✉ ted@iitp.ac.in
                             </Link>
                         </div>
                         <div className="flex items-center gap-3 flex-nowrap">
-                            <p className="text-red-500 font-['Inter'] text-xs sm:text-sm font-bold whitespace-nowrap">Follow us</p>
-                            <div className="flex items-center gap-3 sm:gap-4">
+                            <p className="text-red-500 font-['Inter'] text-sm sm:text-base font-bold whitespace-nowrap">Follow us</p>
+                            <div className="flex items-center gap-4 sm:gap-5">
                                 {socialLinks.map(({ icon: Icon, href }) => (
-                                    <Link key={href} href={href} target="_blank" rel="noopener noreferrer" className="text-white text-lg sm:text-xl hover:text-red-500 transition-colors">
+                                    <Link key={href} href={href} target="_blank" rel="noopener noreferrer" className="text-white text-xl sm:text-2xl hover:text-red-500 transition-colors">
                                         <Icon />
                                     </Link>
                                 ))}

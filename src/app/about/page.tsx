@@ -16,7 +16,7 @@ export default function About() {
                 <span className="text-[#F3E9DC] font-bebas text-[30px] sm:text-[60px] md:text-[70px] lg:text-[90px] font-normal not-italic ">
                     ABOUT&nbsp;&nbsp;
                     <span className="text-[#EB0028] font-cormorant text-[30px] sm:text-[60px] md:text-[70px] lg:text-[90px] font-bold">
-                        TEDxIITPatna
+                        TEDxIIT Patna
                     </span>
                 </span>
             </div>

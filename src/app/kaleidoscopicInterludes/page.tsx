@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
+import WallOfMemories from "@/src/components/past-editions/WallOfMemories";
 
 export default function Theme() {
   return (
@@ -65,6 +66,32 @@ export default function Theme() {
           </p>
         </div>
       </div>
+
+      {/* The Team Section */}
+      <section className="w-full mt-24 mb-12 px-2 sm:px-4 flex flex-col items-center">
+        <div className="flex flex-col items-center text-center mb-10">
+          <h2 className="font-bebas text-[45px] sm:text-[70px] md:text-[85px] lg:text-[105px] tracking-wide uppercase text-white drop-shadow-[0_4px_20px_rgba(235,0,40,0.5)] leading-none">
+            The <span className="text-[#EB0028]">Team</span>
+          </h2>
+          <p className="font-space text-gray-300 max-w-3xl text-base sm:text-xl md:text-2xl mt-4 leading-relaxed">
+            The minds and hearts behind TEDxIIT Patna 2025: Kaleidoscopic Interludes.
+          </p>
+        </div>
+
+        <div className="w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.8)] transition-all duration-300">
+          <Image
+            src="/team-2025.png"
+            alt="TEDxIIT Patna 2025 Team"
+            width={1920}
+            height={1080}
+            className="w-full h-auto object-cover block"
+            priority
+          />
+        </div>
+      </section>
+
+      {/* Wall of Memories for 2025 Edition */}
+      <WallOfMemories />
     </div>  </>
   );
 }

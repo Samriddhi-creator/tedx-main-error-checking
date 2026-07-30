@@ -309,7 +309,7 @@ export const LogoLoop = memo(function LogoLoop({
           {/* Wrapper gives a sized box; Image with fill + object-contain preserves aspect ratio */}
           <div
             className="relative"
-            style={{ height: `${resolvedLogoHeight}px`, width: `${resolvedLogoHeight}px` }}
+            style={{ height: `${resolvedLogoHeight}px`, width: `${resolvedLogoHeight * 1.8}px` }}
           >
             <Image
               src={item.image}
