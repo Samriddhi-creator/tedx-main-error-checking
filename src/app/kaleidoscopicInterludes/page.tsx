@@ -39,24 +39,10 @@ export default function Theme() {
        
 
       <div className="flex flex-col-reverse md:flex-row items-start justify-center w-full  py-4">
-        
-        <div className="w-full md:w-1/2 flex flex-col md:pt-50 md:pl-10 items-center md:items-start justify-center text-center select-none">
-          <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
-            <Image
-              src="/Group 48095475 1 copy.png"
-              alt="KI"
-              width={600}
-              height={600}
-              priority
-              className="w-full h-auto object-contain"
-            />
-          </div>
-        </div>
-
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw]">
             <Image
-              src="/ki.png"
+              src="/editions/ki.png"
               alt="KI Artwork"
               width={600}
               height={600}
@@ -65,7 +51,6 @@ export default function Theme() {
             />
           </div>
         </div>
-
       </div>
 
       <div className="w-full mt-10">

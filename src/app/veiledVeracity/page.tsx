@@ -42,7 +42,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex justify-center align-top">
           <div className="relative w-full max-w-[50vw] sm:max-w-[40vw] md:max-w-[40vw] pb-[15%] sm:mt-15 mt-5">
             <Image
-              src="/vv1.png"
+              src="/editions/vv1.png"
               alt="Veiled Veracity Text"
               width={1200}
               height={1200}
@@ -50,7 +50,7 @@ export default function Theme() {
               className="relative z-10 w-full h-auto object-contain"
             />
             <Image
-              src="/a.png"
+              src="/editions/a.png"
               alt="A"
               width={600}
               height={600}
@@ -64,7 +64,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <div className="w-full max-w-[70vw] sm:max-w-[50vw] md:max-w-[50vw]">
             <Image
-              src="/vv.png"
+              src="/editions/vv.png"
               alt="Veiled Veracity Artwork"
               width={1200}
               height={1200}

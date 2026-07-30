@@ -127,8 +127,8 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4 w-full md:w-1/2 h-full overflow-y-auto no-scrollbar py-6 md:py-8" onClick={(e) => e.stopPropagation()}>
-                    <div className="my-auto flex flex-col gap-0 shrink-0">
+                <div className="flex flex-col justify-between md:justify-center md:gap-4 w-full md:w-1/2 h-full min-h-0 overflow-y-auto no-scrollbar py-4 md:py-0" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex flex-col justify-center gap-0 shrink-0 flex-1  min-h-0 md:flex-none md:my-0">
                         {navLinks.map(({ label, href }, index) => {
                             const distance = lastHoveredIndex >= 0 ? Math.abs(index - lastHoveredIndex) : index;
                             const undimDelay = !hovered ? distance * 40 : 0;
@@ -141,7 +141,7 @@ export default function Navbar() {
                                     }}
                                     onMouseLeave={() => setHovered(null)}
                                     style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity, }}
-                                    className={`text-4xl sm:text-5xl lg:text-6xl font-normal font-['Bebas_Neue'] py-2.5 sm:py-3 md:py-4 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
+                                    className={`text-2xl sm:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-1 sm:py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
                                     {label}
                                 </Link>
                             );

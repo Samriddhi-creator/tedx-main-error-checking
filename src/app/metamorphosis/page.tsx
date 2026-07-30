@@ -27,7 +27,7 @@ export default function TedxThemeSection() {
       <div
         className="relative flex w-full flex-col items-center bg-black bg-cover bg-top min-h-screen overflow-hidden ml-2 sm:ml-8 md:ml-9 lg:ml-10"
         style={{ 
-          backgroundImage: "url('/image 59 (1).png')",
+          backgroundImage: "url('/editions/image 59 (1).png')",
           backgroundPosition:"center 20%"
         }}
       >
@@ -50,19 +50,19 @@ export default function TedxThemeSection() {
   
   {/* Wrap each image in a div that handles the positioning */}
   <div className="absolute w-full h-full left-[-140px] sm:left-[-280px] lg:left-[-420px]">
-    <Image src="/M copy.svg" alt="" fill className="object-contain" />
+    <Image src="/editions/M copy.svg" alt="" fill className="object-contain" />
   </div>
 
   <div className="absolute w-full h-full left-[-98px] sm:left-[-198px] lg:left-[-290px]">
-    <Image src="/E (2).svg" alt="" fill className="object-contain" />
+    <Image src="/editions/E (2).svg" alt="" fill className="object-contain" />
   </div>
 
   <div className="absolute w-full h-full left-[-118px] sm:left-[-235px] lg:left-[-350px]">
-    <Image src="/E copy.svg" alt="" fill className="object-contain" />
+    <Image src="/editions/E copy.svg" alt="" fill className="object-contain" />
   </div>
 
   <div className="absolute w-full h-full left-[88px] sm:left-[180px] lg:left-[270px]">
-    <Image src="/E (1) copy.svg" alt="" fill className="object-contain" />
+    <Image src="/editions/E (1) copy.svg" alt="" fill className="object-contain" />
   </div>
   
 </div>
@@ -70,7 +70,7 @@ export default function TedxThemeSection() {
     {/* --- LAYER 2: The Main White Text (Foreground) --- */}
     <div className="relative sm:w-[570px] md:w-[580px] lg:w-[890px]  z-10 w-full h-full">
       <Image 
-        src="/METAMORPHOSIS.svg" 
+        src="/editions/METAMORPHOSIS.svg" 
         alt="METAMORPHOSIS" 
         width={1200} 
         height={300} 

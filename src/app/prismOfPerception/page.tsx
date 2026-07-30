@@ -57,7 +57,7 @@ export default function Theme() {
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[50vw] -mr-20 -mt-30">
             <Image
-              src="/prism2.png" 
+              src="/editions/prism2.png" 
               alt="Prisms of Perception Artwork"
               width={1000} 
               height={1000}
