@@ -139,7 +139,7 @@ export const SpeakersData: Speaker[] = [
     {
         _id: "12",
         name: "Pankaj Jha",
-        image: "/speakerImages/pankajJha.png",
+        image: "/speakerImages/pankaj.png",
         title: "The Hidden Scripts of Life: Are You Living Your Truth?",
         body: `Pankaj Jha is a versatile artist with a career of over two decades, captivating audiences in film, theater, and literature. An alumnus of the National School of Drama, he is known for nuanced performances in acclaimed films like "Monsoon Wedding," "Black Friday," and "Gulaal." Beyond acting, his talents include painting and poetry, with six solo exhibitions and notable literary works. His recent role as Vidhayak Ji in "Panchayat 2" has further cemented his reputation as a talented and versatile artist.`,
         isPublished: true,

@@ -32,7 +32,7 @@ export default function TedxThemeSection() {
       <div
         className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-cover bg-top min-h-screen w-full relative flex flex-col items-center pt-6 pb-12 px-6 sm:px-8 md:px-12 overflow-hidden ml-2 sm:ml-8 md:ml-9 lg:ml-10 -mt-17`}
         style={{ 
-          backgroundImage: "url('/image 62.png')",
+          backgroundImage: "url('/editions/image 62.png')",
           backgroundPosition: "top right"
         }}
       > 
@@ -44,7 +44,7 @@ export default function TedxThemeSection() {
             {/* SHEDDING OFF SVG */}
             <div className="w-[180px] sm:w-[240px] md:w-[350px] lg:w-[500px] transition-transform duration-300 hover:scale-[1.02] origin-left cursor-pointer">
               <Image 
-                src="/Shedding off.svg" 
+                src="/editions/Shedding off.svg" 
                 alt="SHEDDING OFF" 
                 width={900} 
                 height={200} 
@@ -56,7 +56,7 @@ export default function TedxThemeSection() {
             {/* FEATHERS SVG */}
             <div className="w-[120px] sm:w-[160px] md:w-[250px] lg:w-[360px] transition-transform duration-300 hover:scale-[1.02] origin-left cursor-pointer mt-3 sm:mt-6">
               <Image 
-                src="/feathers copy.svg" 
+                src="/editions/feathers copy.svg" 
                 alt="FEATHERS" 
                 width={900} 
                 height={200} 

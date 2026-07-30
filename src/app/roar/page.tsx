@@ -47,7 +47,7 @@ export default function TedxThemeSection() {
     <div
       className={`${fredoka.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} font-sans bg-cover bg-top min-h-screen w-full relative flex flex-col items-center pb-16 px-4 sm:px-6 lg:px-8 ml-2 sm:ml-8 md:ml-9 lg:ml-10 -mt-16 `}
       style={{ 
-        backgroundImage: "url('/WhatsApp Image 2026-07-01 at 03.01.36 (1) copy.jpeg')",
+        backgroundImage: "url('/editions/WhatsApp Image 2026-07-01 at 03.01.36 (1) copy.jpeg')",
        backgroundSize: 'cover',
         backgroundPosition: 'right top',
         
@@ -68,7 +68,7 @@ export default function TedxThemeSection() {
   {/* LETTER R */}
   <div className="w-[40px] sm:w-[50px] md:w-[50px] lg:w-[90px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom">
     <Image 
-      src="/R.svg" 
+      src="/editions/R.svg" 
       alt="R" 
       width={20} 
       height={80} 
@@ -80,7 +80,7 @@ export default function TedxThemeSection() {
   {/* LETTER O */}
   <div className="w-[60px] sm:w-[80px] lg:w-[150px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-75">
     <Image 
-      src="/Vector copy.svg" // REPLACE WITH YOUR O IMAGE PATH
+      src="/editions/Vector copy.svg" // REPLACE WITH YOUR O IMAGE PATH
       alt="O" 
       width={80} 
       height={80} 
@@ -91,7 +91,7 @@ export default function TedxThemeSection() {
   {/* LETTER A */}
   <div className="w-[50px] sm:w-[60px] lg:w-[120px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-100">
     <Image 
-      src="/A.svg" 
+      src="/editions/A.svg" 
       alt="A" 
       width={50} 
       height={50} 
@@ -102,7 +102,7 @@ export default function TedxThemeSection() {
   {/* LETTER R (Second R) */}
   <div className="w-[40px] sm:w-[50px] lg:w-[90px] h-auto transition-transform duration-300 ease-in-out hover:scale-110 origin-bottom delay-150">
     <Image 
-      src="/R.svg" 
+      src="/editions/R.svg" 
       alt="R" 
       width={50} 
       height={50} 
@@ -117,7 +117,7 @@ export default function TedxThemeSection() {
 <div className="mt-4 sm:mt-2 ml-2  w-full transition-transform duration-300 hover:scale-105 origin-left">
   <div className="relative w-[210px] sm:w-[280px] lg:w-[500px] h-auto">
     <Image 
-      src="/the acousitc of strength copy.svg" 
+      src="/editions/the acousitc of strength copy.svg" 
       alt="the acoustic of strength" 
       width={600} 
       height={100} 
