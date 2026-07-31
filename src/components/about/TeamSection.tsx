@@ -27,6 +27,7 @@ export default function TeamSection() {
                             subRole={member.subRole}
                             linkedin={member.linkedin}
                             featured={true}
+                            objectPosition={member.objectPosition}
                         />
                     </div>
                 ))}
@@ -54,6 +55,7 @@ export default function TeamSection() {
                                         name={member.name}
                                         img={member.img}
                                         linkedin={member.linkedin}
+                                        objectPosition={member.objectPosition}
                                     />
                                 </div>
                             ))}

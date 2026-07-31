@@ -5,6 +5,7 @@ export interface TeamMember {
     role?: string;
     subRole?: string;
     linkedin?: string;
+    objectPosition?: string;
 }
 
 export interface TeamDepartment {
@@ -99,7 +100,7 @@ const Team: TeamDepartment[] = [
         members: [
             { id: 1, name: "Yahya Dawoodi", img: "/team/IMG-20250824-WA0115 - Yahya Dawoodi.jpg", role: "Hospitality Coordinator",linkedin:"https://www.linkedin.com/in/yahyadawoodi" },
             { id: 2, name: "Shikhar Verma", img: "/team/IMG_7978 - Shikhar Verma.png", role: "Hospitality Coordinator" ,linkedin:"https://www.linkedin.com/in/shikhar-verma-702a82308?utm_source=share_via&utm_content=profile&utm_medium=member_ios"},
-            { id: 3, name: "Charu Garg", img: "/team/Screenshot_2026-07-23-15-36-44-753_com.miui.gallery - Charu Garg.jpg", role: "Hospitality Coordinator",linkedin:"https://www.linkedin.com/in/charu-garg-16767a30a/" },
+            { id: 3, name: "Charu Garg", img: "/team/Screenshot_2026-07-23-15-36-44-753_com.miui.gallery - Charu Garg.png", role: "Hospitality Coordinator",linkedin:"https://www.linkedin.com/in/charu-garg-16767a30a/", objectPosition: "bottom" },
         ]
     },
 ];
