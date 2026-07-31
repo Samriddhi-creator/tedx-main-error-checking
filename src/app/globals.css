@@ -28,6 +28,24 @@
     scrollbar-width: none;
   }
 }
+
+/* Custom Scrollbar for whole website */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EB0028;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AA0000;
+}
 .text-inner-shadow {
   color: transparent;
   background:

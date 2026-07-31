@@ -66,8 +66,8 @@ export default function Mist() {
         texB.onload = onLoad;
 
         function build() {
-            W = view!.width = window.innerWidth;
-            H = view!.height = window.innerHeight;
+            W = view!.width = view!.offsetWidth || window.innerWidth;
+            H = view!.height = view!.offsetHeight || window.innerHeight;
             wipeMask = document.createElement("canvas");
             wipeMask.width = W;
             wipeMask.height = H;

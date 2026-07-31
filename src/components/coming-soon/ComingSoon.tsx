@@ -10,7 +10,7 @@ export default function ComingSoon() {
         <div className="pt-0 -mx-2 sm:-mx-6">
             <Video />
         
-        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712]">
+        <main className="relative flex min-h-[60vh] sm:min-h-screen w-full items-center justify-center overflow-hidden bg-[#1a1712]">
             <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
                 <Image
                     src="/bg1.png"
@@ -29,7 +29,7 @@ export default function ComingSoon() {
             {/* ---------------------------------------------------------------
           PINNED NOTE  (hero)
       ---------------------------------------------------------------- */}
-            <div className="relative z-10 w-[min(90vw,460px)] select-none">
+            <div className="relative z-10 w-[min(85vw,360px)] sm:w-[min(90vw,460px)] select-none">
                 {/* the note image itself */}
                 <Image
                     src="/pinpostt.png"
@@ -49,7 +49,7 @@ export default function ComingSoon() {
                         className="text-[#3a2c1e] font-bold tracking-tight"
                         style={{
                             transform: "rotate(-3deg)",
-                            fontSize: "clamp(1.9rem, 6vw, 2.8rem)",
+                            fontSize: "clamp(1.1rem, 6vw, 2.8rem)",
 
                             fontFamily: "'Bebas Neue', sans-serif",
                             letterSpacing: "0.02em",
@@ -62,7 +62,7 @@ export default function ComingSoon() {
                         className="mt-2 text-center text-[#5a4a37]"
                         style={{
                             transform: "rotate(2deg)",
-                            fontSize: "clamp(0.75rem, 2.6vw, 0.95rem)",
+                            fontSize: "clamp(0.65rem, 2.5vw, 0.95rem)",
                             maxWidth: "80%",
                         }}
                     >
