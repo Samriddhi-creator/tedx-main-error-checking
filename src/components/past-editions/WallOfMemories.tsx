@@ -45,7 +45,7 @@ const rotationFromId = (id: string): number => {
 const mapToUI = (mem: BackendMemory): Memory => ({
   id: mem._id,
   author: mem.name,
-  role: mem.customRoleTitle?.trim() || mem.roleCategory,
+  role: mem.roleCategory,
   roleCategory: mem.roleCategory.toLowerCase() as RoleCategory,
   quote: mem.memoryText,
   likes: mem.likes,
@@ -66,7 +66,6 @@ export default function WallOfMemories() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [newAuthor, setNewAuthor] = useState("");
-  const [newRoleTitle, setNewRoleTitle] = useState("");
   const [newRoleCategory, setNewRoleCategory] =
     useState<RoleCategory>("organizer");
   const [newQuote, setNewQuote] = useState("");
@@ -163,13 +162,11 @@ export default function WallOfMemories() {
       const created = await createMemory({
         name: newAuthor.trim(),
         roleCategory: CATEGORY_TO_BACKEND[newRoleCategory],
-        customRoleTitle: newRoleTitle.trim() || undefined,
         memoryText: newQuote.trim(),
       });
 
       setMemories((prev) => [mapToUI(created), ...prev]);
       setNewAuthor("");
-      setNewRoleTitle("");
       setNewQuote("");
       setIsAddModalOpen(false);
     } catch (err) {
@@ -198,18 +195,6 @@ export default function WallOfMemories() {
         <p className="font-space text-gray-300 max-w-3xl text-base sm:text-xl md:text-2xl mt-4 leading-relaxed">
           Glance back at the moments, stories, and kaleidoscopic fragments of TEDxIIT Patna 2025.
         </p>
-
-        {/* Role Filters & Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8">
-
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="ml-2 inline-flex items-center gap-2 bg-white text-black hover:bg-red-600 hover:text-white font-bold py-2.5 px-6 rounded-full transition-colors duration-200 cursor-pointer text-xs sm:text-sm md:text-base"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Pin a Memory</span>
-          </button>
-        </div>
       </div>
 
       {/* Loading / Error States */}
@@ -407,43 +392,28 @@ export default function WallOfMemories() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g., Ananya Sharma"
+                    placeholder="Name"
                     value={newAuthor}
                     onChange={(e) => setNewAuthor(e.target.value)}
                     className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
-                      Role Category *
-                    </label>
-                    <select
-                      value={newRoleCategory}
-                      onChange={(e) =>
-                        setNewRoleCategory(e.target.value as RoleCategory)
-                      }
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
-                    >
-                      <option value="organizer">Organizer</option>
-                      <option value="coordinator">Coordinator</option>
-                      <option value="subcoordinator">Subcoordinator</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
-                      Custom Role Title
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g., Lead Organizer"
-                      value={newRoleTitle}
-                      onChange={(e) => setNewRoleTitle(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
+                    Role Category *
+                  </label>
+                  <select
+                    value={newRoleCategory}
+                    onChange={(e) =>
+                      setNewRoleCategory(e.target.value as RoleCategory)
+                    }
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
+                  >
+                    <option value="organizer">Organizer</option>
+                    <option value="coordinator">Coordinator</option>
+                    <option value="subcoordinator">Subcoordinator</option>
+                  </select>
                 </div>
 
                 <div>
