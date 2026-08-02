@@ -86,7 +86,7 @@ export default function Footer() {
     const handleGlobalMove = useCallback((e: MouseEvent | TouchEvent) => {
         if (!isDraggingRuler.current || !rulerRef.current) return;
 
-        const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? startX.current) : e.clientX;
+        const clientX = 'touches' in e ? ((e as any).touches[0]?.clientX ?? startX.current) : (e as MouseEvent).clientX;
         const walk = (clientX - startX.current) * 1.5; // smooth 1.5x speed multiplier
         rulerRef.current.scrollLeft = startScrollLeft.current - walk;
 
@@ -111,9 +111,10 @@ export default function Footer() {
     }, [handleGlobalMove, runInertia]);
 
     const handleStart = useCallback((e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+        if ('touches' in e) return; // Allow native smooth horizontal scrolling on mobile without JS drag conflict
         stopInertia();
         isDraggingRuler.current = true;
-        const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
+        const clientX = 'touches' in e ? ((e as any).touches[0]?.clientX ?? 0) : (e as React.MouseEvent<HTMLDivElement>).clientX;
         startX.current = clientX;
         startScrollLeft.current = rulerRef.current?.scrollLeft || 0;
         dragLastX.current = clientX;
@@ -145,7 +146,9 @@ export default function Footer() {
         lastScrollLeft.current = current;
 
         if (delta !== 0) {
-            addJourneyDistance(delta);
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const scaledDelta = isMobile ? delta * 0.35 : delta;
+            addJourneyDistance(scaledDelta);
         }
 
         const patternWidth = patternWidthRef.current;
@@ -205,7 +208,7 @@ export default function Footer() {
                     onPointerLeave={handleMouseLeave}
                     onScroll={handleScroll}
                     className="w-full h-full overflow-x-auto overflow-y-hidden flex items-end cursor-grab active:cursor-grabbing select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-                    style={{ touchAction: "pan-y" }}
+                    style={{ touchAction: "pan-x" }}
                 >
                     {/* CSS Ruler - guaranteed horizontal scroll width */}
                     <div className="flex shrink-0">

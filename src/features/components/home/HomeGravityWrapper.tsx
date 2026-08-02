@@ -11,13 +11,13 @@ interface SectionPhysics {
 }
 
 const SECTION_PHYSICS: SectionPhysics[] = [
-  { fallPx: 280,  maxRotateDeg: -2,   driftPx:  16 },  // HeroHome
-  { fallPx: 400,  maxRotateDeg:  1.5, driftPx: -22 },  // AboutTheTheme
-  { fallPx: 540,  maxRotateDeg: -1.2, driftPx:  14 },  // SpeakerHome
-  { fallPx: 460,  maxRotateDeg:  2.5, driftPx: -18 },  // BuyTickets
-  { fallPx: 330,  maxRotateDeg: -1.8, driftPx:  10 },  // MerchBanner
-  { fallPx: 420,  maxRotateDeg:  1.2, driftPx: -12 },  // EventBanner
-  { fallPx: 360,  maxRotateDeg: -2,   driftPx:  11 },  // TicketBanner
+  { fallPx: 210,  maxRotateDeg: -2,   driftPx:  16 },  // HeroHome (-25%)
+  { fallPx: 300,  maxRotateDeg:  1.5, driftPx: -22 },  // AboutTheTheme (-25%)
+  { fallPx: 405,  maxRotateDeg: -1.2, driftPx:  14 },  // SpeakerHome (-25%)
+  { fallPx: 345,  maxRotateDeg:  2.5, driftPx: -18 },  // BuyTickets (-25%)
+  { fallPx: 248,  maxRotateDeg: -1.8, driftPx:  10 },  // MerchBanner (-25%)
+  { fallPx: 315,  maxRotateDeg:  1.2, driftPx: -12 },  // EventBanner (-25%)
+  { fallPx: 270,  maxRotateDeg: -2,   driftPx:  11 },  // TicketBanner (-25%)
 ];
 
 const MAX_G = 9.8; // m/s² shown in HUD

@@ -34,8 +34,8 @@ export default function StickyNote({ note, onLike, isPinned }: StickyNoteProps) 
     }
   };
 
-  // Gamification: Scale up slightly based on likes (max 1.1 scale)
-  const dynamicScale = Math.min(1 + (note.likes * 0.015), 1.15);
+  // Gamification: Scale up slightly based on likes (max 1.05 scale to avoid column overflow)
+  const dynamicScale = Math.min(1 + (note.likes * 0.008), 1.05);
 
   return (
     <motion.div
@@ -43,7 +43,7 @@ export default function StickyNote({ note, onLike, isPinned }: StickyNoteProps) 
       animate={{ opacity: 1, scale: dynamicScale, y: 0, rotate: note.rotation }}
       whileHover={{ scale: dynamicScale + 0.05, rotate: 0, zIndex: 20 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className={`relative p-6 rounded-lg shadow-lg flex flex-col justify-between break-inside-avoid mb-6 cursor-pointer overflow-hidden group`}
+      className={`relative p-3.5 sm:p-5 md:p-6 rounded-lg shadow-lg flex flex-col justify-between break-inside-avoid mb-3 sm:mb-5 md:mb-6 cursor-pointer overflow-hidden group`}
       style={{ backgroundColor: note.color, color: "#1a1a1a", boxShadow: isPinned ? "0 0 20px rgba(220, 38, 38, 0.4)" : undefined }}
 
     >
@@ -54,25 +54,25 @@ export default function StickyNote({ note, onLike, isPinned }: StickyNoteProps) 
 
 
       {/* Tape effect on top - red if pinned */}
-      <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 backdrop-blur-sm shadow-sm rotate-2 z-10 ${isPinned ? "bg-red-500/60" : "bg-white/40"}`} />
+      <div className={`absolute -top-2 sm:-top-3 left-1/2 -translate-x-1/2 w-10 h-4 sm:w-16 sm:h-6 backdrop-blur-sm shadow-sm rotate-2 z-10 ${isPinned ? "bg-red-500/60" : "bg-white/40"}`} />
 
-      <p className="font-['Inter'] text-lg leading-relaxed mb-6 whitespace-pre-wrap font-medium relative z-10">
+      <p className="font-['Inter'] text-xs sm:text-sm md:text-base lg:text-lg leading-normal sm:leading-relaxed mb-3 sm:mb-5 md:mb-6 whitespace-pre-wrap font-medium relative z-10">
         {note.message}
       </p>
 
-      <div className="flex items-center justify-between border-t border-black/10 pt-3 mt-auto relative z-10">
-        <span className="font-bold text-sm">@{note.username}</span>
+      <div className="flex items-center justify-between border-t border-black/10 pt-2 sm:pt-3 mt-auto relative z-10">
+        <span className="font-bold text-[11px] sm:text-xs md:text-sm truncate max-w-[85px] sm:max-w-none">@{note.username}</span>
 
         <button
           onClick={(e) => { e.stopPropagation(); handleToggleLike(); }}
-          className={`relative flex items-center gap-1 text-sm font-semibold transition-colors ${isLiked ? "text-red-600" : "text-black/60 hover:text-red-600"}`}
+          className={`relative flex items-center gap-1 text-xs sm:text-sm font-semibold transition-colors ${isLiked ? "text-red-600" : "text-black/60 hover:text-red-600"}`}
         >
           <motion.div
             whileTap={{ scale: 1.5 }}
             animate={isLiked ? { scale: [1, 1.3, 1], rotate: [0, 15, -15, 0] } : {}}
             transition={{ duration: 0.4 }}
           >
-            <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
+            <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={isLiked ? "currentColor" : "none"} />
           </motion.div>
           {note.likes}
 

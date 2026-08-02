@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
@@ -6,6 +7,47 @@ import "./globals.css";
 import { Bebas_Neue, Cormorant, Space_Grotesk, Inter, Source_Sans_3, Albert_Sans, Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import localFont from "next/font/local";
+
+export const metadata: Metadata = {
+  title: "TEDxIITPatna | Ideas Worth Spreading",
+  description: "Official website of TEDxIITPatna. Discovering, debating, and spreading ideas that spark conversation, deepen understanding, and drive meaningful change at IIT Patna.",
+  keywords: [
+    "TEDx",
+    "IIT Patna",
+    "TEDxIITPatna",
+    "TEDxIITP",
+    "Patna",
+    "Conference",
+    "Ideas Worth Spreading",
+    "Talks",
+    "Speakers",
+    "IITP Events"
+  ],
+  authors: [{ name: "TEDxIITPatna Team" }],
+  metadataBase: new URL("https://tedxiitp.org"),
+  openGraph: {
+    title: "TEDxIITPatna | Ideas Worth Spreading",
+    description: "Official website of TEDxIITPatna. Exploring ideas, innovation, and inspirational talks at IIT Patna.",
+    url: "https://tedxiitp.org",
+    siteName: "TEDxIITPatna",
+    images: [
+      {
+        url: "/logo.svg",
+        width: 800,
+        height: 600,
+        alt: "TEDxIITPatna Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TEDxIITPatna | Ideas Worth Spreading",
+    description: "Official website of TEDxIITPatna. Exploring ideas, innovation, and inspirational talks at IIT Patna.",
+    images: ["/logo.svg"],
+  },
+};
 
 const lemonMilk = localFont({
   src: [
@@ -24,10 +66,10 @@ const molend = localFont({
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
-
 interface Props {
   readonly children: ReactNode;
 }
+
 
 
 const bebasNeue = Bebas_Neue({

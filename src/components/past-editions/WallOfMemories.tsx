@@ -47,8 +47,8 @@ const rotationFromId = (id: string): number => {
 const mapToUI = (mem: BackendMemory): Memory => ({
   id: mem._id,
   author: mem.name,
-  role: mem.roleCategory,
-  roleCategory: mem.roleCategory.toLowerCase() as RoleCategory,
+  role: mem.customRoleTitle?.trim() || mem.roleCategory,
+  roleCategory: (mem.roleCategory || "organizer").toLowerCase() as RoleCategory,
   quote: mem.memoryText,
   likes: mem.likes,
   rotation: rotationFromId(mem._id),
@@ -71,6 +71,7 @@ export default function WallOfMemories() {
   const [newAuthor, setNewAuthor] = useState("");
   const [newRoleCategory, setNewRoleCategory] =
     useState<RoleCategory>("organizer");
+  const [newRoleTitle, setNewRoleTitle] = useState("");
   const [newQuote, setNewQuote] = useState("");
 
   const fetchMemoriesData = async () => {
@@ -80,8 +81,8 @@ export default function WallOfMemories() {
       setMemories(data.map(mapToUI));
       setError(null);
     } catch (e) {
-      console.error("Failed to fetch memories", e);
-      setError("Couldn't load memories right now. Please try again.");
+      console.error("Failed to fetch memories from server", e);
+      setError("Couldn't load memories from server right now.");
     } finally {
       setLoading(false);
     }
@@ -165,16 +166,32 @@ export default function WallOfMemories() {
       const created = await createMemory({
         name: newAuthor.trim(),
         roleCategory: CATEGORY_TO_BACKEND[newRoleCategory],
+        customRoleTitle: newRoleTitle.trim() || undefined,
         memoryText: newQuote.trim(),
       });
 
       setMemories((prev) => [mapToUI(created), ...prev]);
       setNewAuthor("");
+      setNewRoleTitle("");
       setNewQuote("");
       setIsAddModalOpen(false);
     } catch (err) {
-      console.error("Failed to create memory", err);
-      setError("Couldn't pin your memory right now. Please try again.");
+      console.error("Failed to create memory on backend", err);
+      // Fallback local memory pin
+      const fallbackMem: Memory = {
+        id: "mem-" + Date.now(),
+        author: newAuthor.trim(),
+        role: newRoleTitle.trim() || CATEGORY_TO_BACKEND[newRoleCategory],
+        roleCategory: newRoleCategory,
+        quote: newQuote.trim(),
+        likes: 1,
+        rotation: Math.random() * 4 - 2,
+      };
+      setMemories((prev) => [fallbackMem, ...prev]);
+      setNewAuthor("");
+      setNewRoleTitle("");
+      setNewQuote("");
+      setIsAddModalOpen(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -199,6 +216,30 @@ export default function WallOfMemories() {
           Glance back at the moments, stories, and kaleidoscopic fragments of TEDxIIT Patna 2025.
         </p>
 
+        {/* Role Filters & Action Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8">
+          {ROLE_FILTERS.map((filter) => (
+            <button
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
+              className={`py-2 px-5 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 cursor-pointer ${
+                activeFilter === filter.id
+                  ? "bg-[#EB0028] text-white shadow-[0_0_15px_rgba(235,0,40,0.4)]"
+                  : "bg-zinc-900/80 text-gray-400 hover:text-white border border-zinc-800 hover:border-zinc-700"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="ml-2 inline-flex items-center gap-2 bg-white text-black hover:bg-red-600 hover:text-white font-bold py-2.5 px-6 rounded-full transition-colors duration-200 cursor-pointer text-xs sm:text-sm md:text-base"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Pin a Memory</span>
+          </button>
+        </div>
       </div>
 
       {/* Loading / Error / Empty States */}
@@ -407,7 +448,7 @@ export default function WallOfMemories() {
                   <input
                     type="text"
                     required
-                    placeholder="Name"
+                    placeholder="e.g., Ananya Sharma"
                     value={newAuthor}
                     onChange={(e) => setNewAuthor(e.target.value)}
                     className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
@@ -429,6 +470,19 @@ export default function WallOfMemories() {
                     <option value="coordinator">Coordinator</option>
                     <option value="subcoordinator">Subcoordinator</option>
                   </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
+                    Custom Role Title (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g., Web Dev Lead"
+                    value={newRoleTitle}
+                    onChange={(e) => setNewRoleTitle(e.target.value)}
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
+                  />
                 </div>
 
                 <div>

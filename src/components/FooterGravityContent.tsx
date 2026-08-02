@@ -226,6 +226,7 @@ export default function FooterGravityContent() {
     const [physicsActive, setPhysicsActive] = useState(false);
     const [returning, setReturning] = useState(false);
     const [dragId, setDragId] = useState<string | null>(null);
+    const [activeHeight, setActiveHeight] = useState<number | null>(null);
 
     const rulerProgress = useJourneyStore((state) => state.rulerProgress);
 
@@ -240,7 +241,8 @@ export default function FooterGravityContent() {
 
         const containerRect = container.getBoundingClientRect();
         const W = containerRect.width;
-        const H = containerRect.height;
+        const H = containerRect.height * 0.75; // reduce fall space by 25%
+        setActiveHeight(H);
 
         const allRefs = new Map<string, HTMLDivElement>(itemRefs.current);
         if (licenseRef.current) allRefs.set("license", licenseRef.current);
@@ -318,7 +320,7 @@ export default function FooterGravityContent() {
         dragBodyRef.current = null;
         setDragId(null);
         setReturning(true);
-        setTimeout(() => { setPhysicsActive(false); setReturning(false); setBodyStates([]); }, 500);
+        setTimeout(() => { setPhysicsActive(false); setReturning(false); setBodyStates([]); setActiveHeight(null); }, 500);
     }, []);
 
     // ── Pointer interaction helpers ─────────────────────────────────────────
@@ -333,7 +335,15 @@ export default function FooterGravityContent() {
         const engine = engineRef.current;
         if (!Matter || !engine) return null;
         const allBodies = Matter.Composite.allBodies(engine.world).filter((b: any) => !b.isStatic);
-        return allBodies.find((b: any) => Matter.Vertices.contains(b.vertices, { x: px, y: py })) ?? null;
+        const direct = allBodies.find((b: any) => Matter.Vertices.contains(b.vertices, { x: px, y: py }));
+        if (direct) return direct;
+        // On touch/mobile, check within a 35px radius around the body bounds for easy grabbing
+        return allBodies.find((b: any) => {
+            const dx = b.position.x - px;
+            const dy = b.position.y - py;
+            const radius = Math.max(b.bounds.max.x - b.bounds.min.x, b.bounds.max.y - b.bounds.min.y) / 2 + 35;
+            return (dx * dx + dy * dy) <= (radius * radius);
+        }) ?? null;
     }, []);
 
     const handleOverlayPointerDown = useCallback((e: React.PointerEvent) => {
@@ -434,7 +444,7 @@ export default function FooterGravityContent() {
     const showHUD = rulerProgress > 0.005;
 
     return (
-        <div ref={containerRef} className="relative w-full overflow-hidden">
+        <div ref={containerRef} className="relative w-full overflow-hidden transition-[height] duration-500 ease-out" style={{ height: activeHeight ? `${activeHeight}px` : undefined }}>
 
             {/* ── Ghost layout — invisible when physics active, used for measurement ── */}
             <div className="transition-opacity duration-500" style={{ opacity: physicsActive ? 0 : 1, pointerEvents: physicsActive ? "none" : "auto" }}>
@@ -451,7 +461,7 @@ export default function FooterGravityContent() {
                     {/* Transparent hit-area for pointer events */}
                     <div
                         className="absolute inset-0 z-[60]"
-                        style={{ cursor: dragId ? "grabbing" : "grab" }}
+                        style={{ cursor: dragId ? "grabbing" : "grab", touchAction: "none" }}
                         onPointerDown={handleOverlayPointerDown}
                         onPointerMove={handleOverlayPointerMove}
                         onPointerUp={handleOverlayPointerUp}

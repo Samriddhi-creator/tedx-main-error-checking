@@ -219,7 +219,7 @@ export default function CommunityWallPage() {
         </div>
 
         {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+        <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 sm:gap-6 space-y-3 sm:space-y-6">
           {visibleNotes.map((note) => (
             <StickyNote key={note.id} note={note} onLike={handleLike} isPinned={savedNoteId ? note.id === savedNoteId : (savedUsername !== null && note.username === savedUsername)} />
           ))}
