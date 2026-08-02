@@ -12,6 +12,7 @@ import {
 import { Memory as BackendMemory } from "@/types/memory";
 
 export type RoleCategory = "organizer" | "coordinator" | "subcoordinator";
+
 export interface Memory {
   id: string;
   author: string;
@@ -28,6 +29,7 @@ const ROLE_FILTERS = [
   { id: "coordinator", label: "Coordinator" },
   { id: "subcoordinator", label: "Subcoordinator" },
 ];
+
 const CATEGORY_TO_BACKEND: Record<RoleCategory, BackendMemory["roleCategory"]> = {
   organizer: "Organizer",
   coordinator: "Coordinator",
@@ -46,7 +48,7 @@ const mapToUI = (mem: BackendMemory): Memory => ({
   id: mem._id,
   author: mem.name,
   role: mem.customRoleTitle?.trim() || mem.roleCategory,
-  roleCategory: mem.roleCategory.toLowerCase() as RoleCategory,
+  roleCategory: (mem.roleCategory || "organizer").toLowerCase() as RoleCategory,
   quote: mem.memoryText,
   likes: mem.likes,
   rotation: rotationFromId(mem._id),
@@ -65,11 +67,26 @@ export default function WallOfMemories() {
   const [likedIds, setLikedIds] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // New Memory Form State
   const [newAuthor, setNewAuthor] = useState("");
-  const [newRoleTitle, setNewRoleTitle] = useState("");
   const [newRoleCategory, setNewRoleCategory] =
     useState<RoleCategory>("organizer");
+  const [newRoleTitle, setNewRoleTitle] = useState("");
   const [newQuote, setNewQuote] = useState("");
+
+  const fetchMemoriesData = async () => {
+    try {
+      setLoading(true);
+      const data = await getMemories();
+      setMemories(data.map(mapToUI));
+      setError(null);
+    } catch (e) {
+      console.error("Failed to fetch memories", e);
+      setError("Couldn't load memories right now. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -83,21 +100,7 @@ export default function WallOfMemories() {
       }
     }
 
-    const fetchMemories = async () => {
-      try {
-        setLoading(true);
-        const data = await getMemories();
-        setMemories(data.map(mapToUI));
-        setError(null);
-      } catch (e) {
-        console.error("Failed to fetch memories", e);
-        setError("Couldn't load memories right now. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMemories();
+    fetchMemoriesData();
   }, []);
 
   const persistLikedIds = (updated: Record<string, boolean>) => {
@@ -114,12 +117,12 @@ export default function WallOfMemories() {
     const optimisticDelta = isLiked ? -1 : 1;
     setMemories((prev) =>
       prev.map((mem) =>
-        mem.id === id ? { ...mem, likes: mem.likes + optimisticDelta } : mem
+        mem.id === id ? { ...mem, likes: Math.max(0, mem.likes + optimisticDelta) } : mem
       )
     );
     if (selectedMemory && selectedMemory.id === id) {
       setSelectedMemory((prev) =>
-        prev ? { ...prev, likes: prev.likes + optimisticDelta } : prev
+        prev ? { ...prev, likes: Math.max(0, prev.likes + optimisticDelta) } : prev
       );
     }
     persistLikedIds({ ...likedIds, [id]: !isLiked });
@@ -142,12 +145,12 @@ export default function WallOfMemories() {
       console.error("Failed to update like", err);
       setMemories((prev) =>
         prev.map((mem) =>
-          mem.id === id ? { ...mem, likes: mem.likes - optimisticDelta } : mem
+          mem.id === id ? { ...mem, likes: Math.max(0, mem.likes - optimisticDelta) } : mem
         )
       );
       if (selectedMemory && selectedMemory.id === id) {
         setSelectedMemory((prev) =>
-          prev ? { ...prev, likes: prev.likes - optimisticDelta } : prev
+          prev ? { ...prev, likes: Math.max(0, prev.likes - optimisticDelta) } : prev
         );
       }
       persistLikedIds({ ...likedIds, [id]: isLiked });
@@ -201,6 +204,19 @@ export default function WallOfMemories() {
 
         {/* Role Filters & Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8">
+          {ROLE_FILTERS.map((filter) => (
+            <button
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
+              className={`py-2 px-5 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 cursor-pointer ${
+                activeFilter === filter.id
+                  ? "bg-[#EB0028] text-white shadow-[0_0_15px_rgba(235,0,40,0.4)]"
+                  : "bg-zinc-900/80 text-gray-400 hover:text-white border border-zinc-800 hover:border-zinc-700"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
 
           <button
             onClick={() => setIsAddModalOpen(true)}
@@ -212,19 +228,30 @@ export default function WallOfMemories() {
         </div>
       </div>
 
-      {/* Loading / Error States */}
+      {/* Loading / Error / Empty States */}
       {loading && (
-        <p className="text-center text-gray-400 font-space mb-10">
-          Loading memories…
-        </p>
+        <div className="flex justify-center items-center py-12">
+          <p className="font-space text-gray-400 animate-pulse text-base">
+            Loading memories from server...
+          </p>
+        </div>
       )}
+
       {!loading && error && (
-        <p className="text-center text-red-400 font-space mb-10">{error}</p>
+        <div className="flex justify-center items-center py-12">
+          <p className="font-space text-red-400 text-base">{error}</p>
+        </div>
       )}
+
       {!loading && !error && filteredMemories.length === 0 && (
-        <p className="text-center text-gray-400 font-space mb-10">
-          No memories pinned yet. Be the first!
-        </p>
+        <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-[#EB0028]/35 rounded-2xl max-w-3xl mx-auto bg-[#181314]/50 my-6">
+          <p className="font-bebas text-2xl sm:text-3xl tracking-wide text-white mb-2">
+            No Memories Pinned Yet
+          </p>
+          <p className="font-space text-gray-400 text-sm sm:text-base max-w-md">
+            Be the first to share a moment, quote, or story from TEDxIIT Patna 2025!
+          </p>
+        </div>
       )}
 
       {/* Polaroid Memories Grid */}
@@ -250,10 +277,10 @@ export default function WallOfMemories() {
                 onClick={() => setSelectedMemory(mem)}
                 className="group relative flex flex-col justify-between bg-[#181314] hover:bg-[#201718] border-[2px] border-[#EB0028]/35 hover:border-[#EB0028] rounded-2xl p-7 shadow-[0_10px_35px_rgba(0,0,0,0.7)] hover:shadow-[0_12px_40px_rgba(235,0,40,0.25)] transition-all duration-300 cursor-pointer"
               >
-                {/* Visual Pin / Tape top center (no glow) */}
+                {/* Visual Pin / Tape top center */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-[#EB0028] rounded-sm transition-colors" />
 
-                {/* Memory Quote (no date at top) */}
+                {/* Memory Quote */}
                 <div className="my-4 pt-2">
                   <p className="font-space text-white/90 text-base sm:text-lg leading-relaxed italic">
                     &ldquo;{quoteDisplay}&rdquo;
@@ -265,7 +292,7 @@ export default function WallOfMemories() {
                   )}
                 </div>
 
-                {/* Footer: Author, Role & Like Counter OUTSIDE of pill container */}
+                {/* Footer: Author, Role & Like Counter */}
                 <div className="flex items-center justify-between mt-6 pt-4 border-t border-zinc-800/80">
                   <div className="flex flex-col">
                     <span className="font-semibold text-white text-base">
@@ -276,7 +303,7 @@ export default function WallOfMemories() {
                     </span>
                   </div>
 
-                  {/* Like Counter - Clean without pill container */}
+                  {/* Like Counter */}
                   <button
                     type="button"
                     onClick={(e) => handleLike(mem.id, e)}
@@ -302,7 +329,7 @@ export default function WallOfMemories() {
         </AnimatePresence>
       </div>
 
-      {/* Full Memory Dialog Modal (when quote is clicked / too long) */}
+      {/* Full Memory Dialog Modal */}
       <AnimatePresence>
         {selectedMemory && (
           <div
@@ -414,36 +441,34 @@ export default function WallOfMemories() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
-                      Role Category *
-                    </label>
-                    <select
-                      value={newRoleCategory}
-                      onChange={(e) =>
-                        setNewRoleCategory(e.target.value as RoleCategory)
-                      }
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
-                    >
-                      <option value="organizer">Organizer</option>
-                      <option value="coordinator">Coordinator</option>
-                      <option value="subcoordinator">Subcoordinator</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
+                    Role Category *
+                  </label>
+                  <select
+                    value={newRoleCategory}
+                    onChange={(e) =>
+                      setNewRoleCategory(e.target.value as RoleCategory)
+                    }
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
+                  >
+                    <option value="organizer">Organizer</option>
+                    <option value="coordinator">Coordinator</option>
+                    <option value="subcoordinator">Subcoordinator</option>
+                  </select>
+                </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
-                      Custom Role Title
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g., Lead Organizer"
-                      value={newRoleTitle}
-                      onChange={(e) => setNewRoleTitle(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">
+                    Custom Role Title (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g., Web Dev Lead"
+                    value={newRoleTitle}
+                    onChange={(e) => setNewRoleTitle(e.target.value)}
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-red-500 transition-colors"
+                  />
                 </div>
 
                 <div>
