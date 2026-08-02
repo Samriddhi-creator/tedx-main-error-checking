@@ -3,9 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Plus, X, MessageSquareQuote } from "lucide-react";
+import {
+  getMemories,
+  createMemory,
+  likeMemory,
+  unlikeMemory,
+} from "@/services/memory.services";
+import { Memory as BackendMemory } from "@/types/memory";
 
 export type RoleCategory = "organizer" | "coordinator" | "subcoordinator";
-
 export interface Memory {
   id: string;
   author: string;
@@ -22,80 +28,43 @@ const ROLE_FILTERS = [
   { id: "coordinator", label: "Coordinator" },
   { id: "subcoordinator", label: "Subcoordinator" },
 ];
+const CATEGORY_TO_BACKEND: Record<RoleCategory, BackendMemory["roleCategory"]> = {
+  organizer: "Organizer",
+  coordinator: "Coordinator",
+  subcoordinator: "Subcoordinator",
+};
 
-const INITIAL_MEMORIES: Memory[] = [
-  {
-    id: "mem-1",
-    author: "Ananya Sharma",
-    role: "Lead Organizer",
-    roleCategory: "organizer",
-    quote:
-      "Watching months of intense planning, late-night curation meetings, and endless rehearsals converge into a single unforgettable day was magical. The silence before the first speaker walked out gave us all goosebumps.",
-    likes: 48,
-    rotation: -2,
-  },
-  {
-    id: "mem-2",
-    author: "Rohan Kumar",
-    role: "Production Coordinator",
-    roleCategory: "coordinator",
-    quote:
-      "3:00 AM backstage chai sessions while perfecting the lighting cues and audio checks. When the stage lights turned TEDx red for the opening sequence, every single sleepless night felt worth it!",
-    likes: 52,
-    rotation: 1.5,
-  },
-  {
-    id: "mem-3",
-    author: "Priya Mehta",
-    role: "Design Subcoordinator",
-    roleCategory: "subcoordinator",
-    quote:
-      "Designing the kaleidoscopic interludes stage backdrop and seeing attendees stop to take photos with it all day long. It truly felt like art and technology blending into one.",
-    likes: 31,
-    rotation: -1,
-    date_unused: "",
-  } as Memory,
-  {
-    id: "mem-4",
-    author: "Vikram Das",
-    role: "Sponsorship Coordinator",
-    roleCategory: "coordinator",
-    quote:
-      "The energy in the networking lounge during interludes was electric. Attendees, speakers, and coordinators exchanging ideas on how small pauses shape our future.",
-    likes: 39,
-    rotation: 2,
-  },
-  {
-    id: "mem-5",
-    author: "Aditi Rao",
-    role: "Curation Organizer",
-    roleCategory: "organizer",
-    quote:
-      "When Dr. Mehta spoke about 'the quiet transformations in between', you could hear a pin drop in the auditorium. Proud of this TEDxIIT Patna team forever.",
-    likes: 64,
-    rotation: -1.5,
-  },
-  {
-    id: "mem-6",
-    author: "Siddharth N.",
-    role: "Hospitality Subcoordinator",
-    roleCategory: "subcoordinator",
-    quote:
-      "Welcoming speakers from across the country and seeing their excitement before stepping onto the red circle. The standing ovation at the closing ceremony still gives me chills!",
-    likes: 43,
-    rotation: 2.5,
-  },
-];
+const rotationFromId = (id: string): number => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) % 1000;
+  }
+  return (hash / 1000) * 5 - 2.5;
+};
+
+const mapToUI = (mem: BackendMemory): Memory => ({
+  id: mem._id,
+  author: mem.name,
+  role: mem.customRoleTitle?.trim() || mem.roleCategory,
+  roleCategory: mem.roleCategory.toLowerCase() as RoleCategory,
+  quote: mem.memoryText,
+  likes: mem.likes,
+  rotation: rotationFromId(mem._id),
+});
+
+const LIKED_IDS_STORAGE_KEY = "tedx_ki_liked_ids";
 
 export default function WallOfMemories() {
-  const [memories, setMemories] = useState<Memory[]>(INITIAL_MEMORIES);
+  const [memories, setMemories] = useState<Memory[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [likedIds, setLikedIds] = useState<Record<string, boolean>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // New Memory Form State
   const [newAuthor, setNewAuthor] = useState("");
   const [newRoleTitle, setNewRoleTitle] = useState("");
   const [newRoleCategory, setNewRoleCategory] =
@@ -104,83 +73,111 @@ export default function WallOfMemories() {
 
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("tedx_ki_memories_2025_v2");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMemories(parsed);
-        }
-      } catch (e) {
-        console.error("Failed to parse memories", e);
-      }
-    }
-    const savedLikes = localStorage.getItem("tedx_ki_likes_2025");
+
+    const savedLikes = localStorage.getItem(LIKED_IDS_STORAGE_KEY);
     if (savedLikes) {
       try {
         setLikedIds(JSON.parse(savedLikes));
       } catch (e) {
-        console.error("Failed to parse likes", e);
+        console.error("Failed to parse liked ids", e);
       }
     }
+
+    const fetchMemories = async () => {
+      try {
+        setLoading(true);
+        const data = await getMemories();
+        setMemories(data.map(mapToUI));
+        setError(null);
+      } catch (e) {
+        console.error("Failed to fetch memories", e);
+        setError("Couldn't load memories right now. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMemories();
   }, []);
 
-  const saveMemories = (updated: Memory[]) => {
-    setMemories(updated);
-    localStorage.setItem("tedx_ki_memories_2025_v2", JSON.stringify(updated));
+  const persistLikedIds = (updated: Record<string, boolean>) => {
+    setLikedIds(updated);
+    localStorage.setItem(LIKED_IDS_STORAGE_KEY, JSON.stringify(updated));
   };
 
-  const handleLike = (id: string, e?: React.MouseEvent) => {
+  const handleLike = async (id: string, e?: React.MouseEvent) => {
     if (e) {
       e.stopPropagation();
     }
     const isLiked = likedIds[id];
-    const updatedLikes = { ...likedIds, [id]: !isLiked };
-    setLikedIds(updatedLikes);
-    localStorage.setItem("tedx_ki_likes_2025", JSON.stringify(updatedLikes));
 
-    const updated = memories.map((mem) => {
-      if (mem.id === id) {
-        const nextLikes = isLiked ? mem.likes - 1 : mem.likes + 1;
-        if (selectedMemory && selectedMemory.id === id) {
-          setSelectedMemory({ ...mem, likes: nextLikes });
-        }
-        return {
-          ...mem,
-          likes: nextLikes,
-        };
+    const optimisticDelta = isLiked ? -1 : 1;
+    setMemories((prev) =>
+      prev.map((mem) =>
+        mem.id === id ? { ...mem, likes: mem.likes + optimisticDelta } : mem
+      )
+    );
+    if (selectedMemory && selectedMemory.id === id) {
+      setSelectedMemory((prev) =>
+        prev ? { ...prev, likes: prev.likes + optimisticDelta } : prev
+      );
+    }
+    persistLikedIds({ ...likedIds, [id]: !isLiked });
+
+    try {
+      const updatedBackendMem = isLiked
+        ? await unlikeMemory(id)
+        : await likeMemory(id);
+      const trueLikes: number = updatedBackendMem.likes;
+
+      setMemories((prev) =>
+        prev.map((mem) => (mem.id === id ? { ...mem, likes: trueLikes } : mem))
+      );
+      if (selectedMemory && selectedMemory.id === id) {
+        setSelectedMemory((prev) =>
+          prev ? { ...prev, likes: trueLikes } : prev
+        );
       }
-      return mem;
-    });
-    saveMemories(updated);
+    } catch (err) {
+      console.error("Failed to update like", err);
+      setMemories((prev) =>
+        prev.map((mem) =>
+          mem.id === id ? { ...mem, likes: mem.likes - optimisticDelta } : mem
+        )
+      );
+      if (selectedMemory && selectedMemory.id === id) {
+        setSelectedMemory((prev) =>
+          prev ? { ...prev, likes: prev.likes - optimisticDelta } : prev
+        );
+      }
+      persistLikedIds({ ...likedIds, [id]: isLiked });
+    }
   };
 
-  const handleAddMemory = (e: React.FormEvent) => {
+  const handleAddMemory = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newQuote.trim() || !newAuthor.trim()) return;
+    if (!newQuote.trim() || !newAuthor.trim() || isSubmitting) return;
 
-    const roleTitleMap: Record<RoleCategory, string> = {
-      organizer: "Organizer",
-      coordinator: "Coordinator",
-      subcoordinator: "Subcoordinator",
-    };
+    try {
+      setIsSubmitting(true);
+      const created = await createMemory({
+        name: newAuthor.trim(),
+        roleCategory: CATEGORY_TO_BACKEND[newRoleCategory],
+        customRoleTitle: newRoleTitle.trim() || undefined,
+        memoryText: newQuote.trim(),
+      });
 
-    const newMem: Memory = {
-      id: "mem-" + Date.now(),
-      author: newAuthor.trim(),
-      role: newRoleTitle.trim() || roleTitleMap[newRoleCategory],
-      roleCategory: newRoleCategory,
-      quote: newQuote.trim(),
-      likes: 1,
-      rotation: Math.random() * 4 - 2,
-    };
-
-    const updated = [newMem, ...memories];
-    saveMemories(updated);
-    setNewAuthor("");
-    setNewRoleTitle("");
-    setNewQuote("");
-    setIsAddModalOpen(false);
+      setMemories((prev) => [mapToUI(created), ...prev]);
+      setNewAuthor("");
+      setNewRoleTitle("");
+      setNewQuote("");
+      setIsAddModalOpen(false);
+    } catch (err) {
+      console.error("Failed to create memory", err);
+      setError("Couldn't pin your memory right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const filteredMemories = memories.filter(
@@ -214,6 +211,21 @@ export default function WallOfMemories() {
           </button>
         </div>
       </div>
+
+      {/* Loading / Error States */}
+      {loading && (
+        <p className="text-center text-gray-400 font-space mb-10">
+          Loading memories…
+        </p>
+      )}
+      {!loading && error && (
+        <p className="text-center text-red-400 font-space mb-10">{error}</p>
+      )}
+      {!loading && !error && filteredMemories.length === 0 && (
+        <p className="text-center text-gray-400 font-space mb-10">
+          No memories pinned yet. Be the first!
+        </p>
+      )}
 
       {/* Polaroid Memories Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-7xl mx-auto py-4">
@@ -458,9 +470,10 @@ export default function WallOfMemories() {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2 rounded-lg text-sm font-bold bg-[#EB0028] hover:bg-red-600 text-white transition-colors cursor-pointer"
+                    disabled={isSubmitting}
+                    className="px-6 py-2 rounded-lg text-sm font-bold bg-[#EB0028] hover:bg-red-600 text-white transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Pin Memory
+                    {isSubmitting ? "Pinning…" : "Pin Memory"}
                   </button>
                 </div>
               </form>
