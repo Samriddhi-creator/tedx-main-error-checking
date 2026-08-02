@@ -199,30 +199,6 @@ export default function WallOfMemories() {
           Glance back at the moments, stories, and kaleidoscopic fragments of TEDxIIT Patna 2025.
         </p>
 
-        {/* Role Filters & Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8">
-          {ROLE_FILTERS.map((filter) => (
-            <button
-              key={filter.id}
-              onClick={() => setActiveFilter(filter.id)}
-              className={`py-2 px-5 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 cursor-pointer ${
-                activeFilter === filter.id
-                  ? "bg-[#EB0028] text-white shadow-[0_0_15px_rgba(235,0,40,0.4)]"
-                  : "bg-zinc-900/80 text-gray-400 hover:text-white border border-zinc-800 hover:border-zinc-700"
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
-
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="ml-2 inline-flex items-center gap-2 bg-white text-black hover:bg-red-600 hover:text-white font-bold py-2.5 px-6 rounded-full transition-colors duration-200 cursor-pointer text-xs sm:text-sm md:text-base"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Pin a Memory</span>
-          </button>
-        </div>
       </div>
 
       {/* Loading / Error / Empty States */}
