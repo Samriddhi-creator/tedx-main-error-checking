@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
@@ -14,10 +14,15 @@ interface StickyNoteProps {
   };
   onLike: (id: string, isLiking: boolean) => void;
   isPinned?: boolean;
+  isLiked?: boolean;
 }
-export default function StickyNote({ note, onLike, isPinned }: StickyNoteProps) {
-  const [isLiked, setIsLiked] = useState(false);
+export default function StickyNote({ note, onLike, isPinned, isLiked: propIsLiked }: StickyNoteProps) {
+  const [isLiked, setIsLiked] = useState(!!propIsLiked);
   const [floaters, setFloaters] = useState<number[]>([]);
+
+  useEffect(() => {
+    setIsLiked(!!propIsLiked);
+  }, [propIsLiked]);
 
   // Check for holographic rare keywords
   const isRare = note.message.toLowerCase().includes("metamorphosis") ||

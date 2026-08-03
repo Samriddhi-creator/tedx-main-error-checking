@@ -1,10 +1,17 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import StickyNote from "@/src/features/components/wall/StickyNote";
 import AddNoteModal from "@/src/features/components/wall/AddNoteModal";
 import { motion } from "framer-motion";
+import {
+  getCommunityWallNotes,
+  createCommunityWallNote,
+  likeCommunityWallNote,
+  unlikeCommunityWallNote,
+} from "@/services/communityWall.services";
+import { CommunityWallNoteBackend } from "@/types/communityWall";
 
 const PASTEL_COLORS = [
   "#FEF08A", // yellow
@@ -25,41 +32,16 @@ interface Note {
   rotation: number;
 }
 
-// Initial mock data
-const INITIAL_NOTES: Note[] = [
-  {
-    id: "1",
-    username: "TEDxFan",
-    message: "Can't wait for the new theme to unfold! Metamorphosis is exactly what we need right now.",
-    color: PASTEL_COLORS[0],
-    likes: 12,
-    rotation: -2,
-  },
-  {
-    id: "2",
-    username: "TechEnthusiast",
-    message: "Looking forward to the AI discussions. How will it shape our future?",
-    color: PASTEL_COLORS[2],
-    likes: 8,
-    rotation: 1.5,
-  },
-  {
-    id: "3",
-    username: "CreativeSoul",
-    message: "Art and technology intersecting... this is where true magic happens! ✨",
-    color: PASTEL_COLORS[4],
-    likes: 24,
-    rotation: -1,
-  },
-  {
-    id: "4",
-    username: "StudentDev",
-    message: "Hoping to network with amazing innovators this year. See you all there!",
-    color: PASTEL_COLORS[3],
-    likes: 5,
-    rotation: 2.5,
-  }
-];
+const mapToUI = (note: CommunityWallNoteBackend): Note => ({
+  id: note._id,
+  username: note.username,
+  message: note.message,
+  color: note.color || PASTEL_COLORS[0],
+  likes: note.likes || 0,
+  rotation: typeof note.rotation === "number" ? note.rotation : 0,
+});
+
+const LIKED_IDS_STORAGE_KEY = "tedx_cw_liked_ids";
 
 export default function CommunityWallPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -72,6 +54,9 @@ export default function CommunityWallPage() {
   const [savedNoteId, setSavedNoteId] = useState<string | null>(null);
   const [hasPosted, setHasPosted] = useState<boolean>(false);
   const [sort, setSort] = useState<"new" | "top">("new");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [likedIds, setLikedIds] = useState<Record<string, boolean>>({});
 
   const sortedNotes = useMemo(() => [
     ...notes.filter(note => savedNoteId ? note.id === savedNoteId : (savedUsername && note.username === savedUsername)),
@@ -80,40 +65,73 @@ export default function CommunityWallPage() {
   ], [notes, sort, savedUsername, savedNoteId]);
   const visibleNotes = sortedNotes.slice(0, visibleCount);
 
+  const fetchNotesData = useCallback(async (sortOrder: "new" | "top") => {
+    try {
+      setLoading(true);
+      const data = await getCommunityWallNotes(sortOrder);
+      setNotes(data.map(mapToUI));
+      setError(null);
+    } catch (e) {
+      console.error("Failed to fetch notes from server", e);
+      setError("Couldn't load notes from server right now.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    // Load notes from local storage or fallback to initial
-    const savedNotes = localStorage.getItem("tedxCommunityNotes");
-    if (savedNotes) {
-      try {
-        setNotes(JSON.parse(savedNotes));
-      } catch (e) {
-        setNotes(INITIAL_NOTES);
-      }
-    } else {
-      setNotes(INITIAL_NOTES);
-    }
     setSavedUsername(localStorage.getItem("communityWallUsername"));
     setSavedNoteId(localStorage.getItem("communityWallNoteId"));
     setHasPosted(!!localStorage.getItem("communityWallHasPosted"));
+
+    const savedLikes = localStorage.getItem(LIKED_IDS_STORAGE_KEY);
+    if (savedLikes) {
+      try {
+        setLikedIds(JSON.parse(savedLikes));
+      } catch (e) {
+        console.error("Failed to parse liked ids", e);
+      }
+    }
+
     setMounted(true);
   }, []);
 
-
-  // Save notes whenever they change (if mounted)
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem("tedxCommunityNotes", JSON.stringify(notes));
+      fetchNotesData(sort);
     }
-  }, [notes, mounted]);
+  }, [sort, mounted, fetchNotesData]);
 
-  const handleLike = (id: string, isLiking: boolean) => {
+  const handleLike = async (id: string, isLiking: boolean) => {
     setNotes((prev) =>
       prev.map(note =>
         note.id === id ? { ...note, likes: isLiking ? note.likes + 1 : Math.max(0, note.likes - 1) } : note
       )
     );
+    const updatedLikedIds = { ...likedIds, [id]: isLiking };
+    setLikedIds(updatedLikedIds);
+    localStorage.setItem(LIKED_IDS_STORAGE_KEY, JSON.stringify(updatedLikedIds));
+
+    try {
+      const updatedNote = isLiking
+        ? await likeCommunityWallNote(id)
+        : await unlikeCommunityWallNote(id);
+      
+      setNotes((prev) =>
+        prev.map((note) => (note.id === id ? { ...note, likes: updatedNote.likes } : note))
+      );
+    } catch (err) {
+      console.error("Failed to update like on server", err);
+      setNotes((prev) =>
+        prev.map(note =>
+          note.id === id ? { ...note, likes: isLiking ? Math.max(0, note.likes - 1) : note.likes + 1 } : note
+        )
+      );
+      const revertedLikedIds = { ...likedIds, [id]: !isLiking };
+      setLikedIds(revertedLikedIds);
+      localStorage.setItem(LIKED_IDS_STORAGE_KEY, JSON.stringify(revertedLikedIds));
+    }
   };
 
   const MAX_NOTES = 50;
@@ -130,31 +148,57 @@ export default function CommunityWallPage() {
     setShowDeleteConfirm(false);
   };
 
-  const handleAddNote = (username: string, message: string) => {
-    const newNote: Note = {
-      id: Date.now().toString(),
-      username,
-      message,
-      color: PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)],
-      likes: 0,
-      rotation: (Math.random() * 6) - 3, // random between -3 and +3
-    };
+  const handleAddNote = async (username: string, message: string) => {
+    try {
+      const createdBackend = await createCommunityWallNote({
+        username,
+        message,
+        color: PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)],
+        rotation: (Math.random() * 6) - 3,
+      });
 
-    localStorage.setItem("communityWallUsername", username);
-    localStorage.setItem("communityWallHasPosted", "true");
-    localStorage.setItem("communityWallNoteId", newNote.id);
-    setSavedUsername(username);
-    setSavedNoteId(newNote.id);
-    setHasPosted(true);
+      const newNote: Note = mapToUI(createdBackend);
 
-    // Add to top of the list and cap at MAX_NOTES
-    setNotes((prev) => {
-      const updatedNotes = [newNote, ...prev];
-      if (updatedNotes.length > MAX_NOTES) {
-        return updatedNotes.slice(0, MAX_NOTES);
-      }
-      return updatedNotes;
-    });
+      localStorage.setItem("communityWallUsername", username);
+      localStorage.setItem("communityWallHasPosted", "true");
+      localStorage.setItem("communityWallNoteId", newNote.id);
+      setSavedUsername(username);
+      setSavedNoteId(newNote.id);
+      setHasPosted(true);
+
+      setNotes((prev) => {
+        const updatedNotes = [newNote, ...prev];
+        if (updatedNotes.length > MAX_NOTES) {
+          return updatedNotes.slice(0, MAX_NOTES);
+        }
+        return updatedNotes;
+      });
+    } catch (err) {
+      console.error("Failed to post note to server", err);
+      const newNote: Note = {
+        id: Date.now().toString(),
+        username,
+        message,
+        color: PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)],
+        likes: 0,
+        rotation: (Math.random() * 6) - 3,
+      };
+
+      localStorage.setItem("communityWallUsername", username);
+      localStorage.setItem("communityWallHasPosted", "true");
+      localStorage.setItem("communityWallNoteId", newNote.id);
+      setSavedUsername(username);
+      setSavedNoteId(newNote.id);
+      setHasPosted(true);
+
+      setNotes((prev) => {
+        const updatedNotes = [newNote, ...prev];
+        if (updatedNotes.length > MAX_NOTES) {
+          return updatedNotes.slice(0, MAX_NOTES);
+        }
+        return updatedNotes;
+      });
+    }
   };
 
   if (!mounted) return null; // Prevent hydration mismatch
@@ -221,17 +265,37 @@ export default function CommunityWallPage() {
         {/* Masonry Grid */}
         <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 sm:gap-6 space-y-3 sm:space-y-6">
           {visibleNotes.map((note) => (
-            <StickyNote key={note.id} note={note} onLike={handleLike} isPinned={savedNoteId ? note.id === savedNoteId : (savedUsername !== null && note.username === savedUsername)} />
+            <StickyNote
+              key={note.id}
+              note={note}
+              onLike={handleLike}
+              isPinned={savedNoteId ? note.id === savedNoteId : (savedUsername !== null && note.username === savedUsername)}
+              isLiked={!!likedIds[note.id]}
+            />
           ))}
         </div>
 
-        {notes.length === 0 && (
+        {loading && (
+          <div className="flex justify-center items-center py-20">
+            <p className="font-['Space_Grotesk'] text-gray-400 animate-pulse text-lg">
+              Loading notes from server...
+            </p>
+          </div>
+        )}
+
+        {!loading && error && (
+          <div className="flex justify-center items-center py-20">
+            <p className="font-['Space_Grotesk'] text-red-400 text-lg">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && notes.length === 0 && (
           <div className="text-center py-20 text-gray-500">
             <p className="text-xl">The wall is empty! Be the first to leave a note.</p>
           </div>
         )}
 
-        {notes.length > visibleCount && (
+        {!loading && notes.length > visibleCount && (
           <div className="flex justify-center mt-10">
             <button
               onClick={() => setVisibleCount(v => v + 20)}
