@@ -42,7 +42,7 @@ export default function Navbar() {
         setOpen(false);
     }, [pathname]);
 
-    // Lock body scroll when drawer is open (fixes mobile scroll-through incl. iOS Safari)
+    // Lock body scroll when drawer is open
     useEffect(() => {
         if (open) {
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -52,7 +52,6 @@ export default function Navbar() {
             document.body.style.left = "0";
             document.body.style.right = "0";
             document.body.style.overflow = "hidden";
-            // Only compensate for the scrollbar on desktop.
             if (window.innerWidth >= 768 && scrollbarWidth > 0 && scrollbarWidth < 100) { 
                 document.body.style.paddingRight = `${scrollbarWidth}px`;
             }
@@ -80,7 +79,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className={`sticky top-0 z-[120] w-full h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 md:px-8 py-2 md:py-3 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
+            <header className={`sticky top-0 z-40 w-full h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 md:px-8 py-2 md:py-3 overflow-hidden transition-all duration-500 ${open ? "bg-transparent" : scrolled ? "bg-black/40 backdrop-blur-md" : "bg-black"}`}>
                 <div className="flex items-center h-full">
                     <Link href="/" className="flex items-center h-full">
                         <Image src="/logo png.svg" alt="TEDxIITPatna" width={527} height={108} className="h-full w-auto object-contain" style={{ width: "auto" }} priority />
@@ -90,8 +89,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-2 md:gap-4">
                     <button
                         onClick={() => setOpen(!open)}
-                        aria-label="Toggle Menu"
-                        className="size-[36px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[4px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 z-[130] cursor-pointer">
+                        className="relative z-[140] size-[36px] md:size-[45px] bg-gradient-to-b from-red-600 to-red-900 rounded-full flex flex-col items-center justify-center gap-[4px] md:gap-[5px] hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-red-600/30 cursor-pointer">
                         <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "translate-y-[6px] md:translate-y-[7px] rotate-45" : ""}`} />
                         <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "opacity-0" : ""}`} />
                         <span className={`w-[16px] md:w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${open ? "-translate-y-[6px] md:-translate-y-[7px] -rotate-45" : ""}`} />
@@ -100,7 +98,8 @@ export default function Navbar() {
             </header>
 
             <div
-                className={`fixed inset-0 w-screen h-[100dvh] bg-black/95 backdrop-blur-md z-[115] flex px-6 md:px-16 pt-20 md:pt-12 pb-8 md:pb-12 transition-all duration-500 ease-in-out ${open ? "opacity-100 translate-x-0 pointer-events-auto visible" : "opacity-0 translate-x-full pointer-events-none invisible"}`}
+                className={`fixed inset-0 w-screen h-[100dvh] bg-black/95 backdrop-blur-md z-[115] flex px-6 md:px-16 pt-20 md:py-12 transition-all duration-500 ease-in-out ${open ? "opacity-100 translate-x-0 pointer-events-auto visible" : "opacity-0 translate-x-full pointer-events-none invisible"}`}
+                style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
                 onClick={() => setOpen(false)}
             >
                 {/* Desktop Left Info Column */}
@@ -127,39 +126,33 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Main Content Side (Links + Mobile Footer) */}
-                <div className="flex flex-col justify-between md:justify-center md:gap-4 w-full md:w-1/2 h-full min-h-0 overflow-y-auto no-scrollbar" onClick={(e) => e.stopPropagation()}>
+                {/* Main Content Container (Right Side / Full Mobile) */}
+                <div className="flex flex-col justify-between w-full md:w-1/2 h-full min-h-0 overflow-y-auto no-scrollbar" onClick={(e) => e.stopPropagation()}>
                     
-                    {/* Navigation Links Container */}
-                    <div className="flex flex-col justify-center gap-0 shrink-0 flex-1 min-h-0 md:flex-none md:my-0 py-2">
+                    {/* Top Navigation Links */}
+                    <div className="flex flex-col justify-start md:justify-center gap-0 shrink-0 py-2">
                         {navLinks.map(({ label, href }, index) => {
                             const distance = lastHoveredIndex >= 0 ? Math.abs(index - lastHoveredIndex) : index;
                             const undimDelay = !hovered ? distance * 40 : 0;
                             const opacity = !open ? 0 : (hovered && hovered !== label) ? 0.2 : 1;
 
                             return (
-                                <Link 
-                                    key={label} 
-                                    href={href}
-                                    onClick={() => setOpen(false)} 
-                                    onMouseEnter={() => {
-                                        setHovered(label); 
-                                        setLastHovered(label);
+                                <Link key={label} href={href}
+                                    onClick={() => setOpen(false)} onMouseEnter={() => {
+                                        setHovered(label); setLastHovered(label);
                                     }}
                                     onMouseLeave={() => setHovered(null)}
-                                    style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity }}
-                                    className={`text-2xl sm:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-1 sm:py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} 
-                                >
+                                    style={{ transitionDelay: open && !hovered ? `${undimDelay}ms` : "0ms", opacity, }}
+                                    className={`text-2xl sm:text-4xl lg:text-5xl font-normal font-['Bebas_Neue'] py-1 sm:py-2 md:py-3 border-b border-white/20 transition-all duration-500 block transform bg-clip-text text-transparent ${hovered === label ? "bg-gradient-to-b from-red-700 from-35% via-white via-50% to-red-400 to-65%" : "bg-gradient-to-b from-white to-white"} ${open ? "translate-y-0" : "translate-y-8"} ${hovered === label ? "translate-x-4" : "translate-x-0"}`} >
                                     {label}
                                 </Link>
                             );
                         })}
                     </div>
 
-                    {/* Mobile Contact & Follow Us Footer Section */}
-                    {/* Added pb-20 sm:pb-24 to elevate content above bottom mobile UI/action buttons */}
+                    {/* Bottom Mobile Footer */}
                     <div
-                        className={`md:hidden flex flex-col gap-3 shrink-0 pt-4 pb-20 sm:pb-24 border-t border-white/10 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
+                        className={`md:hidden mt-auto flex flex-col gap-3 shrink-0 pt-4 border-t border-white/10 transition-all duration-700 ease-out transform ${open ? "translate-y-0 opacity-100 delay-300" : "translate-y-4 opacity-0"}`}
                     >
                         <div className="flex items-center gap-2">
                             <span className="text-red-500 font-['Inter'] text-sm sm:text-base font-bold">Contact:</span>
